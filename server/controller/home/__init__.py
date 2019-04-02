@@ -4,13 +4,17 @@
 from flask.views import View
 from flask import Blueprint, render_template, current_app as app
 
+from server.util.log import FinalLogger
+
 home = Blueprint('home', __name__)
 
 
 class CommonView(View):
     def __init__(self, template_name):
         self.template_name = template_name
-        self.logger = app.logger
+        # 初始化日志类
+        logger = FinalLogger(app).get_logger()
+        self.logger = logger
 
     def render_data(self):
         return None

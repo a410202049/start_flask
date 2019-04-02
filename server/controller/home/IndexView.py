@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
-from sqlalchemy import desc, func
 
 from server.app import db
 from server.controller.home import CommonView
+from server.exception import BusinessException, PASSWORD_NOT_MATCH
 from server.model.TestModel import Teacher, Student
 
 
@@ -73,7 +73,12 @@ class HomeIndex(HomeBase):
         # print db.session.offset(1).all()  # 从第 2 条记录开始返回
 
         # print data1
-        return {"student": {"name": "kerry"}}
+        self.logger.info(u'这是测试日志')
+        # return {"student": {"name": "kerry"}}
+
+        if 1 != 2:
+            raise BusinessException(u'密码不正确', PASSWORD_NOT_MATCH)
+
 
 
 # class UserAPI(MethodView):

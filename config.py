@@ -9,6 +9,19 @@ class Config:
     PAGE_SIZE = 15
     SQLALCHEMY_ECHO = False
     VERSION = '1.0.1'
+    LOG_FILE = 'info.log'
+
+    # 日志配置项
+    LOG_FILE_MAX_SIZE = 1024 * 5
+    LOG_FILE_NUM_BACKUPS = 5
+
+    # 邮件配置
+    MAIL_SERVER = 'smtp.qq.com'
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    MAIL_USE_TLS = False
+    MAIL_USERNAME = '1509699669@qq.com'
+    MAIL_PASSWORD = 'tkmhowtztlltbagf'
 
     # 所有SQLALCHEMY配置项可参考手册http://www.pythondoc.com/flask-sqlalchemy/config.html#id2
     @staticmethod

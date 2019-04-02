@@ -6,6 +6,19 @@ from config import config
 from werkzeug.utils import import_string
 import sys
 
+from server.exception import ServerBaseException
+from server.util.log import FinalLogger
+
+from flask_mail import Message
+from flask_mail import Mail
+
+
+# msg = Message(title, sender=current_app.config['MAIL_USERNAME'], recipients=recipients)
+# msg.body = body
+#
+# mail = Mail()
+# mail.init_app(current_app)
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -36,6 +49,8 @@ def register_blueprints(app):
         app.register_blueprint(bp)
 
 
+
+
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
@@ -59,6 +74,20 @@ def create_app(config_name):
     # 注册蓝图
     register_blueprints(app)
 
+    # 初始化日志类
+    logger = FinalLogger(app).get_logger()
+
+    # 初始化邮件
+    mail = Mail()
+    mail.init_app(app)
+
+    def send_email(title, body):
+        msg = Message(title, sender='1509699669@qq.com', recipients=['1509699669@qq.com'])
+        msg.body = body
+        with app.app_context():
+            mail.send(msg)
+        # mail.send(msg)
+
     @app.after_request
     def after_request(response):
         pass
@@ -70,16 +99,26 @@ def create_app(config_name):
         #                query.context))
         return response
 
-    # @app.errorhandler(Exception)
-    # def handle_exception(e):
-    #     if current_app.config['CONFIG_NAME'] != 'local':
-    #         if not isinstance(e, ServerBaseException):
-    #             logger.exception(u'service has exception: {0}'.format(e.message))
-    #             import traceback
-    #             from utils import email_util
-    #             title = u'Server-%s-%s' % (current_app.config['CONFIG_NAME'], email_util.get_exception_message(e))
-    #             body = u'Server异常: \n{message}'.format(message=traceback.format_exc())
-    #             email_util.send_warning_email(title, body, ['gaoyuan@axinfu.com'])
-    #     return e.message
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        # if current_app.config['CONFIG_NAME'] != 'local':
+        if isinstance(e, ServerBaseException):
+            logger.exception(u'service has exception: {0}'.format(e.message))
+            import traceback
+            logger.info(u'Server异常: \n{message}'.format(message=traceback.format_exc()))
+            import gevent
+            from gevent import Greenlet, monkey
+            monkey.patch_all()
+
+            title = u'server 异常处理'
+            body = u'Server异常: \n{message}'.format(message=traceback.format_exc())
+
+            gevent.joinall([
+                # 这里spawn是3个任务[实际是3个协程]，每个任务都会执行fetch_async函数
+                gevent.spawn(send_email, title, body)
+
+            ])
+
+        return e.error_msg
 
     return app
