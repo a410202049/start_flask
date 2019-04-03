@@ -5,3 +5,4 @@ colorlog==4.0.2
 pymysql==0.9.3
 flask_mail==0.9.1
 gevent==1.4.0
+flask-restplus==0.12.0

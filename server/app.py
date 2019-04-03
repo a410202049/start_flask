@@ -11,13 +11,8 @@ from server.util.log import FinalLogger
 
 from flask_mail import Message
 from flask_mail import Mail
+from flask_restplus import Api
 
-
-# msg = Message(title, sender=current_app.config['MAIL_USERNAME'], recipients=recipients)
-# msg.body = body
-#
-# mail = Mail()
-# mail.init_app(current_app)
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -47,8 +42,6 @@ def register_blueprints(app):
     for bp_name in blueprints:
         bp = import_string(bp_name)
         app.register_blueprint(bp)
-
-
 
 
 def create_app(config_name):
@@ -81,12 +74,16 @@ def create_app(config_name):
     mail = Mail()
     mail.init_app(app)
 
+    # 初始化 restplus
+    api = Api(app)
+    from server.controller.resource import init_api
+    init_api(api)
+
     def send_email(title, body):
         msg = Message(title, sender='1509699669@qq.com', recipients=['1509699669@qq.com'])
         msg.body = body
         with app.app_context():
             mail.send(msg)
-        # mail.send(msg)
 
     @app.after_request
     def after_request(response):
@@ -102,7 +99,7 @@ def create_app(config_name):
     @app.errorhandler(Exception)
     def handle_exception(e):
         # if current_app.config['CONFIG_NAME'] != 'local':
-        if isinstance(e, ServerBaseException):
+        if not isinstance(e, ServerBaseException):
             logger.exception(u'service has exception: {0}'.format(e.message))
             import traceback
             logger.info(u'Server异常: \n{message}'.format(message=traceback.format_exc()))
@@ -118,7 +115,6 @@ def create_app(config_name):
                 gevent.spawn(send_email, title, body)
 
             ])
-
+            raise e
         return e.error_msg
-
     return app
