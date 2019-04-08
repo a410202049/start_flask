@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+from datetime import timedelta
 
 
 class Config:
@@ -10,6 +11,7 @@ class Config:
     SQLALCHEMY_ECHO = False
     VERSION = '1.0.1'
     LOG_FILE = 'info.log'
+    # app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
 
     # 日志配置项
     LOG_FILE_MAX_SIZE = 1024 * 5
@@ -22,6 +24,15 @@ class Config:
     MAIL_USE_TLS = False
     MAIL_USERNAME = '1509699669@qq.com'
     MAIL_PASSWORD = 'tkmhowtztlltbagf'
+
+    # jwt配置
+    JWT_SECRET_KEY = 'tkmhowtztlltbagf11212'
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=30)
+    JWT_HEADER_NAME = 'Authorization'
+    # JWT_REFRESH_JSON_KEY = 'refresh_token'
+
+    JWT_HEADER_TYPE = ''
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
 
     # 所有SQLALCHEMY配置项可参考手册http://www.pythondoc.com/flask-sqlalchemy/config.html#id2
     @staticmethod

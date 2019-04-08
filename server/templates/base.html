@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html>
-	<head>
-        <meta charset="utf-8" />
-        <title>{% block title %}{% endblock %}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/reset.css', _external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='plugs/layui/css/layui.css', _external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/common.css', _external=True) }}">
+    <link rel="icon" href="{{ url_for('static',filename='images/favicon.ico', _external=True) }}" type="image/x-icon" />
 
-        {% block header %}
+  {% block header %}
 
-        {% endblock %}
-	</head>
-    <body>
+  {% endblock %}
+</head>
+<body>
 
-    {% block container %}{% endblock %}
+<!-- 你的HTML代码 -->
+{% block container %}
 
-    {% block script %}{% endblock %}
-	</body>
+{% endblock %}
+
+
+<script src="{{ url_for('static',filename='plugs/layui/layui.js', _external=True) }}"></script>
+{% block script %}
+
+{% endblock %}
+<script>
+//一般直接写在一个js文件中
+
+</script>
+</body>
 </html>

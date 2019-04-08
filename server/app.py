@@ -1,5 +1,6 @@
 # coding: utf-8
 from flask import Flask, current_app
+from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 
 from config import config
@@ -25,7 +26,6 @@ session_options['autoflush'] = False
 session_options['expire_on_commit'] = False
 
 db = SQLAlchemy(session_options=session_options)
-
 
 # jinja2 None to ''
 def finalize(arg):
@@ -78,6 +78,16 @@ def create_app(config_name):
     api = Api(app)
     from server.controller.resource import init_api
     init_api(api)
+
+    # 初始化jwt
+    jwt = JWTManager(app)
+
+    @jwt.user_claims_loader
+    def add_claims_to_access_token(identity):
+        return {
+            'hello': identity,
+            'foo': ['bar', 'baz']
+        }
 
     def send_email(title, body):
         msg = Message(title, sender='1509699669@qq.com', recipients=['1509699669@qq.com'])

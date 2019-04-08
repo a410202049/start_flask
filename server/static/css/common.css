@@ -1,3 +1,221 @@
-body{
-    background: aqua;
+.container{
+    margin: 0 auto;
+    width: 1170px;
+}
+
+#box-left{
+    margin-top: 30px;
+    width: 100px;
+    margin-right: 40px;
+}
+
+.logo-box{
+    display: block;
+}
+
+#box-left .logo{
+    background-image: url(../images/home.png);
+    background-size: 287.82px 1184.04px;
+    height: 45px;
+    width: 80px;
+    background-position: 0 0;
+    float: right;
+
+}
+
+#box-left .line-box{
+    display: block;
+}
+
+#box-left .line{
+    float: right;
+    background: #ddd;
+    height: 1px;
+    margin-top: 23px;
+    width: 20px;
+    /*margin-left: 60px;*/
+}
+
+#box-left .ul-nav{
+    margin-top: 15px;
+}
+
+#box-left .ul-nav > li{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    text-align: right;
+}
+
+#box-left .ul-nav li .open-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -38px;
+    background-size: 246px 1012px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 6px;
+    transform: rotate(-180deg);
+    transition: transform .5s linear;
+    position: absolute;
+    top: 10px;
+    left: 18px;
+}
+
+
+#box-left .ul-nav li a{
+    font-size: 20px;
+    color: #262626;
+    text-decoration:none;
+    padding: 1px 8px;
+
+}
+
+
+
+#box-left .ul-nav > li.avtive > a, #box-left .ul-nav > li > a:hover{
+    background: #4285f4;
+    color: #fff;
+    border-radius: 1px;
+}
+
+
+#box-left .ul-nav li .sub-list{
+    /*width: 120px;*/
+    /*#787878*/
+}
+
+#box-left .ul-nav li .sub-list .sub-item{
+    display: inline-block;
+    position: relative;
+    margin: 8px 0;
+}
+
+#box-left .ul-nav li .sub-list a{
+    color:#787878;
+    font-size: 16px;
+}
+
+#box-left .ul-nav li .sub-list a:hover{
+    color: #4d7fd0;
+}
+
+#box-left .ul-nav li .sub-list .sub-item .hot{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -50px;
+    background-size: 246px 1012px;
+    padding: 5px 7px;
+    position: absolute;
+    right: -8px;
+    top: 7px;
+}
+
+#box-left .search-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -60px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 9px;
+    position: relative;
+    top: 3px;
+}
+
+#box-left .search-button{
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    font-size: 18px;
+    height: 48px;
+    line-height: 46px;
+    width: 62px;
+    color: #262626;
+    cursor: pointer;
+    margin-bottom: 18px;
+    margin-left: 30px;
+}
+
+.left-box-a{
+    width: 94px;
+    text-align: center;
+    border: 1px solid #4285f4;
+    color: #4285f4 ;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 10px;
+
+}
+.left-box-a:hover{
+    color: #ffffff;
+    background: #4285f4;
+    text-decoration: none;
+}
+
+.left-box-a span{
+    margin-right: 4px;
+}
+
+.seek-report-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -78px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 7px;
+    position: relative;
+    top: 2px;
+}
+
+.left-box-a:hover .seek-report-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -92px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 7px;
+    position: relative;
+    top: 2px;
+}
+
+
+.i-want-contribution-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -876px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 7px;
+    position: relative;
+    top: 2px;
+}
+
+.left-box-a:hover .i-want-contribution-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -890px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 7px;
+    position: relative;
+    top: 2px;
+}
+
+
+
+.seek-finance-entry-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -984px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 7px;
+    position: relative;
+    top: 2px;
+}
+
+.left-box-a:hover .seek-finance-entry-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -998px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 7px;
+    position: relative;
+    top: 2px;
+}
+
+#box-right{
+
 }

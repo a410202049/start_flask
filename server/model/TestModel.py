@@ -6,6 +6,24 @@ from sqlalchemy import DATETIME, String
 from sqlalchemy import Column
 
 
+class User(db.Model):
+    __tablename__ = 't_user'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(32), doc=u'用户名', nullable=False)
+    password = db.Column(db.String(32), doc=u'密码', nullable=False)
+
+    create_time = Column("create_time", DATETIME, nullable=False, default=datetime.now, doc=u'创建时间')
+    update_time = Column("update_time", DATETIME, nullable=False, default=datetime.now, onupdate=datetime.now,
+                         doc=u'更新时间')
+
+    # def get_user(self, password):
+    #     self.db.session.query(
+    #         User
+    #     ).filter(
+    #         User.password
+    #     ).first()
+
+
 class Teacher(db.Model):
     __tablename__ = 't_teacher'
     id = db.Column(db.Integer, primary_key=True)

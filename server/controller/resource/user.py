@@ -1,36 +1,64 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
-from flask_restplus import Resource, abort
-from server.controller.resource import v2
+
+from flask import request, jsonify
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_claims, get_jwt_identity, \
+    create_refresh_token, jwt_refresh_token_required
+
+from server.app import db
+from server.controller.resource import v2, BaseResource
+
+import hashlib
+
+from server.exception import BusinessException, PASSWORD_NOT_MATCH
+from server.model.TestModel import User
 
 
-# @v2.errorhandler(Exception)
-# def api_handle_exception(error):
-#     '''Return a custom message and 400 status code'''
-#     print error
-#     return {'message': 'What you want'}, 400
-
-@v2.route('/users')
-class Users(Resource):
-    def get(self):
-        return {"username": "kerry", "password":"123"}
-
+@v2.route('/login')
+class Login(BaseResource):
     def post(self):
-        return {"username": "kerry123", "password": "456"}
+        username = request.form.get('username')
+        password = request.form.get('password')
 
-    def delete(self):
-        return {"username": "kerry888", "password": "888"}
+        m1 = hashlib.md5()
+        m1.update(password.encode("utf-8"))
+        password_md5 = m1.hexdigest()
+
+        user_info = db.session.query(
+            User
+        ).filter(
+            User.username == username
+        ).first()
+
+        if user_info.password != password_md5:
+            raise BusinessException(u'密码不正确', PASSWORD_NOT_MATCH)
+
+        ret = {
+            'access_token': create_access_token(identity=username),
+            'refresh_token': create_refresh_token(identity=username)
+        }
+
+        return self.make_response(ret)
 
 
-@v2.route('/users/<int:user_id>')
-class UserDetail(Resource):
-    def get(self, user_id):
-        data = "123"
-        a = 1 / 0
-        # abort(400, 'My custom message', custom='value')
-        # user = db.session.query(User).filter(
-        #     User.id == user_id
-        # ).first()
-        # data = user.to_dict()
-        # abort(404)
-        return {"user_info": data}
+@v2.route('/protected', methods=['GET'])
+class Protected(BaseResource):
+
+    @jwt_required
+    def get(self):
+        identity = get_jwt_identity()
+        claims = get_jwt_claims()
+        print claims
+        return identity
+
+
+@v2.route('/refresh', methods=['GET'])
+class Refresh(BaseResource):
+
+    @jwt_refresh_token_required
+    def get(self):
+        current_user = get_jwt_identity()
+        ret = {
+            'access_token': create_access_token(identity=current_user)
+        }
+        return self.make_response(ret)
