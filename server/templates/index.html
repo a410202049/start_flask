@@ -42,7 +42,47 @@
             
         </div>
         <div id="box-right">
-
+            <div class="box-right-header">
+                <div class="kr-header">
+                    <a class="kr-header-btn login"><span>登录</span></a>
+                    <a class="line">|</a>
+                    <a class="kr-header-btn resgister"><span>注册</span></a>
+                </div>
+                <ul class="business-line">
+                   <li><a href="#" target="_blank" rel="noopener noreferrer">开氪</a></li>
+                   <li><a href="#" target="_blank" rel="noopener noreferrer">VClub投资机构</a></li>
+                   <li class="kr-product"><span class="kr_36">36氪</span><span class="product">旗下产品</span></li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="adv">
+                    <a href="#"><img src="{{ url_for('static',filename='images/adv.jpg', _external=True) }}" alt=""></a>
+                </div>
+                <div class="content-box">
+                    <div class="layui-carousel" id="banner">
+                        <div carousel-item>
+                            <div><a href="#"><img src="{{ url_for('static',filename='images/banner1.jpg', _external=True) }}" alt=""></a></div>
+                            <div><a href="#"><img src="{{ url_for('static',filename='images/banner2.jpg', _external=True) }}" alt=""></a></div>
+                            <div><a href="#"><img src="{{ url_for('static',filename='images/banner3.jpg', _external=True) }}" alt=""></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-{% endblock %}    
+{% endblock %}
+{% block script %}
+    <script>
+        layui.use('carousel', function(){
+            var carousel = layui.carousel;
+            //建造实例
+            carousel.render({
+                elem: '#banner'
+                ,width: '720px' //设置容器宽度
+                ,arrow: 'hover' //始终显示箭头
+                //,anim: 'updown' //切换动画方式
+            });
+        });
+
+    </script>
+{% endblock %}

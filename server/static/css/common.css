@@ -1,3 +1,7 @@
+a,a:hover{
+    text-decoration: none;
+}
+
 .container{
     margin: 0 auto;
     width: 1170px;
@@ -7,6 +11,7 @@
     margin-top: 30px;
     width: 100px;
     margin-right: 40px;
+    float: left;
 }
 
 .logo-box{
@@ -105,7 +110,7 @@
     background-size: 246px 1012px;
     padding: 5px 7px;
     position: absolute;
-    right: -4px;
+    right: -8px;
     top: 7px;
 }
 
@@ -217,5 +222,163 @@
 }
 
 #box-right{
+    width: 930px;
+    float: left;
+}
 
+#box-right .box-right-header{
+    height: 34px;
+    width: 100%;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
+    position: relative;
+}
+
+#box-right .box-right-header:after, #box-right .box-right-header:before {
+    background: #fff;
+    content: "";
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 3px;
+}
+#box-right .box-right-header .business-line{
+    float: right;
+    height: 100%;
+    /*line-height: 100%;*/
+}
+#box-right .box-right-header .business-line li{
+    float: left;
+    margin: 0 20px;
+    /*text-align: justify;*/
+    font-size: 12px;
+    line-height: 34px;
+}
+
+#box-right .box-right-header .business-line li .kr_36{
+    color: #4285f4;
+}
+
+#box-right .box-right-header .business-line li.kr-product{
+    background: url(../images/header-msg.png) no-repeat;
+    background-position: 0;
+    background-size: 6px 10px;
+    color: #4285f4;
+    padding-left: 10px;
+}
+
+#box-right .box-right-header .business-line li .product{
+    color: #000;
+}
+
+#box-right .box-right-header .kr-header{
+    background: #4285f4;
+    float: right;
+    line-height: 34px;
+    margin-left: 2px;
+    position: relative;
+    text-align: center;
+    width: 118px;
+    font-size: 0px;
+
+}
+
+.kr-header .kr-header-btn{
+    font-size: 12px;
+    color: #ffffff;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    width: 50%;
+    vertical-align:bottom;
+    display: inline-block;
+}
+
+.kr-header > .line{
+    color: #ffffff;
+    position: absolute;
+    left: 48px;
+    padding: 0 10px;
+    top: 0;
+    font-size: 12px;
+}
+
+.kr-header .kr-header-btn:hover:after{
+    background: rgba(0,0,0,.12);
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.kr-header .kr-header-btn span{
+    z-index: 2;
+    position: relative;
+}
+
+#box-right .content{
+    margin-top: 20px;
+}
+
+#box-right .content .adv{
+    margin-bottom: 20px;
+}
+
+#box-right .content .adv a{
+    display: block;
+}
+
+#box-right .content .adv a img{
+    width: 100%;
+    height: 140px;
+}
+
+#box-right .content #banner a img{
+    width: 100%;
+    height: 100%;
+}
+
+/*.layui-carousel:hover .layui-carousel-arrow{*/
+    /*left: 0;*/
+/*}*/
+
+.layui-carousel:hover .layui-carousel-arrow[lay-type=sub],
+.layui-carousel[lay-arrow=hover] .layui-carousel-arrow[lay-type=sub]{
+    left: 0;
+    width: 28px;
+    height: 40px;
+    border-radius:0;
+}
+
+.layui-carousel:hover .layui-carousel-arrow[lay-type=add],
+.layui-carousel[lay-arrow=hover] .layui-carousel-arrow[lay-type=add]{
+    right: 0;
+    width: 28px;
+    height: 40px;
+    border-radius:0;
+}
+
+.layui-carousel-ind{
+    margin-left: 20px;
+    text-align: left;
+    bottom: 20px;
+    top: unset;
+}
+
+.layui-carousel-ind ul,.layui-carousel-ind ul:hover{
+    background: none;
+}
+
+.layui-carousel-ind li{
+    width: 30px;
+    height: 2px;
+    border-radius: 0;
+    background: hsla(0,0%,100%,.5);
+}
+
+.layui-carousel-ind li.layui-this{
+    background-color: #4285f4;
 }
