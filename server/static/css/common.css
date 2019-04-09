@@ -5,6 +5,7 @@ a,a:hover{
 .container{
     margin: 0 auto;
     width: 1170px;
+    min-width: 1170px;
 }
 
 #box-left{
@@ -222,7 +223,7 @@ a,a:hover{
 }
 
 #box-right{
-    width: 930px;
+    width: 1030px;
     float: left;
 }
 
