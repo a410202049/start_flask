@@ -59,11 +59,106 @@
                     <a href="#"><img src="{{ url_for('static',filename='images/adv.jpg', _external=True) }}" alt=""></a>
                 </div>
                 <div class="content-box">
-                    <div class="layui-carousel" id="banner">
-                        <div carousel-item>
-                            <div><a href="#"><img src="{{ url_for('static',filename='images/banner1.jpg', _external=True) }}" alt=""></a></div>
-                            <div><a href="#"><img src="{{ url_for('static',filename='images/banner2.jpg', _external=True) }}" alt=""></a></div>
-                            <div><a href="#"><img src="{{ url_for('static',filename='images/banner3.jpg', _external=True) }}" alt=""></a></div>
+                    <div class="banner-box clearfix">
+                        <div class="layui-carousel" id="banner">
+                            <div carousel-item>
+                                <div><a href="#"><img src="{{ url_for('static',filename='images/banner1.jpg', _external=True) }}" alt=""></a></div>
+                                <div><a href="#"><img src="{{ url_for('static',filename='images/banner2.jpg', _external=True) }}" alt=""></a></div>
+                                <div><a href="#"><img src="{{ url_for('static',filename='images/banner3.jpg', _external=True) }}" alt=""></a></div>
+                            </div>
+                        </div>
+                        <div class="banner-article">
+                            <ul>
+                                <li>
+                                    <img src="{{ url_for('static',filename='images/article_banner1.jpg', _external=True) }}" alt="">
+                                    <p><a href="#">「云舒写」获高瓴资本领投近亿元B轮融资，完成大语文赛道全产品线布局</a></p>
+                                </li>
+                                <li>
+                                    <img src="{{ url_for('static',filename='images/article_banner2.jpg', _external=True) }}" alt="">
+                                    <p><a href="#">「KLOOK客路」完成 2.25 亿美元 D+ 轮融资，软银愿景基金领投</a></p>
+                                </li>
+                                <li>
+                                    <img src="{{ url_for('static',filename='images/article_banner3.jpg', _external=True) }}" alt="">
+                                    <p><a href="#">「什马出行」获2000万美元A轮融资，打造新能源出行产业互联网平台</a></p>
+                                </li>
+                                <li>
+                                    <img src="{{ url_for('static',filename='images/article_banner4.jpg', _external=True) }}" alt="">
+                                    <p><a href="#">阿里云创新大会再出发，一些变化即将发生</a></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="article_box">
+                        <div class="article_box_left">
+                            <div class="article_category_item">
+                                <p>最新文章</p>
+                                <div class="article_list">
+                                    <div class="article_item">
+                                        <div class="shadow-wrapper-card"></div>
+                                        <div class="shadow-content clearfix">
+                                            <a href="#" class="article_pic">
+                                                <img src="{{ url_for('static',filename='images/article1.jpg', _external=True) }}" alt="">
+                                            </a>
+                                            <div class="article_item_info">
+                                                <div class="article_title_header ellipsis-2">
+                                                    <span class="article_tag">职场</span>
+                                                    <a href="#" class="article_title">做计划，千万要避开这5个误区！</a>
+                                                </div>
+                                                <div class="article_description ellipsis-2">
+                                                    <a href="#">
+                                                        选择去驻外并不是一个简单的决定。海外经历也许不只是职业生涯的一笔，它还有可能影响整个职业发展路径。
+                                                    </a>
+                                                </div>
+                                                <div class="article_footer_bar">
+                                                    <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
+                                                    <a class="kr-flow-bar-author" href="#">
+                                                        领英LinkedIn
+                                                    </a>
+                                                    <span class="kr-flow-bar-time">
+                                                        <i class="kr-flow-bar-time-icon"></i>17分钟前
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="article_item">
+                                        <div class="shadow-wrapper-card"></div>
+                                        <div class="shadow-content clearfix">
+                                            <a href="#" class="article_pic">
+                                                <img src="{{ url_for('static',filename='images/article2.jpg', _external=True) }}" alt="">
+                                            </a>
+                                            <div class="article_item_info">
+                                                <div class="article_title_header ellipsis-2">
+                                                    <span class="article_tag">职场</span>
+                                                    <a href="#" class="article_title">出海日报 | 字节跳动投资的新闻聚合平台Dailyhunt欲进行融资；新加坡大数据提供商AirTrunk完成3.32亿美</a>
+                                                </div>
+                                                <div class="article_description ellipsis-2">
+                                                    <a href="#">
+                                                        以及，日本乐天资本和新加坡投资基金 EV Growth 共同领投新加坡返利平台 ShopBack 4500万美元融资；软银雇佣摩根大通等投行高管管理旗下专注拉美地区投资的50亿美元基金；新加坡生活方式平台 Clozette 完成1000万美元 C 轮融资。
+                                                    </a>
+                                                </div>
+                                                <div class="article_footer_bar">
+                                                    <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
+                                                    <a class="kr-flow-bar-author" href="#">
+                                                        魏佩琳@36氪出海
+                                                    </a>
+                                                    <span class="kr-flow-bar-time">
+                                                        <i class="kr-flow-bar-time-icon"></i>23分钟前
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="article_box_right">
+
                         </div>
                     </div>
                 </div>
@@ -79,6 +174,7 @@
             carousel.render({
                 elem: '#banner'
                 ,width: '720px' //设置容器宽度
+                ,height: '300px'
                 ,arrow: 'hover' //始终显示箭头
                 //,anim: 'updown' //切换动画方式
             });

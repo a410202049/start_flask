@@ -1,3 +1,18 @@
+.ellipsis-2,.ellipsis-4 {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-break: break-all
+}
+
+.ellipsis-2 {
+	-webkit-line-clamp: 2
+}
+
+.ellipsis-4 {
+	-webkit-line-clamp: 4
+}
+
 a,a:hover{
     text-decoration: none;
 }
@@ -340,6 +355,12 @@ a,a:hover{
 #box-right .content #banner a img{
     width: 100%;
     height: 100%;
+    transition:all 1s ease 0s;
+}
+
+#box-right .content #banner a img:hover{
+    transform:scale(1.1);
+    /*transform:rotate(10deg);*/
 }
 
 /*.layui-carousel:hover .layui-carousel-arrow{*/
@@ -383,3 +404,232 @@ a,a:hover{
 .layui-carousel-ind li.layui-this{
     background-color: #4285f4;
 }
+
+#box-right .content #banner{
+    float: left;
+}
+
+#box-right .content .banner-article{
+    width: 300px;
+    float: right;
+}
+
+#box-right .content .banner-article li{
+    width: 145px;
+    height: 145px;
+    float: left;
+    position: relative;
+}
+
+#box-right .content .banner-article li img{
+    position: absolute;
+    width: 145px;
+    height: 145px;
+}
+
+
+#box-right .content .banner-article li:nth-child(2n){
+    margin-left: 10px;
+}
+
+#box-right .content .banner-article li:nth-child(3),#box-right .content .banner-article li:nth-child(4){
+    margin-top: 10px;
+}
+
+#box-right .content .banner-article li p{
+    position: absolute;
+    width: 145px;
+    height: 145px;
+    background-image: linear-gradient(-180deg,hsla(0,0%,74.9%,0),rgba(0,0,0,.78) 97%);
+    bottom: 0;
+    left: 0;
+    transition: all .5s;
+}
+
+#box-right .content .banner-article li p:hover{
+    background: rgba(0,0,0,.4);
+}
+
+/*background: rgba(0,0,0,.4);*/
+    /*bottom: 0;*/
+    /*height: 100%;*/
+    /*left: 0;*/
+    /*position: absolute;*/
+    /*width: 100%;*/
+
+
+#box-right .content .banner-article li p a{
+    font-size: 13px;
+    color: #ffffff;
+    bottom: 6px;
+    line-height: 18px;
+    max-height: 36px;
+    overflow: hidden;
+    padding: 0 10px;
+    position: absolute;
+    text-align: justify;
+    transition: bottom .5s;
+}
+
+#box-right .content .banner-article li p:hover a{
+    bottom: 72px;
+    max-height: 72px;
+    opacity: 1;
+    transform: translateY(50%);
+}
+
+#box-right .content .article_box{
+    margin-top: 40px;
+}
+
+#box-right .content .article_box .article_category_item p{
+    color: #262626;
+    font-size: 24px;
+    line-height: 33px;
+    padding-bottom: 14px;
+}
+
+#box-right .content .article_box .article_category_item{
+    margin-bottom: 30px;
+    width: 690px;
+}
+
+#box-right .content .article_box .article_list .article_item{
+    position: relative;
+    height: 143px;
+    margin-bottom: 30px;
+}
+
+#box-right .content .article_box .article_list .article_item .article_pic{
+    border-radius: 2px;
+    /*display: flex;*/
+    float: left;
+    height: 143px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: 216px;
+    z-index: 1;
+}
+
+#box-right .content .article_box .article_list .article_item .article_pic img{
+    height: 100%;
+    width: 100%;
+}
+
+
+#box-right .content .article_box .article_list .article_item .article_item_info{
+    margin-left: 20px;
+    float: left;
+    width: 454px;
+    position: relative;
+    height: 143px;
+    z-index: 1;
+}
+
+#box-right .content .article_box .article_list .article_item .article_title_header{
+    overflow: hidden;
+    line-height: 24px;
+    max-height: 48px;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_tag{
+    background: #373737;
+    border-radius: 1px;
+    color: #fff;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px;
+    position: relative;
+    text-align: center;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_title{
+    color: #262626;
+    font-size: 18px;
+    text-align: justify;
+    transition: .5s;
+    margin-left: 5px;
+}
+#box-right .content .article_box .article_list .article_item .article_item_info .article_title:hover{
+    color: #4d7fd0;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_description{
+    color: #787878;
+    font-size: 13px;
+    letter-spacing: 0;
+    line-height: 20px;
+    margin-top: 10px;
+    max-height: 40px;
+    overflow: hidden;
+    text-align: justify;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_description:hover a{
+    color: #4d7fd0;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_footer_bar{
+    bottom: 2px;
+    color: #a7a7a7;
+    float: left;
+    font-size: 12px;
+    line-height: 18px;
+    position: absolute;
+    width: 100%;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .kr-flow-bar-motif{
+    margin-right: 6px;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_footer_bar a{
+    color: #4285f4;
+    padding-left: 2px;
+    padding-right: 8px;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_footer_bar .kr-flow-bar-author{
+    color: #a7a7a7;
+    transition: .5s;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_footer_bar .kr-flow-bar-author:hover{
+    color: #4d7fd0;
+    cursor: pointer;
+}
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_footer_bar .kr-flow-bar-time-icon{
+    background: url(../images/home.png) no-repeat;
+    background-position: 0 -115px;
+    background-size: 246px 1012px;
+    display: inline-block;
+    padding: 5px;
+    position: relative;
+    right: 5px;
+    top: 1px;
+}
+
+
+#box-right .content .article_box .article_list .article_item .article_item_info .article_footer_bar .kr-flow-bar-time{
+    float: right;
+}
+
+#box-right .content .article_box .article_list .article_item .shadow-wrapper-card{
+    width: 720px;
+    height: 173px;
+    top: -15px;
+    left: -10px;
+    border-radius: 2px;
+    position: absolute;
+    transition: all .2s linear;
+    /*z-index: 101;*/
+}
+
+#box-right .content .article_box .article_list .article_item:hover .shadow-wrapper-card{
+    background: #fff;
+    box-shadow: 0 0 25px 2px rgba(0,0,0,.2);
+}
+
