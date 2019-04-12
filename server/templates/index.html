@@ -310,16 +310,9 @@
                 ,arrow: 'hover' //始终显示箭头
                 //,anim: 'updown' //切换动画方式
             });
-
-            {#$('.sider_bar_article_item p').toggle(#}
-            {#  function(){#}
-            {#    alert('1');#}
-            {#  }#}
-            {#);#}
+            
 
             $(".sider_bar_article_item p").click(function(){
-                {#debugger#}
-                {#console.log($(this).children('.sider_bar_article_item_detail'));#}
                 $(this).siblings(".sider_bar_article_item_detail").slideToggle();
             });
 
