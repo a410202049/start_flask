@@ -2,44 +2,46 @@
 {% block title %}测试首页{% endblock %}
 
 {% block container %}
-    <div class="container">
+    <div class="container" style="overflow: hidden;">
         <div id="box-left">
-            <a class="clearfix" href="/" class=""><div class="logo"></div></a>
-            <div class="clearfix">
-                <div class="line"></div>
+            <div class="nav-menu">
+                <a class="clearfix" href="/" class=""><div class="logo"></div></a>
+                <div class="clearfix">
+                    <div class="line"></div>
+                </div>
+                <ul class="ul-nav">
+                    <li class="avtive"><a href="#">首页</a></li>
+                    <li><a href="#">快讯</a></li>
+                    <li>
+                        <span class="open-icon"></span>
+                        <a href="#">资讯</a>
+                        <ul class="sub-list">
+                            <li class="sub-item">
+                                <a href="#">最新</a>
+                            </li>
+                            <li class="sub-item">
+                                <a href="#">推荐</a>
+                            </li>
+                            <li class="sub-item">
+                                <a href="#">创投</a>
+                                <span class="hot"></span>
+                            </li>
+                            <li class="sub-item">
+                                <a href="#">科技</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">视频</a></li>
+                </ul>
+                <div class="search-button">
+                    <span class="search-icon"></span>
+                    <span class="search-text">搜索</span>
+                </div>
+                <a class="left-box-a" href="#"><span class="seek-report-icon"></span>寻求报道</a>
+                <a class="left-box-a" href="#"><span class="i-want-contribution-icon"></span>我要投稿</a>
+                <a class="left-box-a" href="#"><span class="seek-finance-entry-icon"></span>寻求投资</a>
             </div>
-            <ul class="ul-nav">
-                <li class="avtive"><a href="#">首页</a></li>
-                <li><a href="#">快讯</a></li>
-                <li>
-                    <span class="open-icon"></span>
-                    <a href="#">资讯</a>
-                    <ul class="sub-list">
-                        <li class="sub-item">
-                            <a href="#">最新</a>
-                        </li>
-                        <li class="sub-item">
-                            <a href="#">推荐</a>
-                        </li>
-                        <li class="sub-item">
-                            <a href="#">创投</a>
-                            <span class="hot"></span>
-                        </li>
-                        <li class="sub-item">
-                            <a href="#">科技</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#">视频</a></li>
-            </ul>
-            <div class="search-button">
-                <span class="search-icon"></span>
-                <span class="search-text">搜索</span>
-            </div>
-            <a class="left-box-a" href="#"><span class="seek-report-icon"></span>寻求报道</a>
-            <a class="left-box-a" href="#"><span class="i-want-contribution-icon"></span>我要投稿</a>
-            <a class="left-box-a" href="#"><span class="seek-finance-entry-icon"></span>寻求投资</a>
-            
+{#            <span style="width: 100px;display: block;height: 1px;"></span>#}
         </div>
         <div id="box-right">
             <div class="box-right-header">
@@ -285,6 +287,91 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <a href="#" class="look_more">查看更多</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sider_bar_right" style="margin-top: 40px;">
+                                <div class="sider_bar_title">
+                                    <span class="title-icon"></span>
+                                    <div class="bar_title">24小时热榜</div>
+                                </div>
+                                <div class="sider_bar_box">
+                                    <div class="article_hot_box">
+                                        <div class="article_hot_item">
+                                            <span class="hot_icon" style="background-position:0 -153px"></span>
+                                            <a href="#" class="hot_img_link">
+                                                <img src="{{ url_for('static',filename='images/hot1.jpg', _external=True) }}" alt="" class="hot_img">
+                                            </a>
+                                            <p>
+                                                <a href="#">氪星晚报 | 奔驰母公司戴姆勒道歉了；Gucci CEO将出资1亿欧元修复巴黎圣母院；抖音回应印度法院下架TikTok</a>
+                                            </p>
+                                        </div>
+                                        <div class="article_hot_item">
+                                            <span class="hot_icon" style="background-position:0 -191px"></span>
+                                            <a href="#" class="hot_img_link">
+                                                <img src="{{ url_for('static',filename='images/hot2.jpg', _external=True) }}" alt="" class="hot_img">
+                                            </a>
+                                            <p>
+                                                <a href="#">我在云南种大麻</a>
+                                            </p>
+                                        </div>
+                                        <div class="article_hot_item small-item">
+                                            <div class="small-item-box">
+                                                <span class="small-item-label active">3</span>
+                                                <a href="#" target="_blank" class="small-item-label-a">
+                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small1.jpg', _external=True) }}" >
+                                                </a>
+                                            </div>
+                                            <div class="small-item-box-right">
+                                                <a href="#" class="small-item-description">
+                                                    8点1氪 | 苹果将继续用高通芯片；西安奔驰维权女车主和解；法国三大集团欲捐4亿欧元重修巴黎圣母院
+                                                </a>
+                                                <span class="small-item-time">11小时前</span>
+                                            </div>
+                                        </div>
+                                        <div class="article_hot_item small-item">
+                                            <div class="small-item-box">
+                                                <span class="small-item-label">4</span>
+                                                <a href="#" target="_blank" class="small-item-label-a">
+                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
+                                                </a>
+                                            </div>
+                                            <div class="small-item-box-right">
+                                                <a href="#" class="small-item-description">
+                                                    焦点分析 | 入局零售业 400 天，腾讯“交卷”
+                                                </a>
+                                                <span class="small-item-time">9小时前</span>
+                                            </div>
+                                        </div>
+                                        <div class="article_hot_item small-item">
+                                            <div class="small-item-box">
+                                                <span class="small-item-label">5</span>
+                                                <a href="#" target="_blank" class="small-item-label-a">
+                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
+                                                </a>
+                                            </div>
+                                            <div class="small-item-box-right">
+                                                <a href="#" class="small-item-description">
+                                                    焦点分析 | 入局零售业 400 天，腾讯“交卷”
+                                                </a>
+                                                <span class="small-item-time">9小时前</span>
+                                            </div>
+                                        </div>
+                                        <div class="article_hot_item small-item">
+                                            <div class="small-item-box">
+                                                <span class="small-item-label">6</span>
+                                                <a href="#" target="_blank" class="small-item-label-a">
+                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
+                                                </a>
+                                            </div>
+                                            <div class="small-item-box-right">
+                                                <a href="#" class="small-item-description">
+                                                    焦点分析 | 入局零售业 400 天，腾讯“交卷”
+                                                </a>
+                                                <span class="small-item-time">9小时前</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -310,7 +397,7 @@
                 ,arrow: 'hover' //始终显示箭头
                 //,anim: 'updown' //切换动画方式
             });
-            
+
 
             $(".sider_bar_article_item p").click(function(){
                 $(this).siblings(".sider_bar_article_item_detail").slideToggle();
