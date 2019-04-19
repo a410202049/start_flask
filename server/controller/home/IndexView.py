@@ -19,3 +19,9 @@ class HomeIndex(HomeBase):
 
     def render_data(self):
         return {}
+
+
+class ArticleDetail(HomeBase):
+
+    def render_data(self):
+        return {}

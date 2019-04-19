@@ -1,387 +1,328 @@
 {% extends "base.html" %}
 {% block title %}测试首页{% endblock %}
 
-{% block container %}
-    <div class="container" style="overflow: hidden;">
-        <div id="box-left">
-            <div class="nav-menu">
-                <a class="clearfix" href="/" class=""><div class="logo"></div></a>
-                <div class="clearfix">
-                    <div class="line"></div>
+{% block content %}
+    <div class="adv">
+        <a href="#"><img src="{{ url_for('static',filename='images/adv.jpg', _external=True) }}" alt=""></a>
+    </div>
+    <div class="content-box clearfix">
+        <div class="banner-box clearfix">
+            <div class="layui-carousel" id="banner">
+                <div carousel-item>
+                    <div><a href="#"><img src="{{ url_for('static',filename='images/banner1.jpg', _external=True) }}" alt=""></a></div>
+                    <div><a href="#"><img src="{{ url_for('static',filename='images/banner2.jpg', _external=True) }}" alt=""></a></div>
+                    <div><a href="#"><img src="{{ url_for('static',filename='images/banner3.jpg', _external=True) }}" alt=""></a></div>
                 </div>
-                <ul class="ul-nav">
-                    <li class="avtive"><a href="#">首页</a></li>
-                    <li><a href="#">快讯</a></li>
+            </div>
+            <div class="banner-article">
+                <ul>
                     <li>
-                        <span class="open-icon"></span>
-                        <a href="#">资讯</a>
-                        <ul class="sub-list">
-                            <li class="sub-item">
-                                <a href="#">最新</a>
-                            </li>
-                            <li class="sub-item">
-                                <a href="#">推荐</a>
-                            </li>
-                            <li class="sub-item">
-                                <a href="#">创投</a>
-                                <span class="hot"></span>
-                            </li>
-                            <li class="sub-item">
-                                <a href="#">科技</a>
-                            </li>
-                        </ul>
+                        <img src="{{ url_for('static',filename='images/article_banner1.jpg', _external=True) }}" alt="">
+                        <p><a href="#">「云舒写」获高瓴资本领投近亿元B轮融资，完成大语文赛道全产品线布局</a></p>
                     </li>
-                    <li><a href="#">视频</a></li>
+                    <li>
+                        <img src="{{ url_for('static',filename='images/article_banner2.jpg', _external=True) }}" alt="">
+                        <p><a href="#">「KLOOK客路」完成 2.25 亿美元 D+ 轮融资，软银愿景基金领投</a></p>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static',filename='images/article_banner3.jpg', _external=True) }}" alt="">
+                        <p><a href="#">「什马出行」获2000万美元A轮融资，打造新能源出行产业互联网平台</a></p>
+                    </li>
+                    <li>
+                        <img src="{{ url_for('static',filename='images/article_banner4.jpg', _external=True) }}" alt="">
+                        <p><a href="#">阿里云创新大会再出发，一些变化即将发生</a></p>
+                    </li>
                 </ul>
-                <div class="search-button">
-                    <span class="search-icon"></span>
-                    <span class="search-text">搜索</span>
-                </div>
-                <a class="left-box-a" href="#"><span class="seek-report-icon"></span>寻求报道</a>
-                <a class="left-box-a" href="#"><span class="i-want-contribution-icon"></span>我要投稿</a>
-                <a class="left-box-a" href="#"><span class="seek-finance-entry-icon"></span>寻求投资</a>
             </div>
-{#            <span style="width: 100px;display: block;height: 1px;"></span>#}
         </div>
-        <div id="box-right">
-            <div class="box-right-header">
-                <div class="kr-header">
-                    <a class="kr-header-btn login"><span>登录</span></a>
-                    <a class="line">|</a>
-                    <a class="kr-header-btn resgister"><span>注册</span></a>
-                </div>
-                <ul class="business-line">
-                   <li><a href="#" target="_blank" rel="noopener noreferrer">开氪</a></li>
-                   <li><a href="#" target="_blank" rel="noopener noreferrer">VClub投资机构</a></li>
-                   <li class="kr-product"><span class="kr_36">36氪</span><span class="product">旗下产品</span></li>
-                </ul>
-            </div>
-            <div class="content">
-                <div class="adv">
-                    <a href="#"><img src="{{ url_for('static',filename='images/adv.jpg', _external=True) }}" alt=""></a>
-                </div>
-                <div class="content-box clearfix">
-                    <div class="banner-box clearfix">
-                        <div class="layui-carousel" id="banner">
-                            <div carousel-item>
-                                <div><a href="#"><img src="{{ url_for('static',filename='images/banner1.jpg', _external=True) }}" alt=""></a></div>
-                                <div><a href="#"><img src="{{ url_for('static',filename='images/banner2.jpg', _external=True) }}" alt=""></a></div>
-                                <div><a href="#"><img src="{{ url_for('static',filename='images/banner3.jpg', _external=True) }}" alt=""></a></div>
+        <div class="article_box">
+            <div class="article_box_left">
+                <div class="article_category_item">
+                    <p>最新文章</p>
+                    <div class="article_list">
+                        <div class="article_item">
+                            <div class="shadow-wrapper-card"></div>
+                            <div class="shadow-content clearfix">
+                                <a href="#" class="article_pic">
+                                    <img src="{{ url_for('static',filename='images/article1.jpg', _external=True) }}" alt="">
+                                </a>
+                                <div class="article_item_info">
+                                    <div class="article_title_header ellipsis-2">
+                                        <span class="article_tag">职场</span>
+                                        <a href="#" class="article_title">做计划，千万要避开这5个误区！</a>
+                                    </div>
+                                    <div class="article_description ellipsis-2">
+                                        <a href="#">
+                                            选择去驻外并不是一个简单的决定。海外经历也许不只是职业生涯的一笔，它还有可能影响整个职业发展路径。
+                                        </a>
+                                    </div>
+                                    <div class="article_footer_bar">
+                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
+                                        <a class="kr-flow-bar-author" href="#">
+                                            领英LinkedIn
+                                        </a>
+                                        <span class="kr-flow-bar-time">
+                                            <i class="kr-flow-bar-time-icon"></i>17分钟前
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="banner-article">
-                            <ul>
-                                <li>
-                                    <img src="{{ url_for('static',filename='images/article_banner1.jpg', _external=True) }}" alt="">
-                                    <p><a href="#">「云舒写」获高瓴资本领投近亿元B轮融资，完成大语文赛道全产品线布局</a></p>
-                                </li>
-                                <li>
-                                    <img src="{{ url_for('static',filename='images/article_banner2.jpg', _external=True) }}" alt="">
-                                    <p><a href="#">「KLOOK客路」完成 2.25 亿美元 D+ 轮融资，软银愿景基金领投</a></p>
-                                </li>
-                                <li>
-                                    <img src="{{ url_for('static',filename='images/article_banner3.jpg', _external=True) }}" alt="">
-                                    <p><a href="#">「什马出行」获2000万美元A轮融资，打造新能源出行产业互联网平台</a></p>
-                                </li>
-                                <li>
-                                    <img src="{{ url_for('static',filename='images/article_banner4.jpg', _external=True) }}" alt="">
-                                    <p><a href="#">阿里云创新大会再出发，一些变化即将发生</a></p>
-                                </li>
-                            </ul>
+
+
+                        <div class="article_item">
+                            <div class="shadow-wrapper-card"></div>
+                            <div class="shadow-content clearfix">
+                                <a href="#" class="article_pic">
+                                    <img src="{{ url_for('static',filename='images/article2.jpg', _external=True) }}" alt="">
+                                </a>
+                                <div class="article_item_info">
+                                    <div class="article_title_header ellipsis-2">
+                                        <span class="article_tag">职场</span>
+                                        <a href="#" class="article_title">出海日报 | 字节跳动投资的新闻聚合平台Dailyhunt欲进行融资；新加坡大数据提供商AirTrunk完成3.32亿美</a>
+                                    </div>
+                                    <div class="article_description ellipsis-2">
+                                        <a href="#">
+                                            以及，日本乐天资本和新加坡投资基金 EV Growth 共同领投新加坡返利平台 ShopBack 4500万美元融资；软银雇佣摩根大通等投行高管管理旗下专注拉美地区投资的50亿美元基金；新加坡生活方式平台 Clozette 完成1000万美元 C 轮融资。
+                                        </a>
+                                    </div>
+                                    <div class="article_footer_bar">
+                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
+                                        <a class="kr-flow-bar-author" href="#">
+                                            魏佩琳@36氪出海
+                                        </a>
+                                        <span class="kr-flow-bar-time">
+                                            <i class="kr-flow-bar-time-icon"></i>23分钟前
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="article_category_item">
+                    <p>专题推荐</p>
+                    <div class="special_list">
+                        <div class="special_item">
+                            <div class="special-shadow-wrapper"></div>
+                            <div class="special_img">
+                                <img src="{{ url_for('static',filename='images/special1.jpg', _external=True) }}" >
+                                <p>视觉中国引众怒，“维权”大户为何成了眼中钉？</p>
+                            </div>
+                            <div class="special_footer">
+                                <p>近日黑洞照片的公开引发全民关注外，也让视觉中国等商业图片网站成为“黑洞中的黑洞”。
+                                    原本属于Event Horizon Telescope组织的黑洞照片被视觉中国用于商业用途，4月11日晚，
+                                    天津网信办深夜约谈视觉中国，网站已关闭进行彻底整改。“维权之王”为何惹了众怒？版权的生意将如何继续？</p>
+                            </div>
+                        </div>
+                        <div class="special_item">
+                            <div class="special-shadow-wrapper"></div>
+                            <div class="special_img">
+                                <img src="{{ url_for('static',filename='images/special2.jpg', _external=True) }}" >
+                                <p>刘强东对上万兄弟“动手”了，快递业开始刮骨疗伤？</p>
+                            </div>
+                            <div class="special_footer">
+                                <p>4月7日晚间，针对取消快递员底薪的报道，京东物流正面回应坐实了此前的传言。另一边，曾经抱紧阿里大腿的通达系，在拼多多等下沉红利的带动下，中通业绩直逼顺丰。依赖电商的物流行业，也无奈受限于电商：电商增速正在放缓，快递行业的空间也逐渐看到了边界，行业近身肉搏中，物流江湖格局也在悄然发生着变化，京东降薪和强化揽收意义何在？通达系和顺丰未来还会有那些增长机会？</p>
+                            </div>
+                        </div>
+                        <div class="special_item">
+                            <div class="special-shadow-wrapper"></div>
+                            <div class="special_img">
+                                <img src="{{ url_for('static',filename='images/special3.jpg', _external=True) }}" >
+                                <p>2019中国基金合伙人未来峰会</p>
+                            </div>
+                            <div class="special_footer">
+                                <p>当下，中国一级市场正处于至关重要的转折点。在经历了创投市场的狂飙...</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="article_box">
-                        <div class="article_box_left">
-                            <div class="article_category_item">
-                                <p>最新文章</p>
-                                <div class="article_list">
-                                    <div class="article_item">
-                                        <div class="shadow-wrapper-card"></div>
-                                        <div class="shadow-content clearfix">
-                                            <a href="#" class="article_pic">
-                                                <img src="{{ url_for('static',filename='images/article1.jpg', _external=True) }}" alt="">
-                                            </a>
-                                            <div class="article_item_info">
-                                                <div class="article_title_header ellipsis-2">
-                                                    <span class="article_tag">职场</span>
-                                                    <a href="#" class="article_title">做计划，千万要避开这5个误区！</a>
-                                                </div>
-                                                <div class="article_description ellipsis-2">
-                                                    <a href="#">
-                                                        选择去驻外并不是一个简单的决定。海外经历也许不只是职业生涯的一笔，它还有可能影响整个职业发展路径。
-                                                    </a>
-                                                </div>
-                                                <div class="article_footer_bar">
-                                                    <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                                    <a class="kr-flow-bar-author" href="#">
-                                                        领英LinkedIn
-                                                    </a>
-                                                    <span class="kr-flow-bar-time">
-                                                        <i class="kr-flow-bar-time-icon"></i>17分钟前
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="article_list">
+                        <div class="article_item">
+                            <div class="shadow-wrapper-card"></div>
+                            <div class="shadow-content clearfix">
+                                <a href="#" class="article_pic">
+                                    <img src="{{ url_for('static',filename='images/article1.jpg', _external=True) }}" alt="">
+                                </a>
+                                <div class="article_item_info">
+                                    <div class="article_title_header ellipsis-2">
+                                        <span class="article_tag">职场</span>
+                                        <a href="#" class="article_title">做计划，千万要避开这5个误区！</a>
                                     </div>
-
-
-                                    <div class="article_item">
-                                        <div class="shadow-wrapper-card"></div>
-                                        <div class="shadow-content clearfix">
-                                            <a href="#" class="article_pic">
-                                                <img src="{{ url_for('static',filename='images/article2.jpg', _external=True) }}" alt="">
-                                            </a>
-                                            <div class="article_item_info">
-                                                <div class="article_title_header ellipsis-2">
-                                                    <span class="article_tag">职场</span>
-                                                    <a href="#" class="article_title">出海日报 | 字节跳动投资的新闻聚合平台Dailyhunt欲进行融资；新加坡大数据提供商AirTrunk完成3.32亿美</a>
-                                                </div>
-                                                <div class="article_description ellipsis-2">
-                                                    <a href="#">
-                                                        以及，日本乐天资本和新加坡投资基金 EV Growth 共同领投新加坡返利平台 ShopBack 4500万美元融资；软银雇佣摩根大通等投行高管管理旗下专注拉美地区投资的50亿美元基金；新加坡生活方式平台 Clozette 完成1000万美元 C 轮融资。
-                                                    </a>
-                                                </div>
-                                                <div class="article_footer_bar">
-                                                    <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                                    <a class="kr-flow-bar-author" href="#">
-                                                        魏佩琳@36氪出海
-                                                    </a>
-                                                    <span class="kr-flow-bar-time">
-                                                        <i class="kr-flow-bar-time-icon"></i>23分钟前
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="article_description ellipsis-2">
+                                        <a href="#">
+                                            选择去驻外并不是一个简单的决定。海外经历也许不只是职业生涯的一笔，它还有可能影响整个职业发展路径。
+                                        </a>
                                     </div>
-
+                                    <div class="article_footer_bar">
+                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
+                                        <a class="kr-flow-bar-author" href="#">
+                                            领英LinkedIn
+                                        </a>
+                                        <span class="kr-flow-bar-time">
+                                            <i class="kr-flow-bar-time-icon"></i>17分钟前
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="article_category_item">
-                                <p>专题推荐</p>
-                                <div class="special_list">
-                                    <div class="special_item">
-                                        <div class="special-shadow-wrapper"></div>
-                                        <div class="special_img">
-                                            <img src="{{ url_for('static',filename='images/special1.jpg', _external=True) }}" >
-                                            <p>视觉中国引众怒，“维权”大户为何成了眼中钉？</p>
-                                        </div>
-                                        <div class="special_footer">
-                                            <p>近日黑洞照片的公开引发全民关注外，也让视觉中国等商业图片网站成为“黑洞中的黑洞”。
-                                                原本属于Event Horizon Telescope组织的黑洞照片被视觉中国用于商业用途，4月11日晚，
-                                                天津网信办深夜约谈视觉中国，网站已关闭进行彻底整改。“维权之王”为何惹了众怒？版权的生意将如何继续？</p>
-                                        </div>
-                                    </div>
-                                    <div class="special_item">
-                                        <div class="special-shadow-wrapper"></div>
-                                        <div class="special_img">
-                                            <img src="{{ url_for('static',filename='images/special2.jpg', _external=True) }}" >
-                                            <p>刘强东对上万兄弟“动手”了，快递业开始刮骨疗伤？</p>
-                                        </div>
-                                        <div class="special_footer">
-                                            <p>4月7日晚间，针对取消快递员底薪的报道，京东物流正面回应坐实了此前的传言。另一边，曾经抱紧阿里大腿的通达系，在拼多多等下沉红利的带动下，中通业绩直逼顺丰。依赖电商的物流行业，也无奈受限于电商：电商增速正在放缓，快递行业的空间也逐渐看到了边界，行业近身肉搏中，物流江湖格局也在悄然发生着变化，京东降薪和强化揽收意义何在？通达系和顺丰未来还会有那些增长机会？</p>
-                                        </div>
-                                    </div>
-                                    <div class="special_item">
-                                        <div class="special-shadow-wrapper"></div>
-                                        <div class="special_img">
-                                            <img src="{{ url_for('static',filename='images/special3.jpg', _external=True) }}" >
-                                            <p>2019中国基金合伙人未来峰会</p>
-                                        </div>
-                                        <div class="special_footer">
-                                            <p>当下，中国一级市场正处于至关重要的转折点。在经历了创投市场的狂飙...</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="article_list">
-                                    <div class="article_item">
-                                        <div class="shadow-wrapper-card"></div>
-                                        <div class="shadow-content clearfix">
-                                            <a href="#" class="article_pic">
-                                                <img src="{{ url_for('static',filename='images/article1.jpg', _external=True) }}" alt="">
-                                            </a>
-                                            <div class="article_item_info">
-                                                <div class="article_title_header ellipsis-2">
-                                                    <span class="article_tag">职场</span>
-                                                    <a href="#" class="article_title">做计划，千万要避开这5个误区！</a>
-                                                </div>
-                                                <div class="article_description ellipsis-2">
-                                                    <a href="#">
-                                                        选择去驻外并不是一个简单的决定。海外经历也许不只是职业生涯的一笔，它还有可能影响整个职业发展路径。
-                                                    </a>
-                                                </div>
-                                                <div class="article_footer_bar">
-                                                    <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                                    <a class="kr-flow-bar-author" href="#">
-                                                        领英LinkedIn
-                                                    </a>
-                                                    <span class="kr-flow-bar-time">
-                                                        <i class="kr-flow-bar-time-icon"></i>17分钟前
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="article_item">
-                                        <div class="shadow-wrapper-card"></div>
-                                        <div class="shadow-content clearfix">
-                                            <a href="#" class="article_pic">
-                                                <img src="{{ url_for('static',filename='images/article2.jpg', _external=True) }}" alt="">
-                                            </a>
-                                            <div class="article_item_info">
-                                                <div class="article_title_header ellipsis-2">
-                                                    <span class="article_tag">职场</span>
-                                                    <a href="#" class="article_title">出海日报 | 字节跳动投资的新闻聚合平台Dailyhunt欲进行融资；新加坡大数据提供商AirTrunk完成3.32亿美</a>
-                                                </div>
-                                                <div class="article_description ellipsis-2">
-                                                    <a href="#">
-                                                        以及，日本乐天资本和新加坡投资基金 EV Growth 共同领投新加坡返利平台 ShopBack 4500万美元融资；软银雇佣摩根大通等投行高管管理旗下专注拉美地区投资的50亿美元基金；新加坡生活方式平台 Clozette 完成1000万美元 C 轮融资。
-                                                    </a>
-                                                </div>
-                                                <div class="article_footer_bar">
-                                                    <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                                    <a class="kr-flow-bar-author" href="#">
-                                                        魏佩琳@36氪出海
-                                                    </a>
-                                                    <span class="kr-flow-bar-time">
-                                                        <i class="kr-flow-bar-time-icon"></i>23分钟前
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <p class="index_button_p">
-                                <span class="load_more">查看更多资讯</span>
-                            </p>
                         </div>
-                        <div class="article_box_right">
-                            <div class="sider_bar_right">
-                                <div class="sider_bar_title">
-                                    <span class="title-icon"></span>
-                                    <div class="bar_title">最新快讯</div>
-                                </div>
-                                <div class="sider_bar_box">
-                                    <div class="sider_bar_content">
-                                        <div class="sider_bar_article">
-                                            <div class="sider_bar_article_item">
-                                                <span class="sider_bar_article_item_icon"></span>
-                                                <p>人民日报评视觉中国：质疑，是为了更好保护版权</p>
-                                                <div class="sider_bar_article_item_time">26分钟前</div>
-                                                <div class="sider_bar_article_item_detail">
-                                                    人民日报评论文章指出，无论是转发黑洞照片，还是吐槽视觉中国，都应该形成这样的社会共识：
-                                                    我们尊重著作权，不意味着要纵容不合规的经营方式；我们指摘经营方式的瑕疵，更不能走到另一个极端，
-                                                    损害保护知识产权的社会共识。
-                                                </div>
-                                            </div>
-
-                                            <div class="sider_bar_article_item">
-                                                <span class="sider_bar_article_item_icon"></span>
-                                                <p>人民日报评视觉中国：质疑，是为了更好保护版权</p>
-                                                <div class="sider_bar_article_item_time">26分钟前</div>
-                                                <div class="sider_bar_article_item_detail">
-                                                    人民日报评论文章指出，无论是转发黑洞照片，还是吐槽视觉中国，都应该形成这样的社会共识：
-                                                    我们尊重著作权，不意味着要纵容不合规的经营方式；我们指摘经营方式的瑕疵，更不能走到另一个极端，
-                                                    损害保护知识产权的社会共识。
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="look_more">查看更多</a>
+                        <div class="article_item">
+                            <div class="shadow-wrapper-card"></div>
+                            <div class="shadow-content clearfix">
+                                <a href="#" class="article_pic">
+                                    <img src="{{ url_for('static',filename='images/article2.jpg', _external=True) }}" alt="">
+                                </a>
+                                <div class="article_item_info">
+                                    <div class="article_title_header ellipsis-2">
+                                        <span class="article_tag">职场</span>
+                                        <a href="#" class="article_title">出海日报 | 字节跳动投资的新闻聚合平台Dailyhunt欲进行融资；新加坡大数据提供商AirTrunk完成3.32亿美</a>
+                                    </div>
+                                    <div class="article_description ellipsis-2">
+                                        <a href="#">
+                                            以及，日本乐天资本和新加坡投资基金 EV Growth 共同领投新加坡返利平台 ShopBack 4500万美元融资；软银雇佣摩根大通等投行高管管理旗下专注拉美地区投资的50亿美元基金；新加坡生活方式平台 Clozette 完成1000万美元 C 轮融资。
+                                        </a>
+                                    </div>
+                                    <div class="article_footer_bar">
+                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
+                                        <a class="kr-flow-bar-author" href="#">
+                                            魏佩琳@36氪出海
+                                        </a>
+                                        <span class="kr-flow-bar-time">
+                                            <i class="kr-flow-bar-time-icon"></i>23分钟前
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="sider_bar_right" style="margin-top: 40px;">
-                                <div class="sider_bar_title">
-                                    <span class="title-icon"></span>
-                                    <div class="bar_title">24小时热榜</div>
-                                </div>
-                                <div class="sider_bar_box">
-                                    <div class="article_hot_box">
-                                        <div class="article_hot_item">
-                                            <span class="hot_icon" style="background-position:0 -153px"></span>
-                                            <a href="#" class="hot_img_link">
-                                                <img src="{{ url_for('static',filename='images/hot1.jpg', _external=True) }}" alt="" class="hot_img">
-                                            </a>
-                                            <p>
-                                                <a href="#">氪星晚报 | 奔驰母公司戴姆勒道歉了；Gucci CEO将出资1亿欧元修复巴黎圣母院；抖音回应印度法院下架TikTok</a>
-                                            </p>
-                                        </div>
-                                        <div class="article_hot_item">
-                                            <span class="hot_icon" style="background-position:0 -191px"></span>
-                                            <a href="#" class="hot_img_link">
-                                                <img src="{{ url_for('static',filename='images/hot2.jpg', _external=True) }}" alt="" class="hot_img">
-                                            </a>
-                                            <p>
-                                                <a href="#">我在云南种大麻</a>
-                                            </p>
-                                        </div>
-                                        <div class="article_hot_item small-item">
-                                            <div class="small-item-box">
-                                                <span class="small-item-label active">3</span>
-                                                <a href="#" target="_blank" class="small-item-label-a">
-                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small1.jpg', _external=True) }}" >
-                                                </a>
-                                            </div>
-                                            <div class="small-item-box-right">
-                                                <a href="#" class="small-item-description">
-                                                    8点1氪 | 苹果将继续用高通芯片；西安奔驰维权女车主和解；法国三大集团欲捐4亿欧元重修巴黎圣母院
-                                                </a>
-                                                <span class="small-item-time">11小时前</span>
-                                            </div>
-                                        </div>
-                                        <div class="article_hot_item small-item">
-                                            <div class="small-item-box">
-                                                <span class="small-item-label">4</span>
-                                                <a href="#" target="_blank" class="small-item-label-a">
-                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
-                                                </a>
-                                            </div>
-                                            <div class="small-item-box-right">
-                                                <a href="#" class="small-item-description">
-                                                    焦点分析 | 入局零售业 400 天，腾讯“交卷”
-                                                </a>
-                                                <span class="small-item-time">9小时前</span>
-                                            </div>
-                                        </div>
-                                        <div class="article_hot_item small-item">
-                                            <div class="small-item-box">
-                                                <span class="small-item-label">5</span>
-                                                <a href="#" target="_blank" class="small-item-label-a">
-                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
-                                                </a>
-                                            </div>
-                                            <div class="small-item-box-right">
-                                                <a href="#" class="small-item-description">
-                                                    焦点分析 | 入局零售业 400 天，腾讯“交卷”
-                                                </a>
-                                                <span class="small-item-time">9小时前</span>
-                                            </div>
-                                        </div>
-                                        <div class="article_hot_item small-item">
-                                            <div class="small-item-box">
-                                                <span class="small-item-label">6</span>
-                                                <a href="#" target="_blank" class="small-item-label-a">
-                                                    <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
-                                                </a>
-                                            </div>
-                                            <div class="small-item-box-right">
-                                                <a href="#" class="small-item-description">
-                                                    焦点分析 | 入局零售业 400 天，腾讯“交卷”
-                                                </a>
-                                                <span class="small-item-time">9小时前</span>
-                                            </div>
-                                        </div>
+                        </div>
+
+                    </div>
+                </div>
+                <p class="index_button_p">
+                    <span class="load_more">查看更多资讯</span>
+                </p>
+            </div>
+            <div class="article_box_right">
+                <div class="sider_bar_right">
+                    <div class="sider_bar_title">
+                        <span class="title-icon"></span>
+                        <div class="bar_title">最新快讯</div>
+                    </div>
+                    <div class="sider_bar_box">
+                        <div class="sider_bar_content">
+                            <div class="sider_bar_article">
+                                <div class="sider_bar_article_item">
+                                    <span class="sider_bar_article_item_icon"></span>
+                                    <p>人民日报评视觉中国：质疑，是为了更好保护版权</p>
+                                    <div class="sider_bar_article_item_time">26分钟前</div>
+                                    <div class="sider_bar_article_item_detail">
+                                        人民日报评论文章指出，无论是转发黑洞照片，还是吐槽视觉中国，都应该形成这样的社会共识：
+                                        我们尊重著作权，不意味着要纵容不合规的经营方式；我们指摘经营方式的瑕疵，更不能走到另一个极端，
+                                        损害保护知识产权的社会共识。
                                     </div>
+                                </div>
+
+                                <div class="sider_bar_article_item">
+                                    <span class="sider_bar_article_item_icon"></span>
+                                    <p>人民日报评视觉中国：质疑，是为了更好保护版权</p>
+                                    <div class="sider_bar_article_item_time">26分钟前</div>
+                                    <div class="sider_bar_article_item_detail">
+                                        人民日报评论文章指出，无论是转发黑洞照片，还是吐槽视觉中国，都应该形成这样的社会共识：
+                                        我们尊重著作权，不意味着要纵容不合规的经营方式；我们指摘经营方式的瑕疵，更不能走到另一个极端，
+                                        损害保护知识产权的社会共识。
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="look_more">查看更多</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sider_bar_right" style="margin-top: 40px;">
+                    <div class="sider_bar_title">
+                        <span class="title-icon"></span>
+                        <div class="bar_title">24小时热榜</div>
+                    </div>
+                    <div class="sider_bar_box">
+                        <div class="article_hot_box">
+                            <div class="article_hot_item">
+                                <span class="hot_icon" style="background-position:0 -153px"></span>
+                                <a href="#" class="hot_img_link">
+                                    <img src="{{ url_for('static',filename='images/hot1.jpg', _external=True) }}" alt="" class="hot_img">
+                                </a>
+                                <p>
+                                    <a href="#">氪星晚报 | 奔驰母公司戴姆勒道歉了；Gucci CEO将出资1亿欧元修复巴黎圣母院；抖音回应印度法院下架TikTok</a>
+                                </p>
+                            </div>
+                            <div class="article_hot_item">
+                                <span class="hot_icon" style="background-position:0 -191px"></span>
+                                <a href="#" class="hot_img_link">
+                                    <img src="{{ url_for('static',filename='images/hot2.jpg', _external=True) }}" alt="" class="hot_img">
+                                </a>
+                                <p>
+                                    <a href="#">我在云南种大麻</a>
+                                </p>
+                            </div>
+                            <div class="article_hot_item small-item">
+                                <div class="small-item-box">
+                                    <span class="small-item-label active">3</span>
+                                    <a href="#" target="_blank" class="small-item-label-a">
+                                        <img class="scaleBig" src="{{ url_for('static',filename='images/small1.jpg', _external=True) }}" >
+                                    </a>
+                                </div>
+                                <div class="small-item-box-right">
+                                    <a href="#" class="small-item-description">
+                                        8点1氪 | 苹果将继续用高通芯片；西安奔驰维权女车主和解；法国三大集团欲捐4亿欧元重修巴黎圣母院
+                                    </a>
+                                    <span class="small-item-time">11小时前</span>
+                                </div>
+                            </div>
+                            <div class="article_hot_item small-item">
+                                <div class="small-item-box">
+                                    <span class="small-item-label">4</span>
+                                    <a href="#" target="_blank" class="small-item-label-a">
+                                        <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
+                                    </a>
+                                </div>
+                                <div class="small-item-box-right">
+                                    <a href="#" class="small-item-description">
+                                        焦点分析 | 入局零售业 400 天，腾讯“交卷”
+                                    </a>
+                                    <span class="small-item-time">9小时前</span>
+                                </div>
+                            </div>
+                            <div class="article_hot_item small-item">
+                                <div class="small-item-box">
+                                    <span class="small-item-label">5</span>
+                                    <a href="#" target="_blank" class="small-item-label-a">
+                                        <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
+                                    </a>
+                                </div>
+                                <div class="small-item-box-right">
+                                    <a href="#" class="small-item-description">
+                                        焦点分析 | 入局零售业 400 天，腾讯“交卷”
+                                    </a>
+                                    <span class="small-item-time">9小时前</span>
+                                </div>
+                            </div>
+                            <div class="article_hot_item small-item">
+                                <div class="small-item-box">
+                                    <span class="small-item-label">6</span>
+                                    <a href="#" target="_blank" class="small-item-label-a">
+                                        <img class="scaleBig" src="{{ url_for('static',filename='images/small2.jpg', _external=True) }}" >
+                                    </a>
+                                </div>
+                                <div class="small-item-box-right">
+                                    <a href="#" class="small-item-description">
+                                        焦点分析 | 入局零售业 400 天，腾讯“交卷”
+                                    </a>
+                                    <span class="small-item-time">9小时前</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
+
     </div>
 {% endblock %}
 {% block script %}
