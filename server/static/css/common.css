@@ -973,6 +973,7 @@ a, a:hover {
     background: #2d3237;
     width: 100%;
     padding-top: 26px;
+    min-width: 1170px;
 }
 .footer .footer_item{
     float: left;
