@@ -16,8 +16,8 @@ class CommonView(View):
         logger = FinalLogger(app).get_logger()
         self.logger = logger
 
-    def render_data(self):
-        return None
+    def render_data(self,*args, **kwargs):
+        return {}
 
     def get_template_name(self):
         raise NotImplementedError()
@@ -25,9 +25,9 @@ class CommonView(View):
     def render_template(self, context):
         return render_template(self.template_name, **context)
 
-    def dispatch_request(self):
+    def dispatch_request(self, *args, **kwargs):
         context = dict()
-        context.update(self.render_data())
+        context.update(self.render_data(*args, **kwargs))
         return self.render_template(context)
 
 
