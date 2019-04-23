@@ -21,5 +21,5 @@ class HomeIndex(HomeBase):
 
 class ArticleDetail(HomeBase):
 
-    def render_data(self, article_id, user_id):
-        return {"username": "kerrygao","article_id":article_id,"user_id":user_id}
+    def render_data(self, article_id):
+        return {"username": "kerrygao", "article_id": article_id}

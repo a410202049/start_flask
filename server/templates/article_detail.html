@@ -38,6 +38,51 @@
                 </div>
                 <p class="txt">好文章，需要你的鼓励</p>
             </div>
+            <div class="author_box">
+                <a href="#" class="author_avatar">
+                    <img src="{{ url_for('static',filename='images/6sl6i37s8bl1w9cf!120.jpg', _external=True) }}" alt="">
+                </a>
+                <a href="#" class="author_name">李汝晴</a>
+                <span class="author-level">新锐作者</span>
+                <div class="actions-items">
+                    <div class="actions-item item-collection-action">
+                        <div class="actions-item-icon"></div>
+                        <div class="action-num collection-num">0</div>
+                    </div>
+                    <div class="actions-item item-tocomment-action">
+                        <div class="actions-item-icon"></div>
+                        <div class="action-num comment-num">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment-box">
+                <div class="common_title_box comment_title_box">
+                    <span class="common_title_icon"></span>
+                    <div class="common_box_title">参与评论</div>
+                </div>
+                <div class="comment_edit_box">
+                    <textarea id="comment_edit" class="comment-input" placeholder="你怎么看..."></textarea>
+                    <div class="comment_footer_box">
+                        <div class="comment_user_info">
+                            <img  class="comment_user_avatar" src="{{ url_for('static',filename='images/default_avatar.e19c4635.png', _external=True) }}" alt="">
+                            <span class="comment_user_name">新用户15031104</span>
+                        </div>
+
+
+                        <div class="comment_footer_right">
+                            <div class="comment_footer_right_text">
+                                <span class="num_item">0</span>/<span>1000</span>
+                            </div>
+                            <div class="submit_btn">提交评论</div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>请回复有价值的信息，无意义的评论将很快被删除，账号将被禁止发言。</p>
+            </div>
+
+
 
 
         </div>
@@ -49,6 +94,43 @@
 {% endblock %}
 {% block script %}
     <script>
+    layui.use('carousel', function(){
+        var $ = layui.$;
+        $(function(){
+
+            //先选出 textarea 和 统计字数 dom 节点
+            var textArea = $('#comment_edit');
+            var word = $('.num_item');
+            var submit_btn = $('.submit_btn');
+
+            //调用
+            statInputNum(textArea,word,submit_btn);
+
+        });
+
+        /*
+        * 剩余字数统计
+        * 注意 最大字数只需要在放数字的节点哪里直接写好即可 如：<var class="word">200</var>
+        */
+        function statInputNum(textArea,numItem, submit_btn) {
+            var max = 1000,
+                curLength;
+            curLength = textArea.val().length;
+            numItem.text(curLength);
+            textArea.on('input propertychange', function () {
+                numItem.text($(this).val().length);
+                if($(this).val().length > max){
+                    numItem.css("color","red");
+                    submit_btn.addClass('disabled');
+                }else{
+                    submit_btn.removeClass('disabled');
+                    numItem.css("color","#787878");
+                }
+            })
+        }
+        
+    });
+
 
     </script>
 {% endblock %}
