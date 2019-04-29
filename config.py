@@ -3,7 +3,7 @@ from datetime import timedelta
 
 
 class Config:
-    DEBUG = True
+    DEBUG = False
     CONFIG_NAME = 'default'
     SECRET_KEY = '\x03d\xf4\x95J\x15\xa4B\xfb\xc0\xaf \xd1A[j$}\x18\x16a\xe7\xd0\xec'
     STRIPE_API_KEY = '\x03d\xf4\x95J\x15\xa4B\xfb\xc0\xaf \xd1A[j$}\x18\x16a\xe7\xd0\xec'

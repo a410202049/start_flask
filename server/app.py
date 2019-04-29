@@ -7,7 +7,7 @@ from config import config
 from werkzeug.utils import import_string
 import sys
 
-from server.exception import ServerBaseException
+from server.exception import ServerBaseException, SystemException
 from server.util.log import FinalLogger
 
 from flask_mail import Message
@@ -108,8 +108,7 @@ def create_app(config_name):
 
     @app.errorhandler(Exception)
     def handle_exception(e):
-        # if current_app.config['CONFIG_NAME'] != 'local':
-        if not isinstance(e, ServerBaseException):
+        if isinstance(e, SystemException):
             logger.exception(u'service has exception: {0}'.format(e.message))
             import traceback
             logger.info(u'Server异常: \n{message}'.format(message=traceback.format_exc()))
@@ -122,9 +121,9 @@ def create_app(config_name):
 
             gevent.joinall([
                 # 这里spawn是3个任务[实际是3个协程]，每个任务都会执行fetch_async函数
-                gevent.spawn(send_email, title, body)
+                Greenlet.spawn(send_email, title, body)
 
             ])
-            raise e
-        return e.error_msg
+        return e
+
     return app
