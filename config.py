@@ -15,7 +15,7 @@ class Config:
     # app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
 
     # 日志配置项
-    LOG_FILE_MAX_SIZE = 1024 * 5
+    LOG_FILE_MAX_SIZE = 1024 * 5 * 1000
     LOG_FILE_NUM_BACKUPS = 5
 
     # 邮件配置

@@ -154,13 +154,154 @@
     </div>
 </div>
 
+<div id="login" class="modal">
+    <div class="modal_header">
+        <img src="{{ url_for('static',filename='images/modal_logo.png', _external=True) }}" alt="">
+        <div class="modal_close"></div>
+    </div>
+    <div class="modal_body">
+        <div class="form-group">
+            <div class="form-group-box">
+                <input type="text" class="form-input" placeholder="请输入手机号/邮箱" autocomplete="off">
+            </div>
+            <div class="error-area">请输入手机号</div>
+        </div>
+        <div class="form-group">
+            <div class="form-group-box">
+                <input type="password" class="form-input password-input" style="width: 60%;" placeholder="密码（6-16位）" autocomplete="off">
+                <span class="password-eyes-icon"></span>
+            </div>
+            <div class="error-area">请输入正确的密码</div>
+        </div>
+        <div class="form-group">
+            <p class="form-group-text forget"><a href="#" class="forget">忘记密码</a></p>
+        </div>
+        <div class="form-group">
+            <button class="modal-button login-btn">登 录</button>
+        </div>
+        <div class="form-group">
+            <p class="form-group-text">还没有账号？<a href="#">去注册</a></p>
+        </div>
+    </div>
+</div>
+<div id="resgister" class="modal">
+    <div class="modal_header">
+        <img src="{{ url_for('static',filename='images/modal_logo.png', _external=True) }}" alt="">
+        <div class="modal_close"></div>
+    </div>
+    <div class="modal_body">
+        <div class="form-group">
+            <div class="form-group-box">
+                <input type="text" class="form-input" placeholder="请输入手机号" autocomplete="off">
+            </div>
+            <div class="error-area">请输入手机号</div>
+        </div>
+        <div class="form-group">
+            <div class="form-group-box">
+                <input type="password" class="form-input password-input" style="width: 60%;" placeholder="密码（6-16位）" autocomplete="off">
+                <span class="password-eyes-icon"></span>
+            </div>
+            <div class="error-area">请输入正确的密码</div>
+        </div>
+        <div class="form-group">
+            <div class="form-group-box">
+                <input type="text" class="form-input" style="width: 60%;" placeholder="请输入验证码" autocomplete="off">
+                <div class="send-msg-code">发送验证码</div>
+            </div>
+            <div class="error-area">请输入正确的验证码</div>
+        </div>
+
+        <div class="form-group">
+            <button class="modal-button login-btn">登 录</button>
+        </div>
+        <div class="form-group">
+            <p class="form-group-text">已有账号？<a href="#">去登录</a></p>
+        </div>
+    </div>
+</div>
+
+
 <script src="{{ url_for('static',filename='plugs/layui/layui.js', _external=True) }}"></script>
 {% block script %}
 
 {% endblock %}
 <script>
-//一般直接写在一个js文件中
+
+    //倒计时
+    var countdown=5;
+    function settime(val) {
+        if (countdown == 0) {
+            val.removeClass("disabled");
+            val.html("发送验证码");
+            countdown = 5;
+            return false;
+        } else {
+            val.addClass("disabled");
+            val.html(countdown + "s 后重发");
+            countdown--;
+        }
+        setTimeout(function() {
+            settime(val);
+        },1000);
+    }
+
+    layui.use('layer', function(){
+        var $ = layui.$;
+        var layer = layui.layer;
+
+        $('.send-msg-code').click(function () {
+            if(!$(this).hasClass('disabled')){
+               settime($(this));
+            }
+        });
+
+        $('.modal_close').click(function () {
+            layer.closeAll();
+        });
+
+
+        $('.password-eyes-icon').click(function () {
+           if($(this).hasClass('show')){
+               $('.password-input').attr('type','password');
+               $(this).removeClass('show');
+           }else{
+               $(this).addClass('show');
+               $('.password-input').attr('type','text');
+           }
+        });
+
+        $('.login').click(function () {
+            layer.closeAll();
+            layer.open({
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                type: 1,
+                area: ['460px'],
+                content: $('#login') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            });
+
+        });
+        $('.resgister').click(function () {
+            layer.closeAll();
+            layer.open({
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                type: 1,
+                area: ['460px'],
+                content: $('#resgister')
+            });
+        })
+
+
+
+
+    });
 
 </script>
+
+
+
 </body>
 </html>
