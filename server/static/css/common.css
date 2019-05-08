@@ -1831,6 +1831,60 @@ a, a:hover {
     width: 20px;
 }
 
+.user-center-box .user-login{
+    background: #edf1f4;
+    cursor: pointer;
+    float: right;
+    height: 34px;
+    padding-top: 2px;
+    position: relative;
+    width: 60px;
+}
+
+.user-center-box .user-login img{
+    border: 1px solid #edf1f4;
+    border-radius: 50%;
+    display: block;
+    height: 28px;
+    /*margin: 0 15px;*/
+    margin: auto;
+    width: 28px;
+}
+
+.user-center-box .user-login .user-menu{
+    background: #fff;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,.1);
+    display: none;
+    left: -113px;
+    padding-left: 20px;
+    position: absolute;
+    top: 34px;
+    width: 172px;
+    z-index: 1;
+}
+
+.user-center-box .user-login .user-menu li a{
+    font-size: 13px;
+    height: 38px;
+    line-height: 38px;
+    color: #262626;
+    border-top: 1px solid #ddd;
+    width: 132px;
+    display: block;
+
+}
+
+.user-center-box .user-login .user-menu li .nickname{
+    font-size: 15px;
+    height: 54px;
+    line-height: 54px;
+    border-top: none;
+}
+
+.user-center-box .user-login:hover .user-menu{
+    display: block;
+}
+
 /*background: #4285f4;*/
     /*border-radius: 2px 2px 0 0;*/
     /*height: 4px;*/
