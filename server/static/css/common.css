@@ -1698,6 +1698,7 @@ a, a:hover {
     background: #fff;
     /*box-shadow: 0 5px 15px 0 rgba(0,0,0,.15);*/
     font-size: 16px;
+    display: none;
     /*margin: 100px auto;*/
     /*overflow: hidden;*/
     /*text-align: left;*/
