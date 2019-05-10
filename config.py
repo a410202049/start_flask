@@ -35,6 +35,13 @@ class Config:
     JWT_HEADER_TYPE = ''
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
 
+    # 短信配置
+    SID = '42f6ac4992866c8b69b18cfcc8b224ae'
+    TOKEN = '95eeabcfc4865a1b7aea38f0a8bcdcea'
+    APPID = '4e5ff31bfc5d4190a7225d113289a3ef'
+    TEMPLATE_ID = '312050'
+    MSG_URL = 'https://open.ucpaas.com/ol/sms/sendsms'
+
     # 所有SQLALCHEMY配置项可参考手册http://www.pythondoc.com/flask-sqlalchemy/config.html#id2
     @staticmethod
     def init_app(app):
@@ -42,7 +49,7 @@ class Config:
 
 
 class LocalConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:Bitnow2018@47.74.251.5/test_123?charset=utf8"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:Bitnow2018@47.74.251.5/36k?charset=utf8"
 
 
 class DevelopmentConfig(Config):

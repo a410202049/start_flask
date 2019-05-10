@@ -4,7 +4,6 @@
 from server.app import db
 from server.controller.home import CommonView
 from server.exception import BusinessException, PASSWORD_NOT_MATCH
-from server.model.TestModel import Teacher, Student
 
 
 class HomeBase(CommonView):

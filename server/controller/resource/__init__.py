@@ -10,6 +10,8 @@ import json
 from flask_restplus import Resource
 
 from server.exception import SUCCESS
+import requests
+
 
 v2 = None
 
@@ -27,7 +29,7 @@ def init_api(api):
     def default_error_handler(error):
         return {'message': str(error)}, getattr(error, 'code', 500)
 
-    __import__('server.controller.resource.user')
+    __import__('server.controller.resource.account')
 
 
 class BaseResource(Resource):
@@ -35,15 +37,22 @@ class BaseResource(Resource):
         # self.context.logger = self.logger
         super(BaseResource, self).__init__(api, *args, **kwargs)
 
-    def make_response(self, response=None):
-        base_resp = dict(resp_code=SUCCESS, resp_desc=u'成功')
-        resp = dict(
-            resp=base_resp,
-        )
+    def make_response(self, resp_code=None, resp_desc=None, data=None):
+        if not resp_code:
+            resp_code = SUCCESS
+            resp_desc = u'成功'
 
-        if response:
-            resp.update(response)
+        resp = dict(
+            resp_code=resp_code,
+            resp_desc=resp_desc
+        )
+        if data:
+            resp['data'] = data
         return resp
+
+    def _post(self, url, data, headers=None):
+        resp = requests.post(url, data, headers=headers)
+        return json.loads(resp.text)
 
 
 class BaseResponse(Response):
