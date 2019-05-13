@@ -127,7 +127,7 @@ class SendMsgCode(BaseResource):
 
         headers = {"Content-Type": "application/json"}
 
-        # resp = self._post(current_app.config.get('MSG_URL'), para, headers)
+        resp = self._post(current_app.config.get('MSG_URL'), para, headers)
 
         # if resp['code'] != '000000':
         #     return self.make_response(ERROR, u'短信发送失败')

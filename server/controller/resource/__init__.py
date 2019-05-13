@@ -51,6 +51,7 @@ class BaseResource(Resource):
         return resp
 
     def _post(self, url, data, headers=None):
+        data = json.dumps(data)
         resp = requests.post(url, data, headers=headers)
         return json.loads(resp.text)
 
