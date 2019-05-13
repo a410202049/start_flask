@@ -4,7 +4,7 @@ import random
 from datetime import datetime, timedelta
 import re
 
-from flask import request, session, current_app
+from flask import request, session, current_app, redirect, url_for
 from server.app import db
 from server.controller.resource import v2, BaseResource
 
@@ -82,6 +82,8 @@ class Login(BaseResource):
         user = db.session.query(Customer).filter(
             Customer.username == mobile
         ).first()
+        if not user:
+            return self.make_response(ERROR, u'用户不存在')
         if user.password != password_md5:
             return self.make_response(ERROR, u'密码不正确')
 
@@ -89,6 +91,13 @@ class Login(BaseResource):
             "uid": user.id
         }
         return self.make_response(SUCCESS, u"登录成功")
+
+
+@v2.route('/logout')
+class Logout(BaseResource):
+    def get(self):
+        session.pop('current_user', None)
+        return redirect(url_for('index'))
 
 
 @v2.route('/send-msg-code')
@@ -127,10 +136,10 @@ class SendMsgCode(BaseResource):
 
         headers = {"Content-Type": "application/json"}
 
-        resp = self._post(current_app.config.get('MSG_URL'), para, headers)
-
-        if resp['code'] != '000000':
-            return self.make_response(ERROR, u'短信发送失败')
+        # resp = self._post(current_app.config.get('MSG_URL'), para, headers)
+        #
+        # if resp['code'] != '000000':
+        #     return self.make_response(ERROR, u'短信发送失败')
 
         mobile_record = MobileCodeRecord()
         mobile_record.mobile = mobile
@@ -138,5 +147,5 @@ class SendMsgCode(BaseResource):
         mobile_record.code = secucode
         db.session.add(mobile_record)
         db.session.commit()
-        return self.make_response(ERROR, u'发送成功')
+        return self.make_response(SUCCESS, u'发送成功')
 

@@ -60,22 +60,26 @@
         </div>
         <div id="box-right">
             <div class="box-right-header">
-                <div class="kr-header">
-                    <a class="kr-header-btn login"><span>登录</span></a>
-                    <a class="line">|</a>
-                    <a class="kr-header-btn resgister"><span>注册</span></a>
-                </div>
-                <div class="user-center-box">
-                    <div class="user-login">
-                        <img src="http://127.0.0.1:5001/static/home/images/default_avatar.e19c4635.png" alt="">
-                        <ul class="user-menu">
-                            <li><a href="#" class="nickname">kerrygao</a></li>
-                            <li><a href="#">账号设置</a></li>
-                            <li><a href="#">我的收藏</a></li>
-                            <li><a href="#">退出登录</a></li>
-                        </ul>
+                {% if not user_info %}
+                    <div class="kr-header">
+                        <a class="kr-header-btn login"><span>登录</span></a>
+                        <a class="line">|</a>
+                        <a class="kr-header-btn register"><span>注册</span></a>
                     </div>
-                </div>
+                {% else %}
+                    <div class="user-center-box">
+                        <div class="user-login">
+
+                            <img src="{% if user_info.avatar %}{{ user_info.avatar }}{% else %}{{ url_for('static',filename='home/images/default_avatar.e19c4635.png', _external=True) }}{% endif %}" alt="">
+                            <ul class="user-menu">
+                                <li><a href="#" class="nickname">{% if user_info.nickname %}{{ user_info.nickname }}{% else %}{{ user_info.username }}{% endif %}</a></li>
+                                <li><a href="#">账号设置</a></li>
+                                <li><a href="#">我的收藏</a></li>
+                                <li><a href="/v2/logout">退出登录</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
                 <ul class="business-line">
                    <li><a href="#" target="_blank" rel="noopener noreferrer">开氪</a></li>
                    <li><a href="#" target="_blank" rel="noopener noreferrer">VClub投资机构</a></li>
@@ -173,13 +177,13 @@
     <div class="modal_body">
         <div class="form-group">
             <div class="form-group-box">
-                <input type="text" class="form-input" placeholder="请输入手机号/邮箱" autocomplete="off">
+                <input type="text" class="form-input username" placeholder="请输入手机号/邮箱" autocomplete="off">
             </div>
             <div class="error-area">请输入手机号</div>
         </div>
         <div class="form-group">
             <div class="form-group-box">
-                <input type="password" class="form-input password-input" style="width: 60%;" placeholder="密码（6-16位）" autocomplete="off">
+                <input type="password" class="form-input password-input password" style="width: 60%;" placeholder="密码（6-16位）" autocomplete="off">
                 <span class="password-eyes-icon"></span>
             </div>
             <div class="error-area">请输入正确的密码</div>
@@ -195,7 +199,7 @@
         </div>
     </div>
 </div>
-<div id="resgister" class="modal">
+<div id="register" class="modal">
     <div class="modal_header">
         <img src="{{ url_for('static',filename='home/images/modal_logo.png', _external=True) }}" alt="">
         <div class="modal_close"></div>
@@ -203,27 +207,27 @@
     <div class="modal_body">
         <div class="form-group">
             <div class="form-group-box">
-                <input type="text" class="form-input" placeholder="请输入手机号" autocomplete="off">
+                <input type="text" class="form-input username" placeholder="请输入手机号" autocomplete="off">
             </div>
             <div class="error-area">请输入手机号</div>
         </div>
         <div class="form-group">
             <div class="form-group-box">
-                <input type="password" class="form-input password-input" style="width: 60%;" placeholder="密码（6-16位）" autocomplete="off">
+                <input type="password" class="form-input password-input password" style="width: 60%;" placeholder="密码（6-16位）" autocomplete="off">
                 <span class="password-eyes-icon"></span>
             </div>
             <div class="error-area">请输入正确的密码</div>
         </div>
         <div class="form-group">
             <div class="form-group-box">
-                <input type="text" class="form-input" style="width: 60%;" placeholder="请输入验证码" autocomplete="off">
+                <input type="text" class="form-input msg-code" style="width: 60%;" placeholder="请输入验证码" autocomplete="off">
                 <div class="send-msg-code">发送验证码</div>
             </div>
             <div class="error-area">请输入正确的验证码</div>
         </div>
 
         <div class="form-group">
-            <button class="modal-button login-btn">登 录</button>
+            <button class="modal-button register-btn">注 册</button>
         </div>
         <div class="form-group">
             <p class="form-group-text">已有账号？<a href="#">去登录</a></p>
@@ -261,8 +265,32 @@
         var layer = layui.layer;
 
         $('.send-msg-code').click(function () {
+            var _this = this;
             if(!$(this).hasClass('disabled')){
-               settime($(this));
+                var username = $('#register .username').val();
+                if(username){
+                    $.ajax({
+                        data : {
+                           mobile: username
+                        },
+                        type : "POST",
+                        url : "/v2/send-msg-code",
+                        dataType : "json",
+                        success: function(data) {
+                            if(data.resp_code == 'RES0001'){
+                                layer.msg(data.resp_desc, {icon: 5});
+                            }else{
+                                settime($(_this));
+                            }
+                        },
+                        error:function(){
+                            layer.msg("获取短信验证码失败", {icon: 5});
+                        }
+                    });
+
+
+                }
+
             }
         });
 
@@ -293,7 +321,7 @@
             });
 
         });
-        $('.resgister').click(function () {
+        $('.register').click(function () {
             layer.closeAll();
             layer.open({
                 title: false,
@@ -301,10 +329,65 @@
                 shadeClose: true,
                 type: 1,
                 area: ['460px'],
-                content: $('#resgister')
+                content: $('#register')
             });
-        })
+        });
 
+        $('.login-btn').click(function () {
+                console.log('login');
+               var username = $('#login .username').val();
+               var password = $('#login .password').val();
+               $.ajax({
+                    data : {
+                       mobile: username,
+                       password: password
+                    },
+                    type : "POST",
+                    url : "/v2/login",
+                    dataType : "json",
+                    success: function(data) {
+                        //data是返回的hash,key之类的值，key是定义的文件名
+                        console.log(data);
+                        if(data.resp_code == 'RES0001'){
+                            layer.msg(data.resp_desc, {icon: 5});
+                        }else{
+                            window.location.reload();
+                        }
+                    },
+                    error:function(){
+                        layer.msg("登录失败", {icon: 5});
+                    }
+               });
+        });
+
+
+        $('.register-btn').click(function () {
+           var username = $('#register .username').val();
+           var password = $('#register .password').val();
+           var msg_code = $('#register .msg-code').val();
+           $.ajax({
+                data : {
+                    mobile: username,
+                    password: password,
+                    verifi_code:msg_code
+                },
+                type : "POST",
+                url : "/v2/register",
+                dataType : "json",
+                success: function(data) {
+                    //data是返回的hash,key之类的值，key是定义的文件名
+                    console.log(data);
+                    if(data.resp_code == 'RES0001'){
+                        layer.msg(data.resp_desc, {icon: 5});
+                    }else{
+                        window.location.reload();
+                    }
+                },
+                error:function(){
+                    layer.msg("注册失败", {icon: 5});
+                }
+            });
+        });
 
 
 

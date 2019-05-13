@@ -12,25 +12,24 @@ from server.models.Models import User
 
 @admin.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_app.config.get('IS_LOCALHOST'):
-        form = LoginForm()
-        if form.validate_on_submit():
-            # user = User.query.filter_by(username=form.username.data).first()
-            user = db.session.query(User).filter(User.username == form.username.data).first()
-            if user is not None and user.verify_password(form.password.data):
-                if not user.status:
-                    # 禁止被禁用的用户登陆
-                    flash(u'用户被禁用，请联系管理员')
-                else:
-                    login_user(user, form.remember_me.data)
-                    return redirect(request.args.get('next') or url_for('admin.index'))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        # user = User.query.filter_by(username=form.username.data).first()
+        user = db.session.query(User).filter(User.username == form.username.data).first()
+        if user is not None and user.verify_password(form.password.data):
+            if not user.status:
+                # 禁止被禁用的用户登陆
+                flash(u'用户被禁用，请联系管理员')
             else:
-                flash(u'用户名或密码错误')
-        if current_user.is_authenticated:
-            return redirect(url_for('admin.index'))
-        return render_template('admin/login.html', form=form)
-    else:
-        return redirect(current_app.config.get('OPERATOR_LOGIN'))
+                login_user(user, form.remember_me.data)
+                return redirect(request.args.get('next') or url_for('admin.index'))
+        else:
+            flash(u'用户名或密码错误')
+    if current_user.is_authenticated:
+        return redirect(url_for('admin.index'))
+    return render_template('admin/login.html', form=form)
+
 
 
 @admin.route('/logout')
