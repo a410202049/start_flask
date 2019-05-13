@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/reset.css', _external=True) }}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='plugs/layui/css/layui.css', _external=True) }}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/common.css', _external=True) }}">
-    <link rel="icon" href="{{ url_for('static',filename='images/favicon.ico', _external=True) }}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='home/css/reset.css', _external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='home/plugs/layui/css/layui.css', _external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='home/css/common.css', _external=True) }}">
+    <link rel="icon" href="{{ url_for('static',filename='home/images/favicon.ico', _external=True) }}" type="image/x-icon" />
 
   {% block header %}
 
@@ -67,7 +67,7 @@
                 </div>
                 <div class="user-center-box">
                     <div class="user-login">
-                        <img src="http://127.0.0.1:5001/static/images/default_avatar.e19c4635.png" alt="">
+                        <img src="http://127.0.0.1:5001/static/home/images/default_avatar.e19c4635.png" alt="">
                         <ul class="user-menu">
                             <li><a href="#" class="nickname">kerrygao</a></li>
                             <li><a href="#">账号设置</a></li>
@@ -130,15 +130,15 @@
                     合作伙伴
                 </div>
                 <ul class="clearfix">
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo1.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo2.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo3.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo1.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo2.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo2.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo3.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo1.png', _external=True) }}" alt=""></a></li>
-                    <li><a href="#"><img src="{{ url_for('static',filename='images/link_logo2.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo1.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo2.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo3.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo1.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo2.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo2.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo3.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo1.png', _external=True) }}" alt=""></a></li>
+                    <li><a href="#"><img src="{{ url_for('static',filename='home/images/link_logo2.png', _external=True) }}" alt=""></a></li>
                 </ul>
             </div>
             <div class="footer_item footer_item_4">
@@ -146,13 +146,13 @@
                     36氪APP下载
                 </div>
                 <div class="qr_box">
-                    <img src="{{ url_for('static',filename='images/qr_code.png', _external=True) }}" alt="">
+                    <img src="{{ url_for('static',filename='home/images/qr_code.png', _external=True) }}" alt="">
                 </div>
                 <p>iOS & Android</p>
             </div>
         </div>
         <div class="footerInfo-wrapper">
-            <a href="#" class="footer-logo"><img src="{{ url_for('static',filename='images/logoWhite.2a5eceda.png', _external=True) }}" alt=""></a>
+            <a href="#" class="footer-logo"><img src="{{ url_for('static',filename='home/images/logoWhite.2a5eceda.png', _external=True) }}" alt=""></a>
             <p>
                 本站由<a href="#">&nbsp;&nbsp;&nbsp;阿里云 提供计算与安全服务&nbsp;&nbsp;&nbsp;</a>
                 <span>
@@ -167,7 +167,7 @@
 
 <div id="login" class="modal">
     <div class="modal_header">
-        <img src="{{ url_for('static',filename='images/modal_logo.png', _external=True) }}" alt="">
+        <img src="{{ url_for('static',filename='home/images/modal_logo.png', _external=True) }}" alt="">
         <div class="modal_close"></div>
     </div>
     <div class="modal_body">
@@ -197,7 +197,7 @@
 </div>
 <div id="resgister" class="modal">
     <div class="modal_header">
-        <img src="{{ url_for('static',filename='images/modal_logo.png', _external=True) }}" alt="">
+        <img src="{{ url_for('static',filename='home/images/modal_logo.png', _external=True) }}" alt="">
         <div class="modal_close"></div>
     </div>
     <div class="modal_body">
@@ -232,7 +232,7 @@
 </div>
 
 
-<script src="{{ url_for('static',filename='plugs/layui/layui.js', _external=True) }}"></script>
+<script src="{{ url_for('static',filename='home/plugs/layui/layui.js', _external=True) }}"></script>
 {% block script %}
 
 {% endblock %}
