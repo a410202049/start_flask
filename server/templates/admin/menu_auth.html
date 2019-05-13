@@ -1,0 +1,457 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body_class %}{% endblock %}
+{% block header %}
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='admin/css/jquery.treegrid.css')}}">
+
+
+{% endblock %}
+
+{% block container %}
+
+<!-- Start content -->
+  <div class="content"> 
+    <div class="container">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">{{ title }}</h4>
+                <ol class="breadcrumb">
+                    <li><a href="{{ url_for('admin.index') }}">系统首页</a></li>
+                    <li class="active">{{ title }}</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-inline" style="margin-top: 15px;margin-bottom: 15px;">
+                                <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#add-menu-modal"> <i class="md md-add m-r-5"></i> <span>添加</span> </button>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <table class="table tree">
+                       <thead>
+                            <tr>
+                                <th>权限名称</th>
+                                <th>方法</th>
+                                <th>icon</th>
+                                <th>是否显示</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for menu in data %}
+                                <tr class="treegrid-{{ menu.id }} {% if menu.parent_id != 0 %}treegrid-parent-{{ menu.parent_id }}{% endif %}" data-menu-id="{{ menu.id }}">
+                                    <td>{{ menu.name }}</td>
+                                    <td>{{ menu.method }}</td>
+                                    <td>{% if menu.icon  %}{{ menu.icon }}{% else %}无{% endif %}</td>
+                                    <td>{% if menu.is_show  %}是{% else %}否{% endif %}</td>
+                                    <td>
+                                        <button class="btn btn-primary waves-effect waves-light child-menu-add"> <i class="md md-add"></i></button>
+                                        <button class="btn btn-success waves-effect waves-light child-menu-edit"> <i class="glyphicon glyphicon-edit"></i></button>
+                                        <button class="btn btn-danger waves-effect waves-light child-menu-del"> <i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+   <!-- container --> 
+  </div> 
+  <!-- content -->
+
+
+    <div id="add-menu-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加菜单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" role="form" id="add-menu-from">
+                            <input type="hidden" name="parent_id" value="0">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">菜单名称</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="菜单名称" name="menu_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否显示</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="is_show">
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="type">
+                                        <option value="0">基础菜单</option>
+                                        <option value="1">操作和功能</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">菜单地址</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="例如：admin/add-user" name="method">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">图标</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="例如：ti-home" name="icon">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">排序</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="排序" name="sort" value="1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" id="add-menu">添加</button>
+                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+    <div id="sub-add-menu-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加菜单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" role="form" id="child-add-menu-from">
+                            <input type="hidden" name="parent_id" value="0">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">父级菜单</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="父级菜单" name="parent_name" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">菜单名称</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="菜单名称" name="menu_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否显示</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="is_show">
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="type">
+                                        <option value="0">基础菜单</option>
+                                        <option value="1">操作和功能</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">菜单地址</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="例如：admin/add-user" name="method">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">图标</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="例如：ti-home" name="icon">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">排序</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="排序" name="sort" value="1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" id="child-add-menu">添加</button>
+                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+
+    <div id="edit-menu-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">编辑菜单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" role="form" id="edit-menu-from">
+                            <input type="hidden" name="parent_id" value="0">
+                            <input type="hidden" name="id" value="0">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">菜单名称</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="菜单名称" name="menu_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否显示</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="is_show">
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">类型</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" name="type">
+                                        <option value="0">基础菜单</option>
+                                        <option value="1">操作和功能</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">菜单地址</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="例如：admin/add-user" name="method">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">图标</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="例如：ti-home" name="icon">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">排序</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="排序" name="sort" value="1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" id="child-edit-menu">编辑</button>
+                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static',filename='admin/js/jquery.treegrid.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='admin/js/jquery.treegrid.bootstrap3.js')}}"></script>
+    <script type="text/javascript">
+      $('.tree').treegrid();
+      $(function () {
+        layui.use(['layer'], function(){
+            var layer = layui.layer;
+
+            $('#add-menu').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.menu_add") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: $("#add-menu-from").serialize(),
+                    dataType: "json",
+                    success: function(data){
+                        if(data.result == 0){
+                            layer.msg('添加成功',{icon: 6,time: 1000});
+                            window.location.reload()
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+            $('#child-add-menu').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.menu_add") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: $("#child-add-menu-from").serialize(),
+                    dataType: "json",
+                    success: function(data){
+                        if(data.result == 0){
+                            layer.msg('添加成功',{icon: 6,time: 1000});
+                            window.location.reload()
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+{#            child-add-menu#}
+
+            $('.child-menu-add').click(function () {
+                menu_id = $(this).parents('tr').data('menu-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.get_menu_info") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: {menu_id:menu_id},
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                        if(data.result == 0){
+                            $('#sub-add-menu-modal [name="parent_id"]').val(data.data.id);
+                            $('#sub-add-menu-modal [name="parent_name"]').val(data.data.name);
+                            $('#sub-add-menu-modal').modal();
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+            $('.child-menu-edit').click(function () {
+                menu_id = $(this).parents('tr').data('menu-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.get_menu_info") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: {menu_id:menu_id},
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                        if(data.result == 0){
+                            $('#edit-menu-modal [name="parent_id"]').val(data.data.parent_id);
+                            $('#edit-menu-modal [name="menu_name"]').val(data.data.name);
+                            $('#edit-menu-modal [name="is_show"]').val(data.data.is_show);
+                            $('#edit-menu-modal [name="method"]').val(data.data.method);
+                            $('#edit-menu-modal [name="icon"]').val(data.data.icon);
+                            $('#edit-menu-modal [name="sort"]').val(data.data.sort);
+                            $('#edit-menu-modal [name="id"]').val(data.data.id);
+                            $('#edit-menu-modal [name="type"]').val(data.data.type);
+{#                            $('#edit-menu-modal [name="parent_name"]').val(data.data.name);#}
+                            $('#edit-menu-modal').modal();
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+            $('#child-edit-menu').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.menu_edit") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: $("#edit-menu-from").serialize(),
+                    dataType: "json",
+                    success: function(data){
+                        if(data.result == 0){
+                            layer.msg('编辑成功',{icon: 6,time: 1000});
+                            window.location.reload()
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+            $('.child-menu-del').click(function () {
+                menu_id = $(this).parents('tr').data('menu-id');
+                layer.confirm('您确定要删除该菜单吗？', {
+                  btn: ['删除','取消'] //按钮
+                }, function(index){
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url_for("admin.menu_del") }}',
+                        beforeSend: function(){
+                            layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                        },
+                        complete: function(){
+                            layer.closeAll('loading');
+                        },
+                        data: {menu_id:menu_id},
+                        dataType: "json",
+                            success: function(data){
+                                if(data.result == 0){
+                                    layer.msg('删除成功',{icon: 6,time: 1000});
+                                    window.location.reload()
+                                }else {
+                                    layer.msg(data.message,{icon: 5});
+                                }
+                            }
+                    });
+                });
+            });
+
+        });
+
+        })
+
+    </script>
+{% endblock %}

@@ -1,0 +1,443 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body_class %}{% endblock %}
+{% block header %}
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='admin/css/jquery.treegrid.css')}}">
+
+
+{% endblock %}
+
+{% block container %}
+
+<!-- Start content -->
+  <div class="content">
+    <div class="container">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">{{ title }}</h4>
+                <ol class="breadcrumb">
+                    <li><a href="{{ url_for('admin.index') }}">系统首页</a></li>
+                    <li class="active">{{ title }}</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-box">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="search-box">
+                                <div class="form-inline">
+                                    <div class="form-group m-r-10">
+                                        <label for="nav_name">链接名称:</label>
+                                        <input type="text" class="form-control" name="link_name" placeholder="链接名称" value="{{ data.link_name }}">
+                                    </div>
+                                           <button type="button" id="search" class="btn btn-primary waves-effect waves-light btn-md">
+                                        搜索
+                                    </button>
+                                    <button type="button" id="reset" class="btn btn-success waves-effect waves-light btn-md">
+                                        重置
+                                    </button>
+                                    <div class="btn btn-default waves-effect waves-light btn-md" data-toggle="modal" data-target="#add-link-modal">添加链接</div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                       <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>分类名称</th>
+                                <th>链接名称</th>
+                                <th>描述</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for link in data.links %}
+                                <tr>
+                                    <td>{{ link.id }}</td>
+                                    <td>{{ link.name }}</td>
+                                    <td>{% if link.link_type ==  'text_link' %}文本链接{% else %}图片链接{% endif %}</td>
+                                    <td>{{ link.link_href }}</td>
+                                    <td>{{ link.sort }}</td>
+                                    <td>
+                                        <button class="btn btn-success waves-effect wavifes-light child-link-edit" data-id="{{ link.id }}"> <i class="glyphicon glyphicon-edit"></i></button>
+                                        <button class="btn btn-danger waves-effect waves-light child-link-del" data-id="{{ link.id }}"> <i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% from "macros.html" import pagination_widget %}
+                    {% if data.pagination %}
+                        <div class="pagination">
+                            {{ pagination_widget(data.pagination,request.endpoint,data.fragment) }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+   <!-- container -->
+  </div>
+  <!-- content -->
+
+
+    <div id="add-link-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加链接</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" role="form" id="add-link-from">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">链接类型</label>
+                                <div class="col-md-8">
+                                    <select class="form-control link_type" name="link_type">
+                                        <option value="text_link">文本链接</option>
+                                        <option value="pic_link">图片链接</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group link_icon" style="display: none;">
+                                <label class="col-md-2 control-label">链接Logo:</label>
+                                <div class="col-md-8">
+                                    <div class="img-part" id="add_cover_pic">
+                                        <i class="add-img-icon md md-add"></i>
+                                        <!--编辑图片时将i标签隐藏-->
+                                        <img style="display: none;" />
+                                        <input type="hidden" name="cover_pic" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">链接名称</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="链接名称" name="link_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">链接地址</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="链接地址" name="link_href">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">排序</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="排序" name="sort" value="1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" id="add-link">添加</button>
+                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+
+
+    <div id="edit-link-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">编辑链接</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal" role="form" id="edit-link-from">
+                            <div class="form-group">
+                                <input type="hidden"  name="id">
+                                <label class="col-md-2 control-label">链接类型</label>
+                                <div class="col-md-8">
+                                    <select class="form-control link_type" name="link_type">
+                                        <option value="text_link">文本链接</option>
+                                        <option value="pic_link">图片链接</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group link_icon" style="display: none;">
+                                <label class="col-md-2 control-label">链接Logo:</label>
+                                <div class="col-md-8">
+                                    <div class="img-part" id="edit_cover_pic">
+                                        <i class="add-img-icon md md-add"></i>
+                                        <!--编辑图片时将i标签隐藏-->
+                                        <img style="display: none;" />
+                                        <input type="hidden" name="cover_pic" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">链接名称</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="链接名称" name="link_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">链接地址</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="链接地址" name="link_href">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">排序</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="排序" name="sort" value="1">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary waves-effect waves-light" id="edit-link">编辑</button>
+                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+
+
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript" src="{{ url_for('static',filename='admin/js/jquery.treegrid.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='admin/js/jquery.treegrid.bootstrap3.js')}}"></script>
+    <script type="text/javascript">
+      $('.tree').treegrid();
+      $(function () {
+        layui.use(['layer','upload'], function(){
+            var layer = layui.layer;
+            var upload = layui.upload;
+
+            $('#add-link-from .link_type').change(function () {
+               if($(this).val() == 'text_link'){
+                   $('.link_icon').css("display","none");
+               }else{
+                   $('.link_icon').css("display","block");
+               }
+            });
+
+
+            $('#edit-link-from .link_type').change(function () {
+               if($(this).val() == 'text_link'){
+                   $('.link_icon').css("display","none");
+               }else{
+                   $('.link_icon').css("display","block");
+               }
+            });
+
+            //执行实例
+            upload.render({
+                elem: '#add_cover_pic', //绑定元素
+                exts: 'jpg|jpeg|png|gif',
+                url: '{{ url_for("admin.upload") }}',
+                size:2048,
+                before:function(obj){
+                    layer.load(0, {shade: false});
+                }
+                ,done: function(res){
+                  //上传完毕回调
+                    layer.closeAll('loading');
+                    var img_path = res.data.img_path
+                    console.log(res)
+                    $('#add_cover_pic img').css("display","block");
+                    $('#add_cover_pic img').attr("src",img_path);
+                    $('#add_cover_pic [name="cover_pic"]').val(img_path);
+                }
+                ,error: function(e){
+                  //请求异常回调
+                    console.log(e)
+                }
+            });
+
+            //执行实例
+            upload.render({
+                elem: '#edit_cover_pic', //绑定元素
+                exts: 'jpg|jpeg|png|gif',
+                url: '{{ url_for("admin.upload") }}',
+                size:2048,
+                before:function(obj){
+                    layer.load(0, {shade: false});
+                }
+                ,done: function(res){
+                  //上传完毕回调
+                    layer.closeAll('loading');
+                    var img_path = res.data.img_path
+                    console.log(res)
+                    $('#edit_cover_pic img').css("display","block");
+                    $('#edit_cover_pic img').attr("src",img_path);
+                    $('#edit_cover_pic [name="cover_pic"]').val(img_path);
+                }
+                ,error: function(e){
+                  //请求异常回调
+                    console.log(e)
+                }
+            });
+
+
+            $('#add-link').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.add_link_method") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: $("#add-link-from").serialize(),
+                    dataType: "json",
+                    success: function(data){
+                        if(data.result == 0){
+                            layer.msg('添加成功',{icon: 6,time: 1000});
+                            window.location.reload()
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+
+{#            $('.child-link-add').click(function () {#}
+{#                var link_id = $(this).parents('tr').data('link-id');#}
+{#                $.ajax({#}
+{#                    type: 'POST',#}
+{#                    url: '{{ url_for("admin.get_nav_info") }}',#}
+{#                    beforeSend: function(){#}
+{#                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2#}
+{#                    },#}
+{#                    complete: function(){#}
+{#                        layer.closeAll('loading');#}
+{#                    },#}
+{#                    data: {nav_id:link_id},#}
+{#                    dataType: "json",#}
+{#                    success: function(data){#}
+{#                        console.log(data);#}
+{#                        if(data.result == 0){#}
+{#                            $('#sub-add-link-modal [name="pid"]').val(data.data.id);#}
+{#                            $('#sub-add-link-modal [name="parent_name"]').val(data.data.name);#}
+{#                            $('#sub-add-link-modal').modal();#}
+{#                        }else {#}
+{#                            layer.msg(data.message,{icon: 5});#}
+{#                        }#}
+{#                    }#}
+{#                });#}
+{#            });#}
+
+            $('.child-link-edit').click(function () {
+                var link_id = $(this).data('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.get_link_info") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: {link_id:link_id},
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                        if(data.result == 0){
+                            $('#edit-link-modal [name="id"]').val(data.data.id);
+                            $('#edit-link-modal [name="link_name"]').val(data.data.name);
+                            $('#edit-link-modal [name="link_type"]').val(data.data.link_type);
+                            $('#edit-link-modal [name="link_href"]').val(data.data.link_href);
+                            $('#edit-link-modal [name="sort"]').val(data.data.sort);
+
+                            if(data.data.link_type == 'pic_link'){
+                                $('#edit-link-modal .link_icon').css("display","block");
+                            }
+
+                            if(data.data.link_icon){
+                                $('#edit_cover_pic [name="cover_pic"]').val(data.data.link_icon);
+                                $('#edit_cover_pic img').attr("src",data.data.link_icon).css("display","block");
+                            }
+
+                            $('#edit-link-modal').modal();
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+            $('#edit-link').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("admin.edit_link_method") }}',
+                    beforeSend: function(){
+                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                    },
+                    complete: function(){
+                        layer.closeAll('loading');
+                    },
+                    data: $("#edit-link-from").serialize(),
+                    dataType: "json",
+                    success: function(data){
+                        if(data.result == 0){
+                            layer.msg('编辑成功',{icon: 6,time: 1000});
+                            window.location.reload()
+                        }else {
+                            layer.msg(data.message,{icon: 5});
+                        }
+                    }
+                });
+            });
+
+            $('.child-link-del').click(function () {
+                var link_id = $(this).data('id');
+                layer.confirm('您确定要删除该链接吗？', {
+                  btn: ['删除','取消'] //按钮
+                }, function(index){
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url_for("admin.del_link_method") }}',
+                        beforeSend: function(){
+                            layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                        },
+                        complete: function(){
+                            layer.closeAll('loading');
+                        },
+                        data: {link_id:link_id},
+                        dataType: "json",
+                            success: function(data){
+                                if(data.result == 0){
+                                    layer.msg('删除成功',{icon: 6,time: 1000});
+                                    window.location.reload()
+                                }else {
+                                    layer.msg(data.message,{icon: 5});
+                                }
+                            }
+                    });
+                });
+            });
+
+        });
+
+        })
+
+    </script>
+{% endblock %}

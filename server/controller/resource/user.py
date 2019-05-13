@@ -11,7 +11,7 @@ from server.controller.resource import v2, BaseResource
 import hashlib
 
 from server.exception import BusinessException, PASSWORD_NOT_MATCH
-# from server.model.TestModel import User
+# from server.models.TestModel import User
 
 
 

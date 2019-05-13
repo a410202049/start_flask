@@ -8,12 +8,12 @@ from werkzeug.utils import import_string
 import sys
 
 from server.exception import ServerBaseException, SystemException
-from server.util.log import FinalLogger
+from server.utils.log import FinalLogger
 
 from flask_mail import Message
 from flask_mail import Mail
 from flask_restplus import Api
-
+from flask_login import LoginManager
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -27,6 +27,12 @@ session_options['expire_on_commit'] = False
 
 db = SQLAlchemy(session_options=session_options)
 
+login_manager = LoginManager()
+login_manager.session_protection = 'basic'
+login_manager.login_view = 'admin.login'
+login_manager.login_message = None
+
+
 # jinja2 None to ''
 def finalize(arg):
     if arg is None:
@@ -37,6 +43,7 @@ def finalize(arg):
 def register_blueprints(app):
     # 注册蓝图
     blueprints = [
+        "server.controller.admin:admin",
         "server.controller.home:home"
     ]
     for bp_name in blueprints:
@@ -67,8 +74,12 @@ def create_app(config_name):
     # 注册蓝图
     register_blueprints(app)
 
+    login_manager.init_app(app)
+
+
     # 初始化日志类
     logger = FinalLogger(app).get_logger()
+    app.logger.addHandler(logger)
 
     # 初始化邮件
     mail = Mail()

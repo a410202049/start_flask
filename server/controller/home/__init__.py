@@ -4,7 +4,7 @@
 from flask.views import View
 from flask import Blueprint, render_template, current_app as app
 
-from server.util.log import FinalLogger
+from server.utils.log import FinalLogger
 
 home = Blueprint('home', __name__)
 

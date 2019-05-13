@@ -1,0 +1,337 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body_class %}{% endblock %}
+{% block container %}
+
+<!-- Start content -->
+  <div class="content"> 
+    <div class="container">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">{{ title }}</h4>
+                <ol class="breadcrumb">
+                    <li><a href="{{ url_for('admin.index') }}">系统首页</a></li>
+                    <li class="active">{{ title }}</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card-box">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="search-box">
+                                <div class="form-inline">
+                                    <div class="form-group m-r-10">
+                                        <label for="username">姓名:</label>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="姓名" value="{{ data.username }}">
+                                    </div>
+                                    <div class="form-group m-r-10">
+                                        <label for="mobile">Email:</label>
+                                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Email" value="{{ data.email }}">
+                                    </div>
+
+                                </div>
+                                <div class="form-inline" style="margin-top: 15px;">
+
+                                    <button type="button" id="search" class="btn btn-primary waves-effect waves-light btn-md">
+                                        搜索
+                                    </button>
+                                    <button type="button" id="reset" class="btn btn-success waves-effect waves-light btn-md">
+                                        重置
+                                    </button>
+                                    <button type="button" id="add_user" class="btn btn-default waves-effect waves-light btn-md" data-toggle="modal" data-target="#add-user-modal"><i class="ion-person-add"> </i> 添加用户</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-actions-bar">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>姓名</th>
+                                    <th>Email</th>
+                                    <th>用户分组</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in data.users %}
+                                <tr data-user-id="{{ user.id }}">
+                                    <td>
+                                        {{ user.id }}
+                                    </td>
+                                    <td>
+                                        {{ user.username }}
+                                    </td>
+                                    <td>
+                                        {% if user.email  %}
+                                            {{ user.email }}
+                                        {% else %}
+                                            未绑定
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        {% if user.group %}
+                                            {{ user.group.name }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success waves-effect waves-light user-edit"> <i class="glyphicon glyphicon-edit"></i></button>
+                                        <button class="btn btn-danger waves-effect waves-light user-del"> <i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {% from "macros.html" import pagination_widget %}
+                        {% if data.pagination %}
+                            <div class="pagination">
+                                {{ pagination_widget(data.pagination,request.endpoint,data.fragment) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div> <!-- end col -->
+        </div>
+    </div>
+   <!-- container --> 
+  </div>
+
+<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">添加用户</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" role="form" id="add-user-from">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择用户组</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="group_id">
+                                    {% for group in data.user_grops %}
+                                        <option value="{{ group.id }}">{{ group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">用户名</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="用户名" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Email</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Email" name="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">密码</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" placeholder="密码" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">确认密码</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" placeholder="确认密码" name="confirm_password">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" id="btn-add-user">添加</button>
+                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal -->
+
+
+<div id="edit-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">编辑用户</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" role="form" id="edit-user-from">
+                        <input type="hidden" name="id" value="0">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择用户组</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="group_id">
+                                    {% for group in data.user_grops %}
+                                        <option value="{{ group.id }}">{{ group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">用户名</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="用户名" name="username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Email</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Email" name="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">密码</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" placeholder="密码" name="password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">确认密码</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" placeholder="确认密码" name="confirm_password">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" id="btn-edit-user">编辑</button>
+                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal -->
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function () {
+            layui.use(['layer','laydate'], function(){
+                var layer = layui.layer;
+                $('#btn-add-user').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url_for("admin.user_add") }}',
+                        beforeSend: function(){
+                            layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                        },
+                        complete: function(){
+                            layer.closeAll('loading');
+                        },
+                        data: $("#add-user-from").serialize(),
+                        dataType: "json",
+                        success: function(data){
+                            if(data.result == 0){
+                                layer.msg('添加成功',{icon: 6,time: 1000});
+                                window.location.reload()
+                            }else {
+                                layer.msg(data.message,{icon: 5});
+                            }
+                        }
+                    });
+                });
+
+                $('.user-edit').click(function () {
+                    user_id = $(this).parents('tr').data('user-id');
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url_for("admin.get_user_info") }}',
+                        beforeSend: function(){
+                            layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                        },
+                        complete: function(){
+                            layer.closeAll('loading');
+                        },
+                        data: {user_id:user_id},
+                        dataType: "json",
+                        success: function(data){
+                            console.log(data);
+                            if(data.result == 0){
+                                $('#edit-user-modal [name="id"]').val(data.data.id);
+                                $('#edit-user-modal [name="username"]').val(data.data.username);
+                                $('#edit-user-modal [name="email"]').val(data.data.email);
+                                $('#edit-user-modal [name="group_id"]').val(data.data.group_id);
+                                $('#edit-user-modal').modal();
+                            }else {
+                                layer.msg(data.message,{icon: 5});
+                            }
+                        }
+                    });
+                });
+
+                $('#btn-edit-user').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url_for("admin.user_edit") }}',
+                        beforeSend: function(){
+                            layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                        },
+                        complete: function(){
+                            layer.closeAll('loading');
+                        },
+                        data: $("#edit-user-from").serialize(),
+                        dataType: "json",
+                        success: function(data){
+                            if(data.result == 0){
+                                layer.msg('编辑成功',{icon: 6,time: 1000});
+                                window.location.reload()
+                            }else {
+                                layer.msg(data.message,{icon: 5});
+                            }
+                        }
+                    });
+                });
+
+                $('.user-del').click(function () {
+                    user_id = $(this).parents('tr').data('user-id');
+                    layer.confirm('您确定要删除该用户吗？', {
+                      btn: ['删除','取消'] //按钮
+                    }, function(index){
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url_for("admin.user_del") }}',
+                            beforeSend: function(){
+                                layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                            },
+                            complete: function(){
+                                layer.closeAll('loading');
+                            },
+                            data: {user_id:user_id},
+                            dataType: "json",
+                                success: function(data){
+                                    if(data.result == 0){
+                                        layer.msg('删除成功',{icon: 6,time: 1000});
+                                        window.location.reload()
+                                    }else {
+                                        layer.msg(data.message,{icon: 5});
+                                    }
+                                }
+                        });
+                    });
+                });
+
+            });
+        })
+    </script>
+{% endblock %}

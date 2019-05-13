@@ -1,0 +1,961 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body_class %}{% endblock %}
+{% block header %}
+    <style>
+        .tab-pane p{
+            line-height: 28px;
+        }
+    </style>
+{% endblock %}
+
+{% block container %}
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="page-title">{{ title }}</h4>
+                <ol class="breadcrumb">
+                    <li><a href="{{ url_for('admin.index') }}">系统首页</a></li>
+                    <li class="active">{{ title }}</li>
+                </ol>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-lg-12">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#base_cfg" data-toggle="tab" aria-expanded="true">
+                            基本配置
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#email_cfg" data-toggle="tab" aria-expanded="false">
+                            邮件配置
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#banner_cfg" data-toggle="tab" aria-expanded="false" style="text-transform:none;">
+                            Banner设置
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="base_cfg">
+                        <div class="row">
+                            <form class="form-horizontal" role="form" id="edit-system-cfg-form">
+{#                                <div class="form-group">#}
+{#                                    <label class="col-md-1 control-label">学校logo:</label>#}
+{#                                    <div class="col-md-1">#}
+{#                                        <div class="img-part" id="logo_btn">#}
+{#                                            <i class="add-img-icon md md-add"></i>#}
+{#                                            <!--编辑图片时将i标签隐藏-->#}
+{#                                            <img style="display: none;" src=""/>#}
+{#                                            <input type="hidden" name="logo" >#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">站点名称:</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="site_name" placeholder="站点名称" value="{{ data.site_name }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">站点名关键词:</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="site_keywords" placeholder="站点名关键词" value="{{ data.site_keywords }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">站点描述:</label>
+                                    <div class="col-md-4">
+                                        <textarea class="form-control" rows="5" name="site_description">{{ data.site_description }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">第三方代码:</label>
+                                    <div class="col-md-4">
+                                        <textarea class="form-control" rows="5" name="third_code">{{ data.third_code }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-1"></label>
+                                    <div class="col-md-4">
+                                        <button id="edit_system_cfg" type="button"
+                                                class="btn btn-success waves-effect waves-light btn-md m-r-10">保存
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="email_cfg">
+                        <div class="row">
+                            <form class="form-horizontal" role="form" id="edit-email-cfg-form">
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">邮件服务器:</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="email_smtp" placeholder="邮件服务器" value="{{ data.email_smtp }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">管理员邮箱:</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="email" placeholder="管理员邮箱" value="{{ data.email }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-1 control-label">邮箱密码:</label>
+                                    <div class="col-md-4">
+                                        <input type="password" class="form-control" name="email_password" placeholder="邮箱密码" value="{{ data.email_password }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-1"></label>
+                                    <div class="col-md-4">
+                                        <button id="edit_email_cfg" type="button"
+                                                class="btn btn-success waves-effect waves-light btn-md m-r-10">保存
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="banner_cfg">
+
+                        <div class="row">
+                            <button id="add_banner" type="button"
+                                    class="btn btn-success waves-effect waves-light btn-md" data-toggle="modal" data-target="#add-banner-modal">添加
+                            </button>
+                        </div>
+                        <div class="row">
+                                {% for banner in data.banners %}
+                                <div class="col-md-2">
+                                    <div class="product-list-box thumb" style="border:1px solid #cccccc;">
+                                        <a href="javascript:void(0);" class="image-popup">
+                                            <img src="{{ banner.img_url }}" class="thumb-img" alt="work-thumbnail">
+                                        </a>
+
+                                        <div class="product-action">
+                                            <a href="javascript:void(0);" class="btn btn-success btn-sm btn-edit" data-id="{{ banner.id }}"><i class="md md-mode-edit"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm btn-del" data-id="{{ banner.id }}"><i class="md md-close"></i></a>
+                                        </div>
+
+                                        <div class="detail" style="margin-top:10px;">
+                                            <h4 class="m-t-0 m-b-5"><a href="" class="text-dark">{% if banner.title %}{{ banner.title }}{% else %}无{% endif %}</a> </h4>
+                                            <h5 class="m-0"><span class="text-muted ">{% if banner.description %}{{ banner.description }}{% else %}无{% endif %}</span></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="add-banner-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">添加Banner</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" role="form" id="add-banner-from">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner图</label>
+                            <div class="col-md-8">
+                                    <div class="img-part" id="img_url_btn">
+                                        <i class="add-img-icon md md-add"></i>
+                                        <!--编辑图片时将i标签隐藏-->
+                                        <img style="display: none;" src=""/>
+                                        <input type="hidden" name="img_url" >
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner名称</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Banner名称" name="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner链接</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Banner链接" name="href">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner描述</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="5" name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">排序</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" placeholder="排序" name="sort" value="1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" id="btn-add-banner">添加</button>
+                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal -->
+
+
+
+<div id="edit-banner-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">编辑Banner</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal" role="form" id="edit-banner-from">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner图</label>
+                            <div class="col-md-8">
+                                    <div class="img-part" id="img_url_edit_btn">
+                                        <i class="add-img-icon md md-add"></i>
+                                        <!--编辑图片时将i标签隐藏-->
+                                        <img style="display: none;" src=""/>
+                                        <input type="hidden" name="banner_id" >
+                                        <input type="hidden" name="img_url" >
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner名称</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Banner名称" name="title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner链接</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Banner链接" name="href">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Banner描述</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="5" name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">排序</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" placeholder="排序" name="sort" value="1">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary waves-effect waves-light" id="btn-edit-banner">编辑</button>
+                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal -->
+
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static',filename='admin/plugins/select-page/selectpage.js') }}"></script>
+<script src="{{ url_for('static',filename='admin/js/plupload.full.min.js')}}"></script>
+<script src="{{ url_for('static',filename='admin/js/qiniu.min.js')}}"></script>
+<script src="{{ url_for('static',filename='admin/js/sortable.min.js')}}"></script>
+<script>
+
+
+        $(function() {
+            layui.use(['layer','upload'], function () {
+                var layer = layui.layer;
+                var upload = layui.upload;
+
+                //执行实例
+                upload.render({
+                    elem: '#img_url_btn', //绑定元素
+                    exts: 'jpg|jpeg|png|gif',
+                    url: '{{ url_for("admin.upload") }}',
+                    size:2048,
+                    before:function(obj){
+                        layer.load(0, {shade: false});
+                    }
+                    ,done: function(res){
+                      //上传完毕回调
+                        layer.closeAll('loading');
+                        var img_path = res.data.img_path
+                        console.log(res)
+                        $('#img_url_btn img').css("display","block");
+                        $('#img_url_btn img').attr("src",img_path);
+                        $('#img_url_btn [name="img_url"]').val(img_path);
+                    }
+                    ,error: function(e){
+                      //请求异常回调
+                        console.log(e)
+                    }
+                });
+
+                //执行实例
+                upload.render({
+                    elem: '#img_url_edit_btn', //绑定元素
+                    exts: 'jpg|jpeg|png|gif',
+                    url: '{{ url_for("admin.upload") }}',
+                    size:2048,
+                    before:function(obj){
+                        layer.load(0, {shade: false});
+                    }
+                    ,done: function(res){
+                      //上传完毕回调
+                        layer.closeAll('loading');
+                        var img_path = res.data.img_path
+                        console.log(res)
+                        $('#img_url_edit_btn img').css("display","block");
+                        $('#img_url_edit_btn img').attr("src",img_path);
+                        $('#img_url_edit_btn [name="img_url"]').val(img_path);
+                    }
+                    ,error: function(e){
+                      //请求异常回调
+                        console.log(e)
+                    }
+                });
+
+                $('#btn-add-banner').click(function(){
+                    layer.confirm('您确定要添加Banner吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function (index) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url_for("admin.add_banner") }}',
+                            beforeSend: function () {
+                                layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                            },
+                            complete: function () {
+                                layer.closeAll('loading');
+                            },
+                            data: $('#add-banner-from').serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.result == 0) {
+                                        layer.msg('添加成功', {icon: 6, time: 1000},function(){
+                                                window.location.reload()
+                                        });
+                                } else {
+                                    layer.msg(data.message, {icon: 5});
+                                }
+                            }
+                        });
+                    });
+                });
+
+
+                $('#btn-edit-banner').click(function(){
+                    layer.confirm('您确定要编辑Banner吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function (index) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url_for("admin.edit_banner") }}',
+                            beforeSend: function () {
+                                layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                            },
+                            complete: function () {
+                                layer.closeAll('loading');
+                            },
+                            data: $('#edit-banner-from').serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.result == 0) {
+                                        layer.msg('编辑成功', {icon: 6, time: 1000},function(){
+                                                window.location.reload()
+                                        });
+                                } else {
+                                    layer.msg(data.message, {icon: 5});
+                                }
+                            }
+                        });
+                    });
+                });
+
+{#                btn-add-banner#}
+
+                $('#edit_system_cfg').click(function () {
+                    layer.confirm('您确定要保存系统基本配置吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function (index) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url_for("admin.save_base_cfg") }}',
+                            beforeSend: function () {
+                                layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                            },
+                            complete: function () {
+                                layer.closeAll('loading');
+                            },
+                            data: $('#edit-system-cfg-form').serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.result == 0) {
+                                    layer.msg('编辑成功', {icon: 6, time: 1000});
+                                } else {
+                                    layer.msg(data.message, {icon: 5});
+                                }
+                            }
+                        });
+                    });
+                });
+
+
+
+                $('#edit_email_cfg').click(function () {
+                    layer.confirm('您确定要保存Emali配置吗？', {
+                        btn: ['确定', '取消'] //按钮
+                    }, function (index) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url_for("admin.save_email_cfg") }}',
+                            beforeSend: function () {
+                                layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                            },
+                            complete: function () {
+                                layer.closeAll('loading');
+                            },
+                            data: $('#edit-email-cfg-form').serialize(),
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.result == 0) {
+                                    layer.msg('编辑成功', {icon: 6, time: 1000});
+                                } else {
+                                    layer.msg(data.message, {icon: 5});
+                                }
+                            }
+                        });
+                    });
+                });
+
+                $('.btn-del').click(function(){
+                   var banner_id = $(this).data('id');
+                   layer.confirm('您确定要删除该Banner吗？', {
+                      btn: ['删除','取消'] //按钮
+                    }, function(index){
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{ url_for("admin.del_banner") }}',
+                            beforeSend: function(){
+                                layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                            },
+                            complete: function(){
+                                layer.closeAll('loading');
+                            },
+                            data: {banner_id:banner_id},
+                            dataType: "json",
+                                success: function(data){
+                                    if(data.result == 0){
+                                        layer.msg('删除成功',{icon: 6,time: 1000});
+                                        window.location.reload()
+                                    }else {
+                                        layer.msg(data.message,{icon: 5});
+                                    }
+                                }
+                        });
+                    });
+                });
+
+
+{#                $('#btn-edit').click(function(){#}
+{#                    var banner_id = $(this).data('id');#}
+{##}
+{#                });#}
+
+                $('.btn-edit').click(function () {
+                    var banner_id = $(this).data('id');
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url_for("admin.get_banner_info") }}',
+                        beforeSend: function(){
+                            layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+                        },
+                        complete: function(){
+                            layer.closeAll('loading');
+                        },
+                        data: {banner_id:banner_id},
+                        dataType: "json",
+                        success: function(data){
+                            console.log(data);
+                            if(data.result == 0){
+
+                                $('#edit-banner-modal [name="banner_id"]').val(data.data.id);
+                                $('#edit-banner-modal [name="title"]').val(data.data.title);
+                                $('#edit-banner-modal [name="img_url"]').val(data.data.img_url);
+                                $('#edit-banner-modal #img_url_edit_btn img' ).attr('src',data.data.img_url).css('display','block');
+                                $('#edit-banner-modal [name="description"]' ).val(data.data.description);
+                                $('#edit-banner-modal [name="href"]' ).val(data.data.href);
+                                $('#edit-banner-modal [name="sort"]' ).val(data.data.sort);
+                                $('#edit-banner-modal').modal();
+                            }else {
+                                layer.msg(data.message,{icon: 5});
+                            }
+                        }
+                    });
+                });
+
+
+
+
+                {##}
+                {#              $('.bus_pool_list').slimScroll({#}
+                {#                  height: '585px',#}
+                {#                  position: 'right',#}
+                {#                  size: "5px",#}
+                {#                  color: '#dcdcdc',#}
+                {#                  wheelStep: 5#}
+                {#              });#}
+                {##}
+                {#                $('#create_key').click(function () {#}
+                {#                    $("[name='scuret_key']").val(getUUID());#}
+                {#                });#}
+                {#                // 是否为合作关系#}
+                {#                $(document).on('change', '#is_partner', function(){#}
+                {#                    $("[name='is_partner']").val(this.checked?1:0);#}
+                {#                });#}
+                {##}
+                {#                // 是否需要密码#}
+                {#                $(document).on('click', '#need_password', function(){#}
+                {#                    $("[name='need_password']").val(this.checked?1:0);#}
+                {#                });#}
+                {##}
+                {#                // 是否为热门学校#}
+                {#                $(document).on('change', '#is_popular', function(){#}
+                {#                    $("[name='is_popular']").val(this.checked?1:0);#}
+                {#                });#}
+                {##}
+                {#                // 是否可见#}
+                {#                $(document).on('change', '#is_enabled', function(){#}
+                {#                    $("[name='is_enabled']").val(this.checked?1:0);#}
+                {#                });#}
+                {##}
+                {#                // 学生账户是否可注销#}
+                {#                $(document).on('change', '#is_could_cancel', function(){#}
+                {#                    $("[name='is_could_cancel']").val(this.checked?1:0);#}
+                {#                });#}
+                {##}
+                {#                $('#province_code').selectPage({#}
+                {#                    showField : 'name',#}
+                {#                    searchField:'keyword',#}
+                {#                    keyField : 'code',#}
+                {#                    pageSize : 10,#}
+                {#                    data : "{{ url_for("admin.get_provice_list") }}",#}
+                {#                    eAjaxSuccess : function(d){#}
+                {#                        console.log(d);#}
+                {#                        var result;#}
+                {#                        if(d) result = d.data;#}
+                {#                        else result = undefined;#}
+                {#                        console.log(result);#}
+                {#                        return result;#}
+                {#                    },#}
+                {#                    formatItem : function(data){#}
+                {#                        console.log(data);#}
+                {#                        return data.name;#}
+                {#                    },#}
+                {#                    eSelect : function(data){#}
+                {#                        console.log(data);#}
+                {#                        $('#city_code').selectPageClear();#}
+                {#                    }#}
+                {#                });#}
+                {##}
+                {#                $('#city_code').selectPage({#}
+                {#                    showField : 'name',#}
+                {#                    searchField:'keyword',#}
+                {#                    keyField : 'code',#}
+                {#                    pageSize : 10,#}
+                {#                    params : function(){#}
+                {#                        province_code = $('#province_code').val();#}
+                {#                        return {'province_code':province_code};#}
+                {#                    },#}
+                {#                    data : "{{ url_for("admin.get_city_list") }}",#}
+                {#                    eAjaxSuccess : function(d){#}
+                {#                        console.log(d);#}
+                {#                        var result;#}
+                {#                        if(d) result = d.data;#}
+                {#                        else result = undefined;#}
+                {#                        console.log(result);#}
+                {#                        return result;#}
+                {#                    },#}
+                {#                    formatItem : function(data){#}
+                {#                        console.log(data);#}
+                {#                        return data.name;#}
+                {#                    }#}
+                {#                });#}
+                {##}
+                {#            Qiniu.uploader({#}
+                {#                runtimes: 'html5,flash,html4',#}
+                {#                browse_button: 'logo_btn',#}
+                {#                uptoken_url: "{{ url_for("admin.get_upload_token") }}",#}
+                {#                domain: "{{ data.qiniu_domain }}",#}
+                {#                get_new_uptoken: true,#}
+                {#                max_file_size: '100mb',#}
+                {#                max_retries: 3,#}
+                {#                dragdrop: false,#}
+                {#                chunk_size: '4mb',#}
+                {#                auto_start: true,#}
+                {#                unique_names: true,#}
+                {#                save_key: false,#}
+                {#                filters: {#}
+                {#                  mime_types : [#}
+                {#                    {title : "Image files", extensions: "jpg,jpeg,gif,png"}#}
+                {#                  ]#}
+                {#                },#}
+                {#                init: {#}
+                {#                    'BeforeUpload': function(up, file) {#}
+                {#                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2#}
+                {#                    },#}
+                {#                    'UploadProgress': function(up, file) {#}
+                {#                        console.log(file.percent);#}
+                {#                        if (file.percent ==100){#}
+                {#                            layer.closeAll('loading');#}
+                {#                        }#}
+                {#                            $('#add-logo-progress-bar').css('width', file.percent + '%');#}
+                {#                    },#}
+                {#                    'FileUploaded': function(up, file, info) {#}
+                {#                           var response = $.parseJSON(info);#}
+                {#                           $('#logo_btn img').attr("src","http://{{ data.qiniu_domain }}"+"/"+response.key);#}
+                {#                           $('#logo_btn img').css("display","block");#}
+                {#                           $('[name ="logo"]').val("http://{{ data.qiniu_domain }}"+"/"+response.key);#}
+                {#                    }#}
+                {#                }#}
+                {#            });#}
+                {##}
+                {#            Qiniu.uploader({#}
+                {#                runtimes: 'html5,flash,html4',#}
+                {#                browse_button: 'land_mark_image_btn',#}
+                {#                uptoken_url: "{{ url_for("admin.get_upload_token") }}",#}
+                {#                domain: "{{ data.qiniu_domain }}",#}
+                {#                get_new_uptoken: true,#}
+                {#                max_file_size: '100mb',#}
+                {#                max_retries: 3,#}
+                {#                dragdrop: false,#}
+                {#                chunk_size: '4mb',#}
+                {#                auto_start: true,#}
+                {#                unique_names: true,#}
+                {#                save_key: false,#}
+                {#                filters: {#}
+                {#                  mime_types : [#}
+                {#                    {title : "Image files", extensions: "jpg,jpeg,gif,png"}#}
+                {#                  ]#}
+                {#                },#}
+                {#                init: {#}
+                {#                    'BeforeUpload': function(up, file) {#}
+                {#                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2#}
+                {#                            $('#add-logo-progress').css('display', 'block');#}
+                {#                    },#}
+                {#                    'UploadProgress': function(up, file) {#}
+                {#                        console.log(file.percent);#}
+                {#                        if (file.percent ==100){#}
+                {#                            layer.closeAll('loading');#}
+                {#                        }#}
+                {#                            $('#add-logo-progress-bar').css('width', file.percent + '%');#}
+                {#                    },#}
+                {#                    'FileUploaded': function(up, file, info) {#}
+                {#                           var response = $.parseJSON(info);#}
+                {##}
+                {#                           $('#land_mark_image_btn img').attr("src","http://{{ data.qiniu_domain }}"+"/"+response.key);#}
+                {#                           $('#land_mark_image_btn img').css("display","block");#}
+                {#                           $('[name ="land_mark_image"]').val("http://{{ data.qiniu_domain }}"+"/"+response.key);#}
+                {#                    }#}
+                {##}
+                {#                }#}
+                {#            });#}
+                {##}
+                {#            });#}
+                {##}
+                {#            $('#edit_school_cfg').click(function () {#}
+                {#                group_id = $(this).parents('tr').data('group-id');#}
+                {#                layer.confirm('您确定要编辑该学校吗？', {#}
+                {#                    btn: ['确定', '取消'] //按钮#}
+                {#                }, function (index) {#}
+                {#                    $.ajax({#}
+                {#                        type: 'POST',#}
+                {#                        url: '{{ url_for("admin.edit_school") }}',#}
+                {#                        beforeSend: function () {#}
+                {#                            layer.load(0, {shade: false}); //0代表加载的风格，支持0-2#}
+                {#                        },#}
+                {#                        complete: function () {#}
+                {#                            layer.closeAll('loading');#}
+                {#                        },#}
+                {#                        data: $('#edit-school-form').serialize(),#}
+                {#                        dataType: "json",#}
+                {#                        success: function (data) {#}
+                {#                            if (data.result == 0) {#}
+                {#                                layer.msg('编辑成功', {icon: 6, time: 1000},function(){#}
+                {#                                    window.location.reload()#}
+                {#                                });#}
+                {#                            } else {#}
+                {#                                layer.msg(data.message, {icon: 5});#}
+                {#                            }#}
+                {#                        }#}
+                {#                    });#}
+                {#                });#}
+                {#            });#}
+                {##}
+                {#            $('.checkbox_bus_pool').click(function () {#}
+                {#                parent_li = $(this).parents('li');#}
+                {#                bus_container = $(parent_li).find('.bus_container').data('container');#}
+                {#                bus_status = $(parent_li).find('.bus_status').data('status');#}
+                {#                bus_title = $(parent_li).find('.bus_title').data('title');#}
+                {#                bus_type = $(this).data('type');#}
+                {#                bus_element = $(".checkbox_bus_pool[data-type='"+bus_type+"']:checked");#}
+                {#                if(bus_element.length >=2){#}
+                {#                    layer.msg("不能选择多个"+bus_type+"业务类型", {icon: 5});#}
+                {#                    $(this).prop('checked',false);#}
+                {#                }else{#}
+                {#                    var isChecked = $(this).is(":checked");#}
+                {#                    if(isChecked){#}
+                {#                        var el = document.createElement('li');#}
+                {#                        el.innerHTML = create_bus_element(bus_type,bus_title,bus_status,bus_container);#}
+                {#                        el.setAttribute('data-name',bus_type);#}
+                {#                        bus_sort_list.el.appendChild(el);#}
+                {#                    }else{#}
+                {#                        $("li[data-name='"+bus_type+"']").remove();#}
+                {#                    }#}
+                {#                }#}
+                {##}
+                {##}
+                {##}
+                {##}
+                {#            });#}
+                {##}
+                {##}
+                {#            $('#save-bus-cfg').click(function () {#}
+                {##}
+                {#                var school_id = "{{ data.school.pid }}";#}
+                {#                var bus_list = [];#}
+                {##}
+                {#                $('.checkbox_bus_pool:checked').each(function(index,element){#}
+                {#                    console.log(index,element);#}
+                {#                    bus_type = $(element).data('type');#}
+                {#                    bus_id = $(element).data('bus-id');#}
+                {#                    order = $('#bus_sort [data-name="'+bus_type+'"]').index();#}
+                {#                    data = {#}
+                {#                        "bus_type":bus_type,#}
+                {#                        "bus_id":bus_id,#}
+                {#                        "order":order#}
+                {#                    };#}
+                {#                    if(bus_type=='Fee'){#}
+                {#                        fee_verify_type = $('[name="fee_verify_type"]').val();#}
+                {#                        data.form_data = {"fee_verify_type":fee_verify_type};#}
+                {#                    }else if(bus_type=='ECard'){#}
+                {#                        need_password = $('[name="need_password"]').val();#}
+                {#                        account_type = $('[name="account_type"]').val();#}
+                {#                        charge_amount_list = $('[name="charge_amount_list"]').val();#}
+                {#                        max_charge_amount = $('[name="max_charge_amount"]').val();#}
+                {#                        charge_notice = $('[name="charge_notice"]').val();#}
+                {#                        data.form_data = {#}
+                {#                            "need_password":need_password,#}
+                {#                            "account_type":account_type,#}
+                {#                            "charge_amount_list":charge_amount_list,#}
+                {#                            "max_charge_amount":max_charge_amount,#}
+                {#                            "charge_notice":charge_notice#}
+                {#                        };#}
+                {#                    }else if(bus_type=='AxfQR'){#}
+                {#                        var certificate_types = [];#}
+                {#                        $('input[name="certificate_type"]:checked').each(#}
+                {#                            function(){#}
+                {#                                value = $(this).val();#}
+                {#                                certificate_types.push(value);#}
+                {#                            }#}
+                {#                        );#}
+                {#                        data.form_data = {"certificate_types":certificate_types}#}
+                {#                    }#}
+                {#                    bus_list.push(data);#}
+                {##}
+                {#                });#}
+                {#                is_could_cancel = $('[name="is_could_cancel"]').val();#}
+                {##}
+                {#                $.ajax({#}
+                {#                    type: 'POST',#}
+                {#                    url: '{{ url_for("admin.edit_school_bus") }}',#}
+                {#                    beforeSend: function () {#}
+                {#                        layer.load(0, {shade: false}); //0代表加载的风格，支持0-2#}
+                {#                    },#}
+                {#                    complete: function () {#}
+                {#                        layer.closeAll('loading');#}
+                {#                    },#}
+                {#                    data: {school_id:school_id,is_could_cancel:is_could_cancel,data:JSON.stringify(bus_list)},#}
+                {#                    dataType: "json",#}
+                {#                    success: function (data) {#}
+                {#                        if (data.result == 0) {#}
+                {#                            layer.msg('编辑成功', {icon: 6});#}
+                {#                        } else {#}
+                {#                            layer.msg(data.message, {icon: 5});#}
+                {#                        }#}
+                {#                    }#}
+                {#                });#}
+                {##}
+                {#            });#}
+                {##}
+                {##}
+                {#            init_edit_page();#}
+                {#        });#}
+                {##}
+                {##}
+                {#        //初始化编辑页面#}
+                {#        function init_edit_page() {#}
+                {#            data_list = {% autoescape false %}{{ data.edit_json }}{% endautoescape %};#}
+                {#            is_could_cancel = {{ data.is_could_cancel }};#}
+                {#            if(is_could_cancel){#}
+                {#                $('#is_could_cancel').click();#}
+                {#                $('[name="is_could_cancel"]').val(is_could_cancel);#}
+                {#            }#}
+                {##}
+                {#            for(var i=0;i<data_list.length;i++){#}
+                {#                bus = data_list[i];#}
+                {#                $('[data-bus-id="'+bus.bus_id+'"]').click();#}
+                {#                if(bus.bus_type == 'Fee'){#}
+                {#                    var fee_verify_type = bus.form_data.fee_verify_type;#}
+                {#                    if(fee_verify_type == null){#}
+                {#                        fee_verify_type = 'None'#}
+                {#                    }#}
+                {#                    $('[name="fee_verify_type"]').val(fee_verify_type);#}
+                {#                }#}
+                {#                if(bus.bus_type == 'ECard'){#}
+                {#                    if(bus.form_data.need_password){#}
+                {#                        $("#need_password").attr('checked', 'true');#}
+                {#                        $('[name="need_password"]').val(bus.form_data.need_password);#}
+                {#                    }#}
+                {#                    $('[name="account_type"]').val(bus.form_data.account_type);#}
+                {#                    $('[name="charge_amount_list"]').val(bus.form_data.charge_amount_list);#}
+                {#                    $('[name="max_charge_amount"]').val(bus.form_data.max_charge_amount);#}
+                {#                    $('[name="charge_notice"]').val(bus.form_data.charge_notice);#}
+                {#                }#}
+                {#                if(bus.bus_type == 'AxfQR'){#}
+                {#                    certificate_types = bus.form_data.certificate_types;#}
+                {#                    for(var j=0;j<certificate_types.length;j++){#}
+                {#                        check_value = certificate_types[j];#}
+                {#                        $('.certificate_type[value="'+check_value+'"]').attr('checked', 'true');#}
+                {#                    }#}
+                {#                }#}
+                {#            }#}
+                {##}
+                {##}
+                {#        }#}
+                {##}
+                {#        function create_bus_element(bus_type,bus_title,bus_status,bus_container) {#}
+                {#            if (bus_type == 'Fee') {#}
+                {#                Fee = '<div class="portlet portlet-bus">';#}
+                {#                Fee += '<div class="portlet-heading bg-primary portlet-heading-bus">';#}
+                {#                Fee += '<h3 class="portlet-title">' + bus_title + "&nbsp;&nbsp;&nbsp;&nbsp;状态：" + bus_status + '</h3>';#}
+                {#                Fee += '<div class="portlet-widgets">';#}
+                {#                Fee += '<span class="divider"></span>';#}
+                {#                Fee += '<a data-toggle="collapse"  href="#' + bus_type + '_' + bus_container + '"><i class="ion-minus-round"></i></a></div>';#}
+                {#                Fee += '<div class="clearfix"></div></div>';#}
+                {#                Fee += '<div id="' + bus_type + '_' + bus_container + '" class="panel-collapse collapse in">';#}
+                {#                Fee += '<div class="portlet-body">';#}
+                {#                Fee += '<div class="form-horizontal">';#}
+                {#                Fee += '<div class="form-group">';#}
+                {#                Fee += '<label class="col-md-2 control-label">缴费类型:</label>';#}
+                {#                Fee += '<div class="col-md-2">';#}
+                {#                Fee += '<select class="form-control" name="fee_verify_type">';#}
+                {#                Fee += '<option value="AdmissionNo">录取通知书号</option>';#}
+                {#                Fee += '<div class="form-horizontal">';#}
+                {#                Fee += '<option value="ExamNo">考生号</option>';#}
+                {#                Fee += '<option value="StudentNo">学号</option>';#}
+                {#                Fee += '<option value="CandidateNumber">准考证号</option>';#}
+                {#                Fee += '<option value="None">无</option>';#}
+                {#                Fee += '</select></div></div></div></div></div></div>';#}
+                {#                return Fee#}
+                {#            }else if(bus_type == 'ECard'){#}
+                {#                ECard = '<div class="portlet portlet-bus">';#}
+                {#                ECard += '<div class="portlet-heading bg-primary portlet-heading-bus">';#}
+                {#                ECard += '<h3 class="portlet-title">'+ bus_title + "&nbsp;&nbsp;&nbsp;&nbsp;状态：" + bus_status +'</h3>';#}
+                {##}
+                {#                ECard += '<div class="portlet-widgets"><span class="divider"></span>';#}
+                {#                ECard += '<a data-toggle="collapse" href="#'+ bus_type + '_' + bus_container +'"><i class="ion-minus-round"></i></a>';#}
+                {#                ECard += '</div><div class="clearfix"></div></div>';#}
+                {#                ECard += '<div id="'+ bus_type + '_' + bus_container +'" class="panel-collapse collapse in"><div class="portlet-body">';#}
+                {#                ECard += '<div class="form-horizontal"><div class="form-group">';#}
+                {#                ECard += '<label class="col-md-2 control-label">是否需要密码:</label>';#}
+                {#                ECard += '<div class="col-md-2"><div class="checkbox">';#}
+                {#                ECard += '<input id="need_password" type="checkbox" ><label for="need_password"></label>';#}
+                {#                ECard += '<input type="hidden" value="0" name="need_password">';#}
+                {#                ECard += '</div></div></div><div class="form-group">';#}
+                {##}
+                {#                ECard += '<label class="col-md-2 control-label" for="account_type">一卡通账号类型:</label>';#}
+                {#                ECard += '<div class="col-md-2"><select class="form-control" name="account_type" id="account_type">';#}
+                {#                ECard += '<option value="StudentNo">学号</option><option value="CardNo">卡号</option>';#}
+                {#                ECard += '<option value="IdCardNo">身份证号</option></select></div></div><div class="form-group">';#}
+                {#                ECard += '<label class="col-md-2 control-label" for="charge_amount_list">一卡通充值列表:</label>';#}
+                {#                ECard += '<div class="col-md-3"><input id="charge_amount_list" type="text" class="form-control" name="charge_amount_list">';#}
+                {#                ECard += '</div></div><div class="form-group"><label class="col-md-2 control-label" for="max_charge_amount">最高充值金额:</label>';#}
+                {#                ECard += '<div class="col-md-3"><input id="max_charge_amount" type="text" class="form-control" name="max_charge_amount">';#}
+                {#                ECard += '</div></div>';#}
+                {#                ECard += '<div class="form-group"><label class="col-md-2 control-label">充值成功提醒</label>' +#}
+                {#                    '<div class="col-md-3"><textarea class="form-control" rows="5" name="charge_notice"></textarea></div></div>';#}
+                {##}
+                {#                ECard += '</div></div></div></div>';#}
+                {#                return ECard#}
+                {#            }else if(bus_type == 'AxfQR'){#}
+                {#               AxfQR = '<div class="portlet portlet-bus">';#}
+                {#               AxfQR += '<div class="portlet-heading bg-primary portlet-heading-bus">';#}
+                {#               AxfQR += '<h3 class="portlet-title">'+ bus_title + "&nbsp;&nbsp;&nbsp;&nbsp;状态：" + bus_status +'</h3>';#}
+                {#               AxfQR += '<div class="portlet-widgets"><span class="divider"></span>';#}
+                {#               AxfQR += '<a data-toggle="collapse" href="#'+ bus_type + '_' + bus_container +'"><i class="ion-minus-round"></i></a>';#}
+                {#               AxfQR += '</div><div class="clearfix"></div>';#}
+                {#               AxfQR += '</div><div id="'+ bus_type + '_' + bus_container +'" class="panel-collapse collapse in"><div class="portlet-body">';#}
+                {#               AxfQR += '<div class="form-horizontal"><div class="form-group">';#}
+                {#               AxfQR += '<label class="col-md-2 control-label" for="certificate_type">支持证件类型:</label>';#}
+                {#               AxfQR += '<div class="col-md-6"><div class="checkbox"><input id="IDCardNO" type="checkbox" class="certificate_type" name="certificate_type" value="IDCardNO">';#}
+                {#               AxfQR += '<label for="IDCardNO">身份证</label></div><div class="checkbox"><input id="Passport" type="checkbox" class="certificate_type" name="certificate_type" value="Passport">';#}
+                {#               AxfQR += '<label for="Passport">护照</label></div><div class="checkbox"><input id="HongKongPasser" type="checkbox" class="certificate_type" name="certificate_type" value="HongKongPasser">';#}
+                {#               AxfQR += '<label for="HongKongPasser">港澳居民来往内地通行证</label></div><div class="checkbox">';#}
+                {#               AxfQR += '<input id="TaiwanPasser" type="checkbox" class="certificate_type" name="certificate_type" value="TaiwanPasser">';#}
+                {#               AxfQR += '<label for="TaiwanPasser">台湾同胞来往内地通行证</label></div>';#}
+                {#               AxfQR += '<div class="checkbox"><input id="Other" type="checkbox" class="certificate_type" name="certificate_type" value="Other">';#}
+                {#               AxfQR += '<label for="Other">其它证件类型</label>';#}
+                {#               AxfQR += '</div></div></div></div></div></div></div>';#}
+                {#               return  AxfQR;#}
+                {#            }else{#}
+                {##}
+                {#                axf_bus = '<div class="portlet portlet-bus">';#}
+                {#                axf_bus += '<div class="portlet-heading bg-primary portlet-heading-bus">';#}
+                {#                axf_bus += '<h3 class="portlet-title">'+ bus_title + "&nbsp;&nbsp;&nbsp;&nbsp;状态：" + bus_status +'</h3>';#}
+                {#                axf_bus += '<div class="portlet-widgets"><span class="divider"></span></div>';#}
+                {#                axf_bus += '<div class="clearfix"></div></div></div>';#}
+                {#                return axf_bus#}
+                {#            }#}
+
+
+            })
+
+        })
+</script>
+{% endblock %}
+
+
+

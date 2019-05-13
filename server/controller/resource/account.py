@@ -11,7 +11,7 @@ from server.controller.resource import v2, BaseResource
 import hashlib
 
 from server.exception import BusinessException, PASSWORD_NOT_MATCH, ERROR, SUCCESS
-from server.model.News import Customer, MobileCodeRecord
+from server.models.News import Customer, MobileCodeRecord
 
 
 @v2.route('/register')
