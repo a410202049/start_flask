@@ -129,8 +129,8 @@ class SendMsgCode(BaseResource):
 
         resp = self._post(current_app.config.get('MSG_URL'), para, headers)
 
-        # if resp['code'] != '000000':
-        #     return self.make_response(ERROR, u'短信发送失败')
+        if resp['code'] != '000000':
+            return self.make_response(ERROR, u'短信发送失败')
 
         mobile_record = MobileCodeRecord()
         mobile_record.mobile = mobile
