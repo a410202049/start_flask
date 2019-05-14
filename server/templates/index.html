@@ -9,9 +9,9 @@
         <div class="banner-box clearfix">
             <div class="layui-carousel" id="banner">
                 <div carousel-item>
-                    <div><a href="#"><img src="{{ url_for('static',filename='home//images/banner1.jpg', _external=True) }}" alt=""></a></div>
-                    <div><a href="#"><img src="{{ url_for('static',filename='home/images/banner2.jpg', _external=True) }}" alt=""></a></div>
-                    <div><a href="#"><img src="{{ url_for('static',filename='home/images/banner3.jpg', _external=True) }}" alt=""></a></div>
+                    {% for banner in banners %}
+                        <div><a href="{{ banner.href }}"><img src="{{ banner.img_url }}" alt="{{ banner.title }}"></a></div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="banner-article">
@@ -40,65 +40,36 @@
                 <div class="article_category_item">
                     <p>最新文章</p>
                     <div class="article_list">
-                        <div class="article_item">
-                            <div class="shadow-wrapper-card"></div>
-                            <div class="shadow-content clearfix">
-                                <a href="#" class="article_pic">
-                                    <img src="{{ url_for('static',filename='home/images/article1.jpg', _external=True) }}" alt="">
-                                </a>
-                                <div class="article_item_info">
-                                    <div class="article_title_header ellipsis-2">
-                                        <span class="article_tag">职场</span>
-                                        <a href="#" class="article_title">做计划，千万要避开这5个误区！</a>
-                                    </div>
-                                    <div class="article_description ellipsis-2">
-                                        <a href="#">
-                                            选择去驻外并不是一个简单的决定。海外经历也许不只是职业生涯的一笔，它还有可能影响整个职业发展路径。
-                                        </a>
-                                    </div>
-                                    <div class="article_footer_bar">
-                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                        <a class="kr-flow-bar-author" href="#">
-                                            领英LinkedIn
-                                        </a>
-                                        <span class="kr-flow-bar-time">
-                                            <i class="kr-flow-bar-time-icon"></i>17分钟前
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="article_item">
-                            <div class="shadow-wrapper-card"></div>
-                            <div class="shadow-content clearfix">
-                                <a href="#" class="article_pic">
-                                    <img src="{{ url_for('static',filename='home/images/article2.jpg', _external=True) }}" alt="">
-                                </a>
-                                <div class="article_item_info">
-                                    <div class="article_title_header ellipsis-2">
-                                        <span class="article_tag">职场</span>
-                                        <a href="#" class="article_title">出海日报 | 字节跳动投资的新闻聚合平台Dailyhunt欲进行融资；新加坡大数据提供商AirTrunk完成3.32亿美</a>
-                                    </div>
-                                    <div class="article_description ellipsis-2">
-                                        <a href="#">
-                                            以及，日本乐天资本和新加坡投资基金 EV Growth 共同领投新加坡返利平台 ShopBack 4500万美元融资；软银雇佣摩根大通等投行高管管理旗下专注拉美地区投资的50亿美元基金；新加坡生活方式平台 Clozette 完成1000万美元 C 轮融资。
-                                        </a>
-                                    </div>
-                                    <div class="article_footer_bar">
-                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                        <a class="kr-flow-bar-author" href="#">
-                                            魏佩琳@36氪出海
-                                        </a>
-                                        <span class="kr-flow-bar-time">
-                                            <i class="kr-flow-bar-time-icon"></i>23分钟前
-                                        </span>
+                        {% for new_article in new_articles %}
+                            <div class="article_item">
+                                <div class="shadow-wrapper-card"></div>
+                                <div class="shadow-content clearfix">
+                                    <a href="#" class="article_pic">
+                                        <img src="{{ new_article.cover_pic }}" alt="{{ new_article.title }}">
+                                    </a>
+                                    <div class="article_item_info">
+                                        <div class="article_title_header ellipsis-2">
+                                            <span class="article_tag">{{ new_article.category_name }}</span>
+                                            <a href="#" class="article_title">{{ new_article.title }}</a>
+                                        </div>
+                                        <div class="article_description ellipsis-2">
+                                            <a href="#">
+                                                {{ new_article.description }}
+                                            </a>
+                                        </div>
+                                        <div class="article_footer_bar">
+{#                                            <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>#}
+                                            <a class="kr-flow-bar-author" href="javascript:void(0);">
+                                                {% if new_article.nickname %}{{ new_article.nickname }}{% else %}{{ new_article.username }}{% endif %}
+                                            </a>
+                                            <span class="kr-flow-bar-time">
+                                                <i class="kr-flow-bar-time-icon"></i>{{ new_article.create_time | friendly_time }}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="article_category_item">
@@ -138,67 +109,40 @@
                         </div>
                     </div>
                     <div class="article_list">
-                        <div class="article_item">
-                            <div class="shadow-wrapper-card"></div>
-                            <div class="shadow-content clearfix">
-                                <a href="#" class="article_pic">
-                                    <img src="{{ url_for('static',filename='home/images/article1.jpg', _external=True) }}" alt="">
-                                </a>
-                                <div class="article_item_info">
-                                    <div class="article_title_header ellipsis-2">
-                                        <span class="article_tag">职场</span>
-                                        <a href="#" class="article_title">做计划，千万要避开这5个误区！</a>
-                                    </div>
-                                    <div class="article_description ellipsis-2">
-                                        <a href="#">
-                                            选择去驻外并不是一个简单的决定。海外经历也许不只是职业生涯的一笔，它还有可能影响整个职业发展路径。
-                                        </a>
-                                    </div>
-                                    <div class="article_footer_bar">
-                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                        <a class="kr-flow-bar-author" href="#">
-                                            领英LinkedIn
-                                        </a>
-                                        <span class="kr-flow-bar-time">
-                                            <i class="kr-flow-bar-time-icon"></i>17分钟前
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article_item">
-                            <div class="shadow-wrapper-card"></div>
-                            <div class="shadow-content clearfix">
-                                <a href="#" class="article_pic">
-                                    <img src="{{ url_for('static',filename='home/images/article2.jpg', _external=True) }}" alt="">
-                                </a>
-                                <div class="article_item_info">
-                                    <div class="article_title_header ellipsis-2">
-                                        <span class="article_tag">职场</span>
-                                        <a href="#" class="article_title">出海日报 | 字节跳动投资的新闻聚合平台Dailyhunt欲进行融资；新加坡大数据提供商AirTrunk完成3.32亿美</a>
-                                    </div>
-                                    <div class="article_description ellipsis-2">
-                                        <a href="#">
-                                            以及，日本乐天资本和新加坡投资基金 EV Growth 共同领投新加坡返利平台 ShopBack 4500万美元融资；软银雇佣摩根大通等投行高管管理旗下专注拉美地区投资的50亿美元基金；新加坡生活方式平台 Clozette 完成1000万美元 C 轮融资。
-                                        </a>
-                                    </div>
-                                    <div class="article_footer_bar">
-                                        <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>
-                                        <a class="kr-flow-bar-author" href="#">
-                                            魏佩琳@36氪出海
-                                        </a>
-                                        <span class="kr-flow-bar-time">
-                                            <i class="kr-flow-bar-time-icon"></i>23分钟前
-                                        </span>
+                        {% for top_article in top_articles %}
+                            <div class="article_item">
+                                <div class="shadow-wrapper-card"></div>
+                                <div class="shadow-content clearfix">
+                                    <a href="#" class="article_pic">
+                                        <img src="{{ top_article.cover_pic }}" alt="{{ top_article.title }}">
+                                    </a>
+                                    <div class="article_item_info">
+                                        <div class="article_title_header ellipsis-2">
+                                            <span class="article_tag">{{ top_article.category_name }}</span>
+                                            <a href="#" class="article_title">{{ top_article.title }}</a>
+                                        </div>
+                                        <div class="article_description ellipsis-2">
+                                            <a href="#">
+                                                {{ top_article.description }}
+                                            </a>
+                                        </div>
+                                        <div class="article_footer_bar">
+{#                                            <span class="kr-flow-bar-motif">来自主题：<a href="#" target="_blank">职场新鲜人</a>|</span>#}
+                                            <a class="kr-flow-bar-author" href="javascript:void(0);">
+                                                {% if top_article.nickname %}{{ top_article.nickname }}{% else %}{{ top_article.username }}{% endif %}
+                                            </a>
+                                            <span class="kr-flow-bar-time">
+                                                <i class="kr-flow-bar-time-icon"></i>{{ top_article.create_time | friendly_time }}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        {% endfor %}
                     </div>
                 </div>
                 <p class="index_button_p">
-                    <span class="load_more">查看更多资讯</span>
+                    <span class="load_more" data-page="1">查看更多资讯</span>
                 </p>
             </div>
             <div class="article_box_right">
@@ -232,7 +176,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="look_more">查看更多</a>
+                            <a href="javascript:void(0);" class="look_more">查看更多</a>
                         </div>
                     </div>
                 </div>
@@ -243,80 +187,61 @@
                     </div>
                     <div class="sider_bar_box">
                         <div class="article_hot_box">
-                            <div class="article_hot_item">
-                                <span class="hot_icon" style="background-position:0 -153px"></span>
-                                <a href="#" class="hot_img_link">
-                                    <img src="{{ url_for('static',filename='home/images/hot1.jpg', _external=True) }}" alt="" class="hot_img">
-                                </a>
-                                <p>
-                                    <a href="#">氪星晚报 | 奔驰母公司戴姆勒道歉了；Gucci CEO将出资1亿欧元修复巴黎圣母院；抖音回应印度法院下架TikTok</a>
-                                </p>
-                            </div>
-                            <div class="article_hot_item">
-                                <span class="hot_icon" style="background-position:0 -191px"></span>
-                                <a href="#" class="hot_img_link">
-                                    <img src="{{ url_for('static',filename='home/images/hot2.jpg', _external=True) }}" alt="" class="hot_img">
-                                </a>
-                                <p>
-                                    <a href="#">我在云南种大麻</a>
-                                </p>
-                            </div>
-                            <div class="article_hot_item small-item">
-                                <div class="small-item-box">
-                                    <span class="small-item-label active">3</span>
-                                    <a href="#" target="_blank" class="small-item-label-a">
-                                        <img class="scaleBig" src="{{ url_for('static',filename='home/images/small1.jpg', _external=True) }}" >
-                                    </a>
-                                </div>
-                                <div class="small-item-box-right">
-                                    <a href="#" class="small-item-description">
-                                        8点1氪 | 苹果将继续用高通芯片；西安奔驰维权女车主和解；法国三大集团欲捐4亿欧元重修巴黎圣母院
-                                    </a>
-                                    <span class="small-item-time">11小时前</span>
-                                </div>
-                            </div>
-                            <div class="article_hot_item small-item">
-                                <div class="small-item-box">
-                                    <span class="small-item-label">4</span>
-                                    <a href="#" target="_blank" class="small-item-label-a">
-                                        <img class="scaleBig" src="{{ url_for('static',filename='home/images/small2.jpg', _external=True) }}" >
-                                    </a>
-                                </div>
-                                <div class="small-item-box-right">
-                                    <a href="#" class="small-item-description">
-                                        焦点分析 | 入局零售业 400 天，腾讯“交卷”
-                                    </a>
-                                    <span class="small-item-time">9小时前</span>
-                                </div>
-                            </div>
-                            <div class="article_hot_item small-item">
-                                <div class="small-item-box">
-                                    <span class="small-item-label">5</span>
-                                    <a href="#" target="_blank" class="small-item-label-a">
-                                        <img class="scaleBig" src="{{ url_for('static',filename='home/images/small2.jpg', _external=True) }}" >
-                                    </a>
-                                </div>
-                                <div class="small-item-box-right">
-                                    <a href="#" class="small-item-description">
-                                        焦点分析 | 入局零售业 400 天，腾讯“交卷”
-                                    </a>
-                                    <span class="small-item-time">9小时前</span>
-                                </div>
-                            </div>
-                            <div class="article_hot_item small-item">
-                                <div class="small-item-box">
-                                    <span class="small-item-label">6</span>
-                                    <a href="#" target="_blank" class="small-item-label-a">
-                                        <img class="scaleBig" src="{{ url_for('static',filename='home/images/small2.jpg', _external=True) }}" >
-                                    </a>
-                                </div>
-                                <div class="small-item-box-right">
-                                    <a href="#" class="small-item-description">
-                                        焦点分析 | 入局零售业 400 天，腾讯“交卷”
-                                    </a>
-                                    <span class="small-item-time">9小时前</span>
-                                </div>
-                            </div>
+
+                            {% for hot_article in hot_articles %}
+                                {% if loop.index == 1 %}
+                                    <div class="article_hot_item">
+                                        <span class="hot_icon" style="background-position:0 -153px"></span>
+                                        <a href="#" class="hot_img_link">
+                                            <img src="{{ hot_article.cover_pic }}" alt="" class="hot_img">
+                                        </a>
+                                        <p>
+                                            <a href="#">{{ hot_article.description}}</a>
+                                        </p>
+                                    </div>
+                                {% elif loop.index == 2 %}
+                                    <div class="article_hot_item">
+                                        <span class="hot_icon" style="background-position:0 -191px"></span>
+                                        <a href="#" class="hot_img_link">
+                                            <img src="{{ hot_article.cover_pic }}" alt="" class="hot_img">
+                                        </a>
+                                        <p>
+                                            <a href="#">{{ hot_article.description}}</a>
+                                        </p>
+                                    </div>
+                                {% elif loop.index == 3 %}
+                                    <div class="article_hot_item small-item">
+                                        <div class="small-item-box">
+                                            <span class="small-item-label active">{{ loop.index }}</span>
+                                            <a href="#" target="_blank" class="small-item-label-a">
+                                                <img class="scaleBig" src="{{ hot_article.cover_pic }}" >
+                                            </a>
+                                        </div>
+                                        <div class="small-item-box-right">
+                                            <a href="#" class="small-item-description">
+                                                {{ hot_article.description}}
+                                            </a>
+                                            <span class="small-item-time">{{ hot_article.create_time | friendly_time }}</span>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="article_hot_item small-item">
+                                        <div class="small-item-box">
+                                            <span class="small-item-label">{{ loop.index }}</span>
+                                            <a href="#" target="_blank" class="small-item-label-a">
+                                                <img class="scaleBig" src="{{ hot_article.cover_pic }}" >
+                                            </a>
+                                        </div>
+                                        <div class="small-item-box-right">
+                                            <a href="#" class="small-item-description">
+                                               {{ hot_article.description}}
+                                            </a>
+                                            <span class="small-item-time">{{ hot_article.create_time | friendly_time }}</span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
                         </div>
                     </div>
                 </div>
@@ -344,6 +269,34 @@
                 $(this).siblings(".sider_bar_article_item_detail").slideToggle();
             });
 
+
+            $('.load_more').click(function () {
+                var page = $(this).data('page');
+                var next_page = page + 1;
+                var _this = this;
+                $.ajax({
+                    data : {
+                        page: next_page
+                    },
+                    type : "GET",
+                    url : "/v2/more-article",
+                    dataType : "json",
+                    success: function(data) {
+                        //data是返回的hash,key之类的值，key是定义的文件名
+                        console.log(data);
+                        if(data.resp_code == 'RES0001'){
+                            layer.msg(data.resp_desc, {icon: 5});
+                        }else{
+                            $(_this).data('page', next_page);
+                            console.log(data);
+                            
+                        }
+                    },
+                    error:function(){
+                        layer.msg("获取失败", {icon: 5});
+                    }
+                });
+            });
 
 
 

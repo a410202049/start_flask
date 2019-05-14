@@ -27,7 +27,7 @@ class Upload(object):
 
     def upload_file(self):
         file = request.files['file']
-        basedir = os.path.abspath(os.path.dirname(__file__))
+        # basedir = os.path.abspath(os.path.dirname(__file__))
         if file and self.allowed_file(file.filename):
 
             # 如果上传目录不存在，则创建一个目录

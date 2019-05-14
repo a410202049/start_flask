@@ -4,6 +4,9 @@
 from server.app import db
 from server.controller.home import CommonView
 from flask import session
+
+from server.models.ArticleModel import Article, ArticleCategory
+from server.models.CommonModel import BannerCfg
 from server.models.News import Customer
 
 class HomeBase(CommonView):
@@ -23,7 +26,62 @@ class HomeBase(CommonView):
 
 
 class HomeIndex(HomeBase):
-    pass
+
+    def render_data(self):
+        banners = db.session.query(
+            BannerCfg
+        ).order_by(BannerCfg.sort.desc()).all()
+
+        new_articles = db.session.query(
+            Article.id,
+            Article.title,
+            Article.description,
+            Article.cover_pic,
+            Article.create_time,
+            ArticleCategory.name.label('category_name'),
+            Customer.nickname,
+            Customer.username
+
+        ).join(
+            ArticleCategory, ArticleCategory.id == Article.cid
+        ).join(
+            Customer, Customer.id == Article.author_id
+        ).order_by(Article.create_time.desc()).limit(3).all()
+
+        hot_articles = db.session.query(
+            Article.id,
+            Article.title,
+            Article.description,
+            Article.cover_pic,
+            Article.create_time,
+            ArticleCategory.name.label('category_name')
+        ).join(
+            ArticleCategory, ArticleCategory.id == Article.cid
+        ).filter(
+            Article.is_hot == 1
+        ).order_by(Article.create_time.desc()).limit(10).all()
+
+        top_articles = db.session.query(
+            Article.id,
+            Article.title,
+            Article.description,
+            Article.cover_pic,
+            Article.create_time,
+            ArticleCategory.name.label('category_name')
+        ).join(
+            ArticleCategory, ArticleCategory.id == Article.cid
+        ).filter(
+            Article.is_top == 1
+        ).order_by(Article.create_time.desc()).limit(2).all()
+
+
+        return {
+            "banners": banners,
+            "new_articles": new_articles,
+            "hot_articles": hot_articles,
+            "top_articles": top_articles,
+        }
+
 
 
 class ArticleDetail(HomeBase):

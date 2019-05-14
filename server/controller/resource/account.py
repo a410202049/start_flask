@@ -11,6 +11,7 @@ from server.controller.resource import v2, BaseResource
 import hashlib
 
 from server.exception import BusinessException, PASSWORD_NOT_MATCH, ERROR, SUCCESS
+from server.models.ArticleModel import Article, ArticleCategory
 from server.models.News import Customer, MobileCodeRecord
 
 
@@ -149,3 +150,40 @@ class SendMsgCode(BaseResource):
         db.session.commit()
         return self.make_response(SUCCESS, u'发送成功')
 
+
+@v2.route('/more-article')
+class MoreArticle(BaseResource):
+    def get(self):
+        page_size = request.args.get('page_size', 2)
+        page = request.args.get('page', 2)
+
+        top_article_obj = db.session.query(
+            Article.id,
+            Article.title,
+            Article.description,
+            Article.cover_pic,
+            Article.create_time,
+            ArticleCategory.name.label('category_name')
+        ).join(
+            ArticleCategory, ArticleCategory.id == Article.cid
+        ).filter(
+            Article.is_top == 1
+        ).order_by(Article.create_time.desc()).paginate(int(page), int(page_size), False)
+
+        top_article_items = top_article_obj.items
+
+        top_articles = []
+        for top_article in top_article_items:
+            _ = {}
+            _['id'] = top_article.id
+            _['title'] = top_article.title
+            _['description'] = top_article.description
+            _['cover_pic'] = top_article.cover_pic
+            _['create_time'] = str(top_article.create_time)
+            _['category_name'] = top_article.category_name
+            top_articles.append(_)
+
+        if not top_articles:
+            return self.make_response(ERROR, u'没有更多资讯了')
+
+        return self.make_response(SUCCESS, u'加载成功', data=top_articles)
