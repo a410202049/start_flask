@@ -151,11 +151,11 @@ class SendMsgCode(BaseResource):
         return self.make_response(SUCCESS, u'发送成功')
 
 
-@v2.route('/more-article')
+@v2.route('/more-article/<int:page>', endpoint="more-article")
 class MoreArticle(BaseResource):
-    def get(self):
+    def get(self, page):
         page_size = request.args.get('page_size', 2)
-        page = request.args.get('page', 2)
+        # page = request.args.get('page', 2)
 
         top_article_obj = db.session.query(
             Article.id,

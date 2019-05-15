@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import time
 
-from flask import Response
+from flask import Response, jsonify
 import json
 from flask_restplus import Resource
 
@@ -48,7 +48,7 @@ class BaseResource(Resource):
         )
         if data:
             resp['data'] = data
-        return resp
+        return jsonify(resp)
 
     def _post(self, url, data, headers=None):
         data = json.dumps(data)

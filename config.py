@@ -12,6 +12,7 @@ class Config:
     VERSION = '1.0.1'
     LOG_FILE = 'info.log'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JSON_AS_ASCII = False
     # app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
 
     # 日志配置项

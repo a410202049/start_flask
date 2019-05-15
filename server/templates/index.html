@@ -275,11 +275,11 @@
                 var next_page = page + 1;
                 var _this = this;
                 $.ajax({
-                    data : {
-                        page: next_page
-                    },
+//                    data : {
+//                        page: next_page
+//                    },
                     type : "GET",
-                    url : "/v2/more-article",
+                    url : "{{ url_for('more-article',page='0')}}".replace('0', next_page),
                     dataType : "json",
                     success: function(data) {
                         //data是返回的hash,key之类的值，key是定义的文件名
