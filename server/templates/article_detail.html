@@ -235,7 +235,7 @@
 
                 $.ajax({
                     type : "GET",
-                    url : "{{ url_for('article-collet',article_id=article.id )}}",
+                    url : "{{ url_for('article-collet',article_id=article.id ,_external=True)}}",
                     dataType : "json",
                     success: function(resp) {
                         //data是返回的hash,key之类的值，key是定义的文件名
