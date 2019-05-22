@@ -5,31 +5,27 @@
     <div class="article_detail_box">
         <div class="article">
             <div class="article_cover_pic">
-                <img src="{{ url_for('static',filename='images/ranrt0kevxa8yr1q.png', _external=True) }}" alt="">
+                <img src="{{ url_for('static',filename='home/images/ranrt0kevxa8yr1q.png', _external=True) }}" alt="">
             </div>
             <div class="article_title">
-                一周观察+ | 《复联4》捞钱有理，奔驰车主开启“短视频维权
+                {{ article.title }}
             </div>
             <div class="publish_box">
-                <a href="#">观察+的小姐姐们</a>
-                <span class="publish_time">· 37分钟前</span>
+                <a href="#">{{ author.nickname }}</a>
+                <span class="publish_time">· {{ article.create_time | friendly_time }}</span>
             </div>
             <div class="article_description">
-                “开始和结束”是本周新商业世界的关键词。
+                {{ article.description }}
             </div>
             <div class="article_detail_content">
-                <address><p><span>（以下内容是36氪音频节目《观察+》的文字版，收听更多精彩解读，请在36氪app订阅《观察+》）</span></p></address>
-                <h3><a href="http://3g.163.com/news/article_cambrian/EC1G1JRG05373Y3P.html" target="_blank">最新研究发现：人在死的时候知道自己已经死了</a></h3>
-                <p><a href="https://36kr.com/newsflashes/163955" target="_blank">Uber宣布其自动驾驶部门获软银丰田等10亿美元注资</a></p>
-                <p><span>据最新的研究发现，当一个人死亡时，能够意识到自己已经死了，因为即便心脏停跳，身体无法移动，大脑仍然是清醒的状态，甚至能够听到医生宣告自己已经死亡。</span><br></p>
-                <p><img alt="氪星晚报 | 百度秘密孵化音乐类新项目；Uber自动驾驶部门获软银等10亿美元注资；游戏版号申报正式重启" src="https://pic.36krcnd.com/201904/19103953/sf9z51zp4gcixu2d.jpg!1200"></p>
-                <p>近日，亚马逊退出中国，宣布从7月18日起将停止向第三方卖家提供服务。此前刘强东曾表示，亚马逊在中国做不起来的原因，就是对中国团队没有信任，不授权。“它的总经理一直是外国人，从来没有在中国生活过。”</p>
-
+                {% autoescape false %}
+                    {{ article.content }}
+                {% endautoescape %}
             </div>
             <div class="article-footer-txt"><p>本文经授权发布，不代表36氪立场。如若转载请联系原作者。</p></div>
             <div class="adv_box">
                 <a href="#">
-                    <img src="{{ url_for('static',filename='images/v2_1555496072495_img_jpg.jpg', _external=True) }}" alt="">
+                    <img src="{{ url_for('static',filename='home/images/v2_1555496072495_img_jpg.jpg', _external=True) }}" alt="">
                 </a>
             </div>
             <div class="thumb-up-box">
@@ -40,14 +36,14 @@
             </div>
             <div class="author_box">
                 <a href="#" class="author_avatar">
-                    <img src="{{ url_for('static',filename='images/6sl6i37s8bl1w9cf!120.jpg', _external=True) }}" alt="">
+                    <img src="{{ author.avatar }}" alt="">
                 </a>
-                <a href="#" class="author_name">李汝晴</a>
+                <a href="#" class="author_name">{{ author.nickname }}</a>
                 <span class="author-level">新锐作者</span>
                 <div class="actions-items">
                     <div class="actions-item item-collection-action">
                         <div class="actions-item-icon"></div>
-                        <div class="action-num collection-num">0</div>
+                        <div class="action-num collection-num">{{ collet_num }}</div>
                     </div>
                     <div class="actions-item item-tocomment-action">
                         <div class="actions-item-icon"></div>
@@ -65,7 +61,7 @@
                     <textarea id="comment_edit" class="comment-input" placeholder="你怎么看..."></textarea>
                     <div class="comment_footer_box">
                         <div class="comment_user_info">
-                            <img  class="comment_user_avatar" src="{{ url_for('static',filename='images/default_avatar.e19c4635.png', _external=True) }}" alt="">
+                            <img  class="comment_user_avatar" src="{{ url_for('static',filename='home/images/default_avatar.e19c4635.png', _external=True) }}" alt="">
                             <span class="comment_user_name">新用户15031104</span>
                         </div>
 
@@ -91,7 +87,7 @@
                     <ul>
                         <li class="comment-list-item clearfix">
                             <div class="comment-list-item-avatar">
-                                <img src="{{ url_for('static',filename='images/default_avatar.e19c4635.png', _external=True) }}">
+                                <img src="{{ url_for('static',filename='home/images/default_avatar.e19c4635.png', _external=True) }}">
                             </div>
                             <div class="comment-list-item-detail">
 
@@ -140,7 +136,7 @@
 
                         <li class="comment-list-item clearfix">
                             <div class="comment-list-item-avatar">
-                                <img src="{{ url_for('static',filename='images/default_avatar.e19c4635.png', _external=True) }}">
+                                <img src="{{ url_for('static',filename='home/images/default_avatar.e19c4635.png', _external=True) }}">
                             </div>
                             <div class="comment-list-item-detail">
 
@@ -172,15 +168,15 @@
                 <div class="author_info_box">
                     <div class="author_info">
                         <div class="author_info_header">
-                            <img class="author_avatar" src="https://krplus-pic.b0.upaiyun.com/avatar/201904/04023113/aeam58vcu6sl1jdc!120">
+                            <img class="author_avatar" src="{{ author.avatar }}">
                             <div class="author_text">
-                                <a href="#" class="author_name">魏佩琳@36氪出海</a>
+                                <a href="#" class="author_name">{{ author.nickname }}</a>
                                 <span class="author-role">新锐作者</span>
                             </div>
 
                         </div>
-                        <p class="author_description">关注出海 交流可加微信：13292050986</p>
-                        <span class="sider_bar_title_icon">发表文章19篇</span>
+                        <p class="author_description">关注出海 交流可加微信</p>
+                        <span class="sider_bar_title_icon">发表文章{{ author_article_num }}篇</span>
                         <div class="inner-wrapper">
                             <div class="section">
                                 <span class="sider_bar_title_icon" style="color: #262626;">最近内容</span>
@@ -231,6 +227,40 @@
 
             //调用
             statInputNum(textArea,word,submit_btn);
+
+
+            $('.actions-item-icon').click(function () {
+                var _this = this;
+                var collet_num = parseInt($('.collection-num').html());
+
+                $.ajax({
+                    type : "GET",
+                    url : "{{ url_for('article-collet',article_id=article.id )}}",
+                    dataType : "json",
+                    success: function(resp) {
+                        //data是返回的hash,key之类的值，key是定义的文件名
+                        console.log(resp);
+                        if(resp.resp_code == 'RES0001'){
+                            layer.msg(resp.resp_desc, {icon: 5});
+                        }else if(resp.resp_code=='RES0003'){
+                            $('.login').click();
+                        }else{
+                            if(resp.resp_code=='RES0004'){
+                                $(_this).addClass('active');
+                                $('.collection-num').html(collet_num+1)
+                            }else{
+                                $(_this).removeClass('active');
+                                var num = collet_num-1 < 0 ? 0 : collet_num-1;
+                                $('.collection-num').html(num);
+                            }
+                        }
+                    },
+                    error:function(){
+                        layer.msg("获取失败", {icon: 5});
+                    }
+                });
+            })
+
 
         });
 

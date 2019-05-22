@@ -8,7 +8,7 @@ from flask import current_app
 import json
 
 from server.controller.resource import BaseResource
-from server.exception import ERROR
+from server.exception import ERROR, NOT_LOGIN
 
 resource = BaseResource()
 
@@ -35,7 +35,7 @@ def home_login_required(func):
         current_user = session.get('current_user', None)
         if not current_user:
             if request.is_xhr:
-                return resource.make_response(ERROR, '请登录后，再继续操作')
+                return resource.make_response(NOT_LOGIN, '请登录后，再继续操作')
                 # return CommonResponse(ResultType.Failed, message=u"请登录后，再继续操作").to_json()
             else:
                 print 'not login'

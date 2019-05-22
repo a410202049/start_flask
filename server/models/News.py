@@ -42,3 +42,16 @@ class MobileCodeRecord(db.Model):
                          doc=u'更新时间')
 
 
+class ArticleCollet(db.Model):
+    """
+    文章收藏
+    """
+    __tablename__ = 't_article_collet'
+    id = db.Column(db.Integer, primary_key=True)
+    article_id = db.Column(db.Integer)
+    uid = db.Column(db.Integer)
+    create_time = Column("create_time", DATETIME, nullable=False, default=datetime.now, doc=u'创建时间')
+    update_time = Column("update_time", DATETIME, nullable=False, default=datetime.now, onupdate=datetime.now,
+                         doc=u'更新时间')
+
+

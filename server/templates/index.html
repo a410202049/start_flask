@@ -44,16 +44,16 @@
                             <div class="article_item">
                                 <div class="shadow-wrapper-card"></div>
                                 <div class="shadow-content clearfix">
-                                    <a href="#" class="article_pic">
+                                    <a href="{{ url_for('article_detail',article_id=new_article.id ) }}" class="article_pic">
                                         <img src="{{ new_article.cover_pic }}" alt="{{ new_article.title }}">
                                     </a>
                                     <div class="article_item_info">
                                         <div class="article_title_header ellipsis-2">
                                             <span class="article_tag">{{ new_article.category_name }}</span>
-                                            <a href="#" class="article_title">{{ new_article.title }}</a>
+                                            <a href="{{ url_for('article_detail',article_id=new_article.id ) }}" class="article_title">{{ new_article.title }}</a>
                                         </div>
                                         <div class="article_description ellipsis-2">
-                                            <a href="#">
+                                            <a href="{{ url_for('article_detail',article_id=new_article.id ) }}">
                                                 {{ new_article.description }}
                                             </a>
                                         </div>
@@ -108,21 +108,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="article_list">
+                    <div class="article_list" id="top_article_list">
                         {% for top_article in top_articles %}
                             <div class="article_item">
                                 <div class="shadow-wrapper-card"></div>
                                 <div class="shadow-content clearfix">
-                                    <a href="#" class="article_pic">
+                                    <a href="{{ url_for('article_detail',article_id=top_article.id ) }}" class="article_pic">
                                         <img src="{{ top_article.cover_pic }}" alt="{{ top_article.title }}">
                                     </a>
                                     <div class="article_item_info">
                                         <div class="article_title_header ellipsis-2">
                                             <span class="article_tag">{{ top_article.category_name }}</span>
-                                            <a href="#" class="article_title">{{ top_article.title }}</a>
+                                            <a href="{{ url_for('article_detail',article_id=top_article.id ) }}" class="article_title">{{ top_article.title }}</a>
                                         </div>
                                         <div class="article_description ellipsis-2">
-                                            <a href="#">
+                                            <a href="{{ url_for('article_detail',article_id=top_article.id ) }}">
                                                 {{ top_article.description }}
                                             </a>
                                         </div>
@@ -251,10 +251,49 @@
     </div>
 {% endblock %}
 {% block script %}
+
+    <script id="more-article" type="text/html">
+        <%# layui.each(d, function(index, item){ %>
+        <div class="article_item">
+            <div class="shadow-wrapper-card"></div>
+            <div class="shadow-content clearfix">
+                <a href="<% item.article_url %>" class="article_pic">
+                    <img src="<% item.cover_pic %>" alt="<% item.title %>">
+                </a>
+                <div class="article_item_info">
+                    <div class="article_title_header ellipsis-2">
+                        <span class="article_tag"><% item.category_name %></span>
+                        <a href="<% item.article_url %>" class="article_title"><% item.title %></a>
+                    </div>
+                    <div class="article_description ellipsis-2">
+                        <a href="<% item.article_url %>">
+                            <% item.description %>
+                        </a>
+                    </div>
+                    <div class="article_footer_bar">
+
+                        <span class="kr-flow-bar-time">
+                            <i class="kr-flow-bar-time-icon"></i><% item.create_time %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%# }) %>
+
+    </script>
+
     <script>
-        layui.use('carousel', function(){
+        layui.use(['carousel','laytpl'], function(){
             var $ = layui.$;
             var carousel = layui.carousel;
+            var laytpl = layui.laytpl;
+            laytpl.config({
+              open: '<%',
+              close: '%>'
+            });
+
+
             //建造实例
             carousel.render({
                 elem: '#banner'
@@ -281,14 +320,24 @@
                     type : "GET",
                     url : "{{ url_for('more-article',page='0')}}".replace('0', next_page),
                     dataType : "json",
-                    success: function(data) {
+                    success: function(resp) {
                         //data是返回的hash,key之类的值，key是定义的文件名
-                        console.log(data);
-                        if(data.resp_code == 'RES0001'){
-                            layer.msg(data.resp_desc, {icon: 5});
+                        console.log(resp);
+                        if(resp.resp_code == 'RES0001'){
+                            layer.msg(resp.resp_desc, {icon: 5});
                         }else{
                             $(_this).data('page', next_page);
-                            console.log(data);
+                            console.log(resp.data);
+
+                            var getTpl = $('#more-article').html();
+                            laytpl(getTpl).render(resp.data, function(html){
+                              $('#top_article_list').append(html);
+
+                            });
+
+
+
+
                             
                         }
                     },

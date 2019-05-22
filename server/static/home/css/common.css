@@ -1346,7 +1346,9 @@ a, a:hover {
     background-image:url(../images/ic_tab_collection_normal@2x.2fcf6582.png);
 }
 
-.article_detail_box .article .author_box .actions-item.item-collection-action .actions-item-icon:hover{
+.article_detail_box .article .author_box .actions-item.item-collection-action .actions-item-icon:hover,
+.article_detail_box .article .author_box .actions-item.item-collection-action .actions-item-icon.active
+{
     background-image:url(../images/ic_tab_collection_selected@2x.ddd58bac.png);
 }
 

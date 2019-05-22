@@ -10,9 +10,12 @@ from server.controller.resource import v2, BaseResource
 
 import hashlib
 
-from server.exception import BusinessException, PASSWORD_NOT_MATCH, ERROR, SUCCESS
+from server.decorators.common_decorators import home_login_required
+from server.exception import BusinessException, PASSWORD_NOT_MATCH, ERROR, SUCCESS, ADD_COLLET_SUCCESS, \
+    CANCEL_COLLET_SUCCESS
+from server.helpers.common_helper import friendly_time
 from server.models.ArticleModel import Article, ArticleCategory
-from server.models.News import Customer, MobileCodeRecord
+from server.models.News import Customer, MobileCodeRecord, ArticleCollet
 
 
 @v2.route('/register')
@@ -179,11 +182,48 @@ class MoreArticle(BaseResource):
             _['title'] = top_article.title
             _['description'] = top_article.description
             _['cover_pic'] = top_article.cover_pic
-            _['create_time'] = str(top_article.create_time)
+            _['create_time'] = friendly_time(top_article.create_time)
             _['category_name'] = top_article.category_name
+            _['article_url'] = url_for('article_detail', article_id=top_article.id, _external=True)
+
             top_articles.append(_)
 
         if not top_articles:
             return self.make_response(ERROR, u'没有更多资讯了')
 
         return self.make_response(SUCCESS, u'加载成功', data=top_articles)
+
+
+@v2.route('/article-collet/<int:article_id>', endpoint="article-collet")
+class ArticleColletResource(BaseResource):
+    @home_login_required
+    def get(self, article_id):
+        current_user = session.get('current_user', None)
+        uid = current_user['uid']
+
+        article = db.session.query(
+            Article
+        ).filter(
+            Article.id == article_id
+        ).first()
+
+        if article.author_id == uid:
+            return self.make_response(ERROR, u'不能收藏自己发布的文章')
+
+        collet = db.session.query(
+            ArticleCollet
+        ).filter(
+            ArticleCollet.article_id == article_id,
+            ArticleCollet.uid == uid
+        ).first()
+        if not collet:
+            article_collet = ArticleCollet()
+            article_collet.uid = uid
+            article_collet.article_id = article_id
+            db.session.add(article_collet)
+            db.session.commit()
+            return self.make_response(ADD_COLLET_SUCCESS, u'添加收藏')
+        else:
+            db.session.delete(collet)
+            db.session.commit()
+            return self.make_response(CANCEL_COLLET_SUCCESS, u'取消收藏')
