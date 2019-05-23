@@ -42,12 +42,12 @@
                 <span class="author-level">新锐作者</span>
                 <div class="actions-items">
                     <div class="actions-item item-collection-action">
-                        <div class="actions-item-icon"></div>
+                        <div class="actions-item-icon {% if user_info %}{% if collet_status %}active{% endif %}{% endif %}"></div>
                         <div class="action-num collection-num">{{ collet_num }}</div>
                     </div>
                     <div class="actions-item item-tocomment-action">
                         <div class="actions-item-icon"></div>
-                        <div class="action-num comment-num">0</div>
+                        <div class="action-num comment-num">{{ comment_list|length }}</div>
                     </div>
                 </div>
             </div>
@@ -60,10 +60,24 @@
                 <div class="comment_edit_box">
                     <textarea id="comment_edit" class="comment-input" placeholder="你怎么看..."></textarea>
                     <div class="comment_footer_box">
-                        <div class="comment_user_info">
-                            <img  class="comment_user_avatar" src="{{ url_for('static',filename='home/images/default_avatar.e19c4635.png', _external=True) }}" alt="">
-                            <span class="comment_user_name">新用户15031104</span>
-                        </div>
+
+                        {% if not user_info %}
+                            <div class="not_login_box">
+                                <a href="javascript:void(0);" id="comment_login">登录</a>后参与讨论
+                            </div>
+                        {% else %}
+
+                            <div class="comment_user_info">
+                                <img  class="comment_user_avatar" src="{{ user_info.avatar }}" alt="">
+                                <span class="comment_user_name">{{ user_info.nickname }}</span>
+                            </div>
+
+                            <div class="reply_info_box" data-comment-id="0">
+                                回复：<span class="replay_nickname"></span>
+                                <i class="reply-close"></i>
+                            </div>
+
+                        {% endif %}
 
 
                         <div class="comment_footer_right">
@@ -77,7 +91,7 @@
 
                 <p>请回复有价值的信息，无意义的评论将很快被删除，账号将被禁止发言。</p>
             </div>
-
+            {% if comment_list %}
             <div class="comment-list-box">
                 <div class="common_title_box comment_title_box">
                     <span class="common_title_icon"></span>
@@ -85,79 +99,54 @@
                 </div>
                 <div class="comment-list">
                     <ul>
-                        <li class="comment-list-item clearfix">
-                            <div class="comment-list-item-avatar">
-                                <img src="{{ url_for('static',filename='home/images/default_avatar.e19c4635.png', _external=True) }}">
-                            </div>
-                            <div class="comment-list-item-detail">
+                        {% for comment in comment_list %}
+                            <li class="comment-list-item clearfix">
+                                <div class="comment-list-item-avatar">
+                                    <img src="{{ comment.user_avatar }}">
+                                </div>
+                                <div class="comment-list-item-detail">
 
-                                <div class="comment_left_box">
-                                        <span class="username">kerrygao</span>
-                                        <span class="comment_time"> · 4分钟前</span>
-                                </div>
-                                <div class="comment_right_box">
-                                    <a class="item-user-reply">回复</a>
-                                </div>
-                                <div class="comment_content_box">
-                                    <p class="comment_content">
-                                        pauline_Lund 交流，入群交流烦请备注：姓名+公司+职位。36氪出海同时也欢迎更多精英伙伴提供出海类优质原创稿件，邮箱 weipeilin@36kr.com，邮件备注：投稿-标题-作者姓名，感谢！
-                                    </p>
-                                    <div class="comment_reply_box">
-                                        <ul>
-                                            <li>
-                                                <div class="reply_left_box">
-                                                    <span class="username">kerrygao</span>
-                                                    <span class="comment_time"> · 4分钟前</span>
-                                                </div>
-                                                <div class="reply_left_right">
-                                                    <a class="item-user-reply">回复</a>
-                                                </div>
-                                                <p class="reply_content">
-                                                    36氪出海同时也欢迎更多精英伙伴提供出海
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <div class="reply_left_box">
-                                                    <span class="username">kerrygao</span>
-                                                    <span class="comment_time"> · 4分钟前</span>
-                                                </div>
-                                                <div class="reply_left_right">
-                                                    <a class="item-user-reply">回复</a>
-                                                </div>
-                                                <p class="reply_content">
-                                                    36氪出海同时也欢迎更多精英伙伴提供出海
-                                                </p>
-                                            </li>
-                                        </ul>
+                                    <div class="comment_left_box">
+                                            <span class="username">{{ comment.nickname }}</span>
+                                            <span class="comment_time"> · {{ comment.create_time | friendly_time}}</span>
+                                    </div>
+                                    <div class="comment_right_box">
+                                        <a class="item-user-reply" data-comment-id="{{ comment.comment_id }}">回复</a>
+                                    </div>
+                                    <div class="comment_content_box">
+                                        <p class="comment_content">
+                                            {{ comment.content }}
+                                        </p>
+                                        {% if comment.reply_list %}
+                                            <div class="comment_reply_box">
+                                                <ul>
+                                                    {% for reply in comment.reply_list %}
+                                                        <li>
+                                                            <div class="reply_left_box">
+                                                                <span class="username">{{ reply.nickname }}</span>
+                                                                <span class="comment_time"> · {{ reply.create_time | friendly_time}}</span>
+                                                            </div>
+                                                            <div class="reply_left_right">
+                                                                <a class="item-user-reply" data-comment-id="{{ reply.reply_id }}">回复</a>
+                                                            </div>
+                                                            <p class="reply_content">
+                                                                {{ reply.content }}
+                                                            </p>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        {% endfor %}
 
-                        <li class="comment-list-item clearfix">
-                            <div class="comment-list-item-avatar">
-                                <img src="{{ url_for('static',filename='home/images/default_avatar.e19c4635.png', _external=True) }}">
-                            </div>
-                            <div class="comment-list-item-detail">
-
-                                <div class="comment_left_box">
-                                        <span class="username">kerrygao</span>
-                                        <span class="comment_time"> · 4分钟前</span>
-                                </div>
-                                <div class="comment_right_box">
-                                    <a class="item-user-reply">回复</a>
-                                </div>
-                                <div class="comment_content_box">
-                                    <p class="comment_content">
-                                        pauline_Lund 交流，入群交流烦请备注：姓名+公司+职位。36氪出海同时也欢迎更多精英伙伴提供出海类优质原创稿件，邮箱 weipeilin@36kr.com，邮件备注：投稿-标题-作者姓名，感谢！
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
                     </ul>
 
                 </div>
             </div>
+            {% endif %}
 
 
 
@@ -228,6 +217,29 @@
             //调用
             statInputNum(textArea,word,submit_btn);
 
+
+            $("#comment_login").click(function () {
+                $('.login').click();
+            });
+
+            $('.item-user-reply').click(function () {
+                var comment_id = $(this).data('comment-id');
+                console.log(comment_id);
+                var reply_nickname = $(this).parent().prev().find('.username').html();
+                console.log(reply_nickname);
+                $('.reply_info_box').data("comment-id", comment_id);
+                $('.reply_info_box .replay_nickname').html(reply_nickname);
+                $('.reply_info_box').css("display","block");
+                console.log($('.reply_info_box').data("comment-id"));
+                $('#comment_edit').attr('placeholder','回复 '+reply_nickname);
+            });
+
+            $('.reply-close').click(function () {
+                $('.reply_info_box').css("display","none");
+                $('.reply_info_box').data("comment-id",0);
+                $('.reply_info_box .replay_nickname').html('');
+                $('#comment_edit').attr('placeholder','你怎么看...');
+            });
 
             $('.actions-item-icon').click(function () {
                 var _this = this;

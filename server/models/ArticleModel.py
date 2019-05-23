@@ -90,32 +90,6 @@ class ArticleCategory(db.Model):
         return category
 
 
-# 文章评论表
-class ArticleComment(db.Model):
-    __tablename__ = 't_article_comment'
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, doc=u'评论内容', nullable=False)
-    customer_id = db.Column(db.Integer, doc=u'用户id', nullable=False)
-    article_id = db.Column(db.Integer, doc=u'文章id', nullable=False)
-    laud_no = db.Column(db.Integer, doc=u"点赞数量")
-    create_time = Column("create_time", DATETIME, nullable=False, default=datetime.now, doc=u'创建时间')
-    update_time = Column("update_time", DATETIME, nullable=False, default=datetime.now, onupdate=datetime.now,
-                         doc=u'更新时间')
-
-    # 添加或编辑评论
-    def merge_article_comment(self, article_id, content, customer_id, comment_id=None):
-        if comment_id:
-            self.id = comment_id
-        self.article_id = article_id
-        self.content = content
-        self.customer_id = customer_id
-        db.session.merge(self)
-        db.session.commit()
-        return self.id
-
-        # 文章关键词
-
-
 class ArticleKeywords(db.Model):
     __tablename__ = 't_article_keywords'
     id = db.Column(db.Integer, primary_key=True)

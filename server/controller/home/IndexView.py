@@ -7,7 +7,7 @@ from flask import session
 
 from server.models.ArticleModel import Article, ArticleCategory
 from server.models.CommonModel import BannerCfg
-from server.models.News import Customer, ArticleCollet
+from server.models.News import Customer, ArticleCollet, ArticleComment
 
 
 class HomeBase(CommonView):
@@ -87,6 +87,18 @@ class HomeIndex(HomeBase):
 class ArticleDetail(HomeBase):
 
     def render_data(self, article_id):
+        current_user = session.get('current_user', None)
+
+        collet_status = None
+        if current_user:
+            uid = current_user['uid']
+            collet_status = db.session.query(
+                ArticleCollet
+            ).filter(
+                ArticleCollet.article_id == article_id,
+                ArticleCollet.uid == uid
+            ).count()
+
         article = db.session.query(
             Article
         ).filter(
@@ -110,9 +122,53 @@ class ArticleDetail(HomeBase):
         ).count()
 
 
-        return {
+        comment_obj_list = db.session.query(
+            ArticleComment, Customer
+        ).join(
+            Customer, ArticleComment.uid == Customer.id
+        ).filter(
+            ArticleComment.article_id == article_id,
+            ArticleComment.comment_id == 0
+        ).all()
+
+        comment_list = []
+
+        for comment, customer in comment_obj_list:
+            reply_list = []
+            comment_dict = {}
+            comment_dict['comment_id'] = comment.id
+            comment_dict['content'] = comment.content
+            comment_dict['user_avatar'] = customer.avatar
+            comment_dict['nickname'] = customer.nickname
+            comment_dict['create_time'] = comment.create_time
+
+            reply_obj_list = db.session.query(
+                ArticleComment, Customer
+            ).join(
+                Customer, ArticleComment.uid == Customer.id
+            ).filter(
+                ArticleComment.comment_id == comment.id,
+                ArticleComment.commten_type == 1
+            ).all()
+
+            for reply, reply_customer in reply_obj_list:
+                reply_dict = {}
+                reply_dict['reply_id'] = reply.id
+                reply_dict['content'] = reply.content
+                reply_dict['user_avatar'] = reply_customer.avatar
+                reply_dict['nickname'] = reply_customer.nickname
+                reply_dict['create_time'] = reply.create_time
+                reply_list.append(reply_dict)
+
+            comment_dict['reply_list'] = reply_list
+            comment_list.append(comment_dict)
+
+        resp = {
             "article": article,
             "author": author,
             "author_article_num": author_article_num,
-            "collet_num": collet_num
+            "collet_num": collet_num,
+            "collet_status": collet_status,
+            "comment_list": comment_list
         }
+        return resp

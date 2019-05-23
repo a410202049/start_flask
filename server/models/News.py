@@ -55,3 +55,17 @@ class ArticleCollet(db.Model):
                          doc=u'更新时间')
 
 
+class ArticleComment(db.Model):
+    """
+    文章评论
+    """
+    __tablename__ = 't_article_comment'
+    id = db.Column(db.Integer, primary_key=True)
+    article_id = db.Column(db.Integer)
+    content = db.Column(db.Text)
+    commten_type = Column("type", db.Integer, default=0, doc=u'评论类型')
+    uid = db.Column(db.Integer,  doc=u'评论用户id')
+    comment_id = db.Column(db.Integer, default=0, doc=u'评论id')
+    create_time = Column("create_time", DATETIME, nullable=False, default=datetime.now, doc=u'创建时间')
+    update_time = Column("update_time", DATETIME, nullable=False, default=datetime.now, onupdate=datetime.now,
+                         doc=u'更新时间')

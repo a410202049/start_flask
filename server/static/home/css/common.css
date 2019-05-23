@@ -1888,6 +1888,41 @@ a, a:hover {
     display: block;
 }
 
+.not_login_box{
+    float: left;
+}
+.not_login_box a{
+    color: #4285f4;
+}
+
+.reply_info_box{
+    background-color: #e1e9f6;
+    border-radius: 2px;
+    color: #4285f4;
+    float: left;
+    height: 30px;
+    padding: 0 60px 0 10px;
+    position: relative;
+    display: none;
+    margin-left: 30px;
+}
+
+.reply_info_box .reply-close{
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAA2hJREFUSA3tVVtIFGEU/s/MbOvOSJQhJNmFLi89VBRlSt52tg2xhwgsQoMgDPIhykBdfRHCXQskiIog6iGiIC0KMmtztTS6YQUFgUS9BFFIdmFn1svunM6/OTHNXh96EdqXc/u+8/3nzD+zjP3/zfYNgH0Ar18vijLsAQZXQq1ys72eTaz69UZEbJAEtjvoU15YOYI14H6MYQFDLEQ0mlR/uMtezxQTp4m4xMMVBoNldnyCYKhVuSkwOMeBiKzR7deO2UmpYrdfP0yc47zOe/T75Ot2bMJKOYDWAZ6Afp7sfh4DQBsdxM/9VD81oDWggWd4nfAXSKyeLNrxCRPOELDUJx+g53iJxyTc4enQj9jJZuzxa/U02Wkec06cm0Tsd91kJbHtiMJQQLvMkO2JlwU4OOBT4us24e5AeB9DuEinIi12tcyn1LUDGGbdbpNOaII4ccFKZS+tpieeQ3Y2LjADUAORWjDgAhfjGI5NJ8ZpSZ/hTL8/pn0QpeEnejetdgeNQaeHWiIaCHiFciKJ3SwtlmvaKyH6h5TCyUqQc2uu4Zzxd/oNZFhNgjONUaID9Oatknd274KpFBp/pbMW5KyqU+icDOsPaYVF8S4Az5y5cnnfIZj8q2uaIO0ztPOimlZOJ1xn5rnPc2acjc16Qm8g4o6icZumc9EaH/HmtN4t9NJFJBC2B32ugX8m6O2MlMViRh8JyCT2VJFk77SLwVRY76dLs5FyuigKVcEW11Am0YwTejv1kmgM79E8udR4BETZ098CP3jj6gDOj6A+SFOvpYsUlkTYFmyRH6cTTSvoPq5vgqhxn75Pc+nqv8oBWe31wTdrwyo/5k8x7QF9aVZTs58oCVsHmuXnVozVTynoPqGtZ9MYIvA8APaGMaUy1ApfrWTT33ZSK5iOsCGadCXlvjMHqANNykuzbrVJBdWOyTWMTQ/SZHkk9nYOUyr6WmHMSrT73i59cXQCh2n1S6npOGOOylCb87UdlyDo6YwsMYzYCF3BfAKP5jhYxZ2m3M92YrLYE5hYjkZsiC7XIvqGjUlOYUPwqPzRik18D42Y+lsM3osSuLMV4037fTkfHJKo0la+8B6xKVZiFeN+gmBhgXIVBLHOCXLx/Wblk52QKb7bnDPqAHEzo3+WxQtdtzLh/9dn3wZ+AQ3jP9VhQ3yRAAAAAElFTkSuQmCC) no-repeat 50%;
+    background-size: 14px;
+    cursor: pointer;
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all .5s;
+    width: 30px;
+}
+.reply_info_box .reply-close:hover{
+    transform: rotate(180deg);
+}
+
+
 /*background: #4285f4;*/
     /*border-radius: 2px 2px 0 0;*/
     /*height: 4px;*/
