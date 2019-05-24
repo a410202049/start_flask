@@ -15,7 +15,8 @@ from server.exception import BusinessException, PASSWORD_NOT_MATCH, ERROR, SUCCE
     CANCEL_COLLET_SUCCESS
 from server.helpers.common_helper import friendly_time
 from server.models.ArticleModel import Article, ArticleCategory
-from server.models.News import Customer, MobileCodeRecord, ArticleCollet
+from server.models.News import Customer, MobileCodeRecord, ArticleCollet, ArticleComment
+from server.utils.XssFilter import XssHtml
 
 
 @v2.route('/register')
@@ -227,3 +228,31 @@ class ArticleColletResource(BaseResource):
             db.session.delete(collet)
             db.session.commit()
             return self.make_response(CANCEL_COLLET_SUCCESS, u'取消收藏')
+
+
+@v2.route('/article-comment', endpoint="article-comment")
+class ArticleCommentResource(BaseResource):
+    @home_login_required
+    def post(self):
+        current_user = session.get('current_user', None)
+        article_id = request.form.get('article_id')
+        content = request.form.get('content')
+        uid = current_user['uid']
+        comment_type = request.form.get('comment_type', 0)
+        comment_id = request.form.get('comment_id', 0)
+
+        parser = XssHtml()
+        parser.feed(content)
+        parser.close()
+        content_html = parser.getHtml()
+
+        article_comment = ArticleComment()
+        article_comment.commten_type = comment_type
+        article_comment.article_id = article_id
+        article_comment.uid = uid
+        article_comment.comment_id = comment_id
+        article_comment.content = content_html
+        db.session.add(article_comment)
+        db.session.commit()
+
+        return self.make_response(SUCCESS, u'添加成功')

@@ -1,0 +1,57 @@
+﻿拉取镜像：sudo docker pull ubantu
+指定版本：sudo docker pull ubantu:14.04
+利用镜像创建容器：sudo docker run -t -i ubuntu /bin/bash
+各个参数解析：
+-t:在新容器内指定一个伪终端或终端。
+-i:允许你对容器内的标准输入 (STDIN) 进行交互。
+进入容器命令：docker exec -it 9072f3132757 bash
+
+启动docker：service docker start
+设置开机启动：systemctl enable docker
+将指定用户添加到用户组：usermod -aG docker your_username
+查看镜像详情：sudo docker inspect xxxxxxx（镜像id）
+搜寻镜像：docker search mysql
+删除镜像：docker rmi xxxx（镜像id）
+删除容器：docker rm xxxx（容器id）
+查看所有正则运行的容器：docker ps -a
+
+创建镜像的方法
+
+基于已有镜像容器创建：
+docker commit -m "added a new file" -a "docker Newbeen" 9be0cc4d95a5 test
+各个参数解析：
+-a:作者信息
+-m:提交信息
+-p：提交时暂停容器
+
+
+保存镜像到一个tar包; -o, --output="" Write to an file  
+docker save image_name -o file_path  
+加载一个tar包格式的镜像; -i, --input="" Read from a tar archive file  
+docker load -i file_path  
+  
+机器a  
+docker save image_name > /home/save.tar  
+使用scp将save.tar拷到机器b上，然后：  
+docker load < /home/save.tar  
+
+
+发布image（push）
+docker push new_image_name  
+
+创建容器
+docker create  --name myrunoob  nginx:latest
+
+docker run = docker create & docker start
+
+docker stop xxxxx 停止容器
+
+
+sudo docker attach 44fc0f0582d9 进入容器
+
+
+修改/etc/selinux/config
+SELINUX=enforcing
+
+pip install -t . PyMySQL 安装到当前目录
+invk test_func

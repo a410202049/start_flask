@@ -1,6 +1,8 @@
 {% extends "base.html" %}
-{% block title %}{% endblock %}
-
+{% block title %}{{ article.title }}-36kr{% endblock %}
+{% block header %}
+    <meta name="description" content="36氪为您提供创业资讯、科技新闻、投融资对接、股权投资、极速融资等创业服务，致力成为创业者可以依赖的创业服务平台，为创业者提供最好的产品和服务。">
+{% endblock %}
 {% block content %}
     <div class="article_detail_box">
         <div class="article">
@@ -222,16 +224,56 @@
                 $('.login').click();
             });
 
+            var login_status = {% if not user_info %}0{% else %}1{% endif %};
+
+
+            $(".submit_btn").click(function () {
+                var content = $('#comment_edit').val();
+                var comment_id = $('.reply_info_box').data('comment-id');
+                var comment_type = comment_id ? 1 : 0;
+
+                if(content){
+                    $.ajax({
+                        type : "POST",
+                        url : "{{ url_for('article-comment',_external=True)}}",
+                        dataType : "json",
+                        data:{
+                            article_id:"{{ article.id }}",
+                            content:content,
+                            comment_type:comment_type,
+                            comment_id:comment_id
+                        },
+                        success: function(resp) {
+                            //data是返回的hash,key之类的值，key是定义的文件名
+                            if(resp.resp_code == 'RES0001'){
+                                layer.msg(resp.resp_desc, {icon: 5});
+                            }else{
+                                window.location.reload();
+                            }
+
+                        },
+                        error:function(){
+                            layer.msg("获取失败", {icon: 5});
+                        }
+                    });
+                }
+            });
+
             $('.item-user-reply').click(function () {
-                var comment_id = $(this).data('comment-id');
-                console.log(comment_id);
-                var reply_nickname = $(this).parent().prev().find('.username').html();
-                console.log(reply_nickname);
-                $('.reply_info_box').data("comment-id", comment_id);
-                $('.reply_info_box .replay_nickname').html(reply_nickname);
-                $('.reply_info_box').css("display","block");
-                console.log($('.reply_info_box').data("comment-id"));
-                $('#comment_edit').attr('placeholder','回复 '+reply_nickname);
+                if(login_status){
+                    var comment_id = $(this).data('comment-id');
+                    console.log(comment_id);
+                    var reply_nickname = $(this).parent().prev().find('.username').html();
+                    console.log(reply_nickname);
+                    $('.reply_info_box').data("comment-id", comment_id);
+                    $('.reply_info_box .replay_nickname').html(reply_nickname);
+                    $('.reply_info_box').css("display","block");
+                    console.log($('.reply_info_box').data("comment-id"));
+                    $('#comment_edit').attr('placeholder','回复 '+reply_nickname);
+                }else{
+                    $('.login').click();
+                }
+
             });
 
             $('.reply-close').click(function () {
