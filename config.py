@@ -58,6 +58,7 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:123456@172.17.0.1/36k?charset=utf8"
 
 
