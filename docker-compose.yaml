@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web_app:
+    image: start_flask:latest
+    restart: always
+    command: gunicorn -c gunicorn.conf.py online:app
+    ports:
+      - '5000:5000'
+    volumes:
+      - '/var/log/gunicorn:/var/log/gunicorn'
+
+    mem_limit: 192m
+    #  docker build -t gunicorn_gevent_flask .
