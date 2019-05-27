@@ -6,7 +6,10 @@ import multiprocessing
 
 bind = '0.0.0.0:5000'
 backlog = 2048
-worker_class = "sync"
+worker_class = "gevent"
+timeout = 600
+graceful_timeout = 40
+
 # debug = True
 loglevel = 'debug'
 proc_name = 'gunicorn.proc'
