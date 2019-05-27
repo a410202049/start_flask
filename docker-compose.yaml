@@ -10,4 +10,4 @@ services:
       - '/var/log/gunicorn:/var/log/gunicorn'
 
     mem_limit: 192m
-    #  docker build -t gunicorn_gevent_flask .
+    #  docker build -t start_flask .
