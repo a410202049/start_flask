@@ -1,0 +1,14 @@
+https://www.cnblogs.com/cnkai/p/7504980.html
+
+https://www.jianshu.com/p/c2b80ab5e501
+
+http://www.kerrygao.com/archives/133/
+
+
+https://blog.csdn.net/u013332124/article/details/80621638 xpath文档
+
+ip代理池 开源代码 ：https://github.com/qiyeboy/IPProxyPool
+
+https://www.cnblogs.com/qiyeboy python相关技术博客
+
+https://github.com/FWC1994/Python-Crawler/blob/master/Crawl.py 多线程爬虫
